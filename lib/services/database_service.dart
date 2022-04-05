@@ -9,19 +9,25 @@ class DatabaseService extends IDatabaseService {
   static DatabaseService? _instance;
 
   final int _version = 02;
-  late Database _db;
+  Database? _db;
 
   static DatabaseService? get instance {
     _instance ??= DatabaseService._init();
     return _instance;
   }
 
-  DatabaseService._init();
+  DatabaseService._init() {
+    db;
+  }
 
   DbUtils dbUtils = DbUtils();
 
-  Future<Database> get db async {
-    _db = await dbOpen();
+  Database? get db {
+    if (_db == null) {
+      dbOpen().then((value) {
+        _db = value;
+      });
+    }
 
     return _db;
   }
@@ -29,12 +35,17 @@ class DatabaseService extends IDatabaseService {
   Future<Database> dbOpen() async {
     String path = join(await getDatabasesPath(), EnumDbName.db.name);
 
-    Database myDb = await openDatabase(path, version: _version, onCreate: _createDb, onConfigure: _onConfigure);
+    Database myDb = await openDatabase(path,
+        version: _version,
+        onCreate: _createDb,
+        onConfigure: _onConfigure,
+        onOpen: (db) {});
     return myDb;
   }
 
   _createDb(Database db, int version) async {
-    await db.execute('''CREATE TABLE ${EnumTableName.araclarTablosu.name}(${EnumAraclarTablosuColumnName.id.name} INTEGER PRIMARY KEY AUTOINCREMENT,
+    await db.execute(
+        '''CREATE TABLE ${EnumTableName.araclarTablosu.name}(${EnumAraclarTablosuColumnName.id.name} INTEGER PRIMARY KEY AUTOINCREMENT,
     ${EnumAraclarTablosuColumnName.adi.name} VARCHAR(20),
     ${EnumAraclarTablosuColumnName.yakitTuru.name} VARCHAR(20),
     ${EnumAraclarTablosuColumnName.imagePath.name} TEXT,
@@ -70,38 +81,61 @@ class DatabaseService extends IDatabaseService {
 
   @override
   Future<int> insert<T extends BaseModel>(T model) async {
-    //Database? db = await this.db;
+    if (db != null) {
+      var i = db!.insert(dbUtils.getTableName<T>(), model.toMap());
 
-    return (await db).insert(dbUtils.getTableName<T>(), model.toMap());
+      return i;
+    } else {
+      throw ("insert hata db null");
+    }
   }
 
-  getItem<T extends BaseModel>(Database db) {}
-
   @override
-  Future<int> delete<T extends BaseModel>(int id) {
-    // TODO: implement delete
-    throw UnimplementedError();
+  Future<int> delete<T extends BaseModel>(int id) async {
+    if (db != null) {
+      return await (db!.delete(dbUtils.getTableName<T>(),
+          where: "${EnumAraclarTablosuColumnName.id.name}=?", whereArgs: [id]));
+    } else {
+      throw ("delete hata");
+    }
   }
 
   @override
   Future<T?> getModel<T extends BaseModel>(int id) async {
-    Map<String, Object?> modelMaps =
-        (await (await db).query(dbUtils.getTableName<T>(), where: "${EnumAraclarTablosuColumnName.id.name}=?", whereArgs: [id])).first;
+    if (db != null) {
+      Map<String, Object?> modelMaps = (await db!.query(
+              dbUtils.getTableName<T>(),
+              where: "${EnumAraclarTablosuColumnName.id.name}=?",
+              whereArgs: [id]))
+          .first;
 
-    return dbUtils.fromMap<T>(modelMaps);
+      return dbUtils.fromMap<T>(modelMaps);
+    } else {
+      throw ("getModel model cekilemedi db null");
+    }
   }
 
   @override
   Future<List<T?>> getModelList<T extends BaseModel>() async {
-    List<Map<String, dynamic>> modelMaps = await (await db).query(dbUtils.getTableName<T>());
+    if (db != null) {
+      List<Map<String, dynamic>> modelMaps =
+          await db!.query(dbUtils.getTableName<T>());
 
-    return modelMaps.map((e) => dbUtils.fromMap<T>(e)).toList();
+      return modelMaps.map((e) => dbUtils.fromMap<T>(e)).toList();
+    } else {
+      throw ("getModelList hata db null");
+    }
   }
 
   @override
-  Future<int> update<T extends BaseModel>(T model) {
-    // TODO: implement update
-    throw UnimplementedError();
+  Future<int> update<T extends BaseModel>(T model) async {
+    if (db != null) {
+      return await (db!.update(dbUtils.getTableName<T>(), model.toMap(),
+          where: "${EnumAraclarTablosuColumnName.id.name}=?",
+          whereArgs: [model.id]));
+    } else {
+      throw ("update hata");
+    }
   }
 
   @override
@@ -111,7 +145,11 @@ class DatabaseService extends IDatabaseService {
   }
 
   @override
-  colsed() async {
-    (await db).close();
+  close() async {
+    if (db != null) {
+      db!.close();
+    } else {
+      throw ("close db null");
+    }
   }
 }

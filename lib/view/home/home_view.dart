@@ -30,9 +30,13 @@ class HomeView extends StatelessWidget {
 
           DatabaseService.instance!.insert<CarModel>(carModel);
 
-          (await DatabaseService.instance!.getModelList<CarModel>()).forEach((element) {});
+          (await DatabaseService.instance!.getModelList<CarModel>())
+              .forEach((element) {
+            print(element);
+          });
 
-          print((await DatabaseService.instance!.getModel<CarModel>(1)).toString());
+          print((await DatabaseService.instance!.getModel<CarModel>(1))
+              .toString());
         },
       ),
     );

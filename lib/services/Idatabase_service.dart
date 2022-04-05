@@ -10,5 +10,5 @@ abstract class IDatabaseService {
 
   Future<int> aracaAitTumYakitlariSil(int id);
 
-  colsed();
+  close();
 }
