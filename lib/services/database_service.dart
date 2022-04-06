@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:yakit_takip_2022/model/yakit_islem_model.dart';
 import 'package:yakit_takip_2022/services/Idatabase_service.dart';
 import 'package:yakit_takip_2022/services/db_utils.dart';
 
@@ -13,6 +16,7 @@ class DatabaseService extends IDatabaseService {
 
   static DatabaseService? get instance {
     _instance ??= DatabaseService._init();
+
     return _instance;
   }
 
@@ -33,19 +37,22 @@ class DatabaseService extends IDatabaseService {
   }
 
   Future<Database> dbOpen() async {
-    String path = join(await getDatabasesPath(), EnumDbName.db.name);
+    late Database myDb;
+    try {
+      String path = join(await getDatabasesPath(), EnumDbName.db.name);
 
-    Database myDb = await openDatabase(path,
-        version: _version,
-        onCreate: _createDb,
-        onConfigure: _onConfigure,
-        onOpen: (db) {});
-    return myDb;
+      myDb = await openDatabase(path, version: _version, onCreate: _createDb, onConfigure: _onConfigure);
+      return myDb;
+    } on Exception catch (e) {
+      print(e);
+      print("Database açılamadı");
+
+      throw ("Database Açılmadı Hata");
+    }
   }
 
-  _createDb(Database db, int version) async {
-    await db.execute(
-        '''CREATE TABLE ${EnumTableName.araclarTablosu.name}(${EnumAraclarTablosuColumnName.id.name} INTEGER PRIMARY KEY AUTOINCREMENT,
+  FutureOr<void> _createDb(Database db, int version) async {
+    await db.execute('''CREATE TABLE ${EnumTableName.araclarTablosu.name}(${EnumAraclarTablosuColumnName.id.name} INTEGER PRIMARY KEY AUTOINCREMENT,
     ${EnumAraclarTablosuColumnName.adi.name} VARCHAR(20),
     ${EnumAraclarTablosuColumnName.yakitTuru.name} VARCHAR(20),
     ${EnumAraclarTablosuColumnName.imagePath.name} TEXT,
@@ -75,26 +82,23 @@ class DatabaseService extends IDatabaseService {
     ) ''');
   }
 
-  Future<void> _onConfigure(Database db) async {
+  FutureOr<void> _onConfigure(Database db) async {
     await db.execute('PRAGMA foreign_keys = ON');
   }
 
   @override
   Future<int> insert<T extends BaseModel>(T model) async {
     if (db != null) {
-      var i = db!.insert(dbUtils.getTableName<T>(), model.toMap());
-
-      return i;
+      return await db!.insert(dbUtils.getTableName<T>(), model.toMap());
     } else {
-      throw ("insert hata db null");
+      throw ("insert hata!!!! model eklenemedi Database null");
     }
   }
 
   @override
   Future<int> delete<T extends BaseModel>(int id) async {
     if (db != null) {
-      return await (db!.delete(dbUtils.getTableName<T>(),
-          where: "${EnumAraclarTablosuColumnName.id.name}=?", whereArgs: [id]));
+      return await (db!.delete(dbUtils.getTableName<T>(), where: "${EnumAraclarTablosuColumnName.id.name}=?", whereArgs: [id]));
     } else {
       throw ("delete hata");
     }
@@ -103,11 +107,8 @@ class DatabaseService extends IDatabaseService {
   @override
   Future<T?> getModel<T extends BaseModel>(int id) async {
     if (db != null) {
-      Map<String, Object?> modelMaps = (await db!.query(
-              dbUtils.getTableName<T>(),
-              where: "${EnumAraclarTablosuColumnName.id.name}=?",
-              whereArgs: [id]))
-          .first;
+      Map<String, Object?> modelMaps =
+          (await db!.query(dbUtils.getTableName<T>(), where: "${EnumAraclarTablosuColumnName.id.name}=?", whereArgs: [id])).first;
 
       return dbUtils.fromMap<T>(modelMaps);
     } else {
@@ -118,34 +119,38 @@ class DatabaseService extends IDatabaseService {
   @override
   Future<List<T?>> getModelList<T extends BaseModel>() async {
     if (db != null) {
-      List<Map<String, dynamic>> modelMaps =
-          await db!.query(dbUtils.getTableName<T>());
+      List<Map<String, dynamic>> modelMaps = await db!.query(dbUtils.getTableName<T>());
 
       return modelMaps.map((e) => dbUtils.fromMap<T>(e)).toList();
     } else {
-      throw ("getModelList hata db null");
+      throw ("getModelList model listesi getirilemedi");
     }
   }
 
   @override
   Future<int> update<T extends BaseModel>(T model) async {
     if (db != null) {
-      return await (db!.update(dbUtils.getTableName<T>(), model.toMap(),
-          where: "${EnumAraclarTablosuColumnName.id.name}=?",
-          whereArgs: [model.id]));
+      return await (db!.update(dbUtils.getTableName<T>(), model.toMap(), where: "${EnumAraclarTablosuColumnName.id.name}=?", whereArgs: [model.id]));
     } else {
       throw ("update hata");
     }
   }
 
   @override
-  Future<int> aracaAitTumYakitlariSil(int id) {
-    // TODO: implement aracaAitTumYakitlariSil
-    throw UnimplementedError();
+  Future<int> aracaAitTumYakitlariSil(int id) async {
+    if (db != null) {
+      return await db!.delete(
+        dbUtils.getTableName<YakitIslemModel>(),
+        where: "${EnumAraclarTablosuColumnName.id.name}=?",
+        whereArgs: [id],
+      );
+    } else {
+      throw ("Araca ait yakıtlar silinirken hata!!!!!!");
+    }
   }
 
   @override
-  close() async {
+  close() {
     if (db != null) {
       db!.close();
     } else {

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:yakit_takip_2022/model/yakit_islem_model.dart';
 import 'package:yakit_takip_2022/services/database_service.dart';
+import 'package:yakit_takip_2022/view/add_new_car/add_new_car_view.dart';
+import 'package:yakit_takip_2022/view/add_new_car/add_new_car_view_model.dart';
 
 import 'view/home/home_view.dart';
 
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomeView(),
+      home: AddNewCarView(viewModel: AddNewCarViewModel()),
     );
   }
 }
