@@ -8,22 +8,23 @@ class AracListViewModel extends ChangeNotifier {
 
   List<CarModel?> listCarModel = [];
 
+  set aracListesi(List<CarModel?> list) {
+    listCarModel = list;
+    notifyListeners();
+  }
+
   AracListViewModel() {
     _dbServis = DatabaseService.instance!;
-    yaz();
+    aracListesiniDoldur();
   }
 
   Future<List<CarModel?>> getAracListesi() {
-    return DatabaseService.instance!.getModelList<CarModel>();
+    return _dbServis.getModelList<CarModel>();
   }
 
   Future<void> aracListesiniDoldur() async {
-    listCarModel = await getAracListesi();
-  }
+    aracListesi = await getAracListesi();
 
-  yaz() async {
-    (await DatabaseService.instance!.getModelList<CarModel>()).forEach((element) {
-      print(element);
-    });
+  
   }
 }
