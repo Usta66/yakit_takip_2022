@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:yakit_takip_2022/model/car_model.dart';
 import 'package:yakit_takip_2022/model/yakit_islem_model.dart';
 import 'package:yakit_takip_2022/services/Idatabase_service.dart';
 import 'package:yakit_takip_2022/services/db_utils.dart';
@@ -21,6 +22,7 @@ class DatabaseService extends IDatabaseService {
   }
 
   DatabaseService._init() {
+    print("db init çalıştı");
     db;
   }
 
@@ -42,6 +44,8 @@ class DatabaseService extends IDatabaseService {
       String path = join(await getDatabasesPath(), EnumDbName.db.name);
 
       myDb = await openDatabase(path, version: _version, onCreate: _createDb, onConfigure: _onConfigure);
+
+      print("db open");
       return myDb;
     } on Exception catch (e) {
       print(e);
@@ -118,6 +122,7 @@ class DatabaseService extends IDatabaseService {
 
   @override
   Future<List<T?>> getModelList<T extends BaseModel>() async {
+    db;
     if (db != null) {
       List<Map<String, dynamic>> modelMaps = await db!.query(dbUtils.getTableName<T>());
 
