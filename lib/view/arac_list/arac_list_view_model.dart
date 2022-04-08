@@ -24,7 +24,23 @@ class AracListViewModel extends ChangeNotifier {
 
   Future<void> aracListesiniDoldur() async {
     aracListesi = await getAracListesi();
+  }
 
-  
+  Future<int> modelInsert(CarModel carModel) {
+    var a = _dbServis.insert<CarModel>(carModel);
+    aracListesiniDoldur();
+    return a;
+  }
+
+  Future<int> modelUpdate(CarModel carModel) {
+    return _dbServis.update<CarModel>(carModel);
+  }
+
+  Future<int> delete(CarModel carModel) {
+    if (carModel.id != null) {
+      return _dbServis.delete<CarModel>(carModel.id!);
+    } else {
+      throw ("delet carmosel id null");
+    }
   }
 }

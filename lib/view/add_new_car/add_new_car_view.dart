@@ -17,7 +17,6 @@ class AddNewCarView extends StatelessWidget {
   final AddNewCarViewModel viewModel;
   @override
   Widget build(BuildContext context) {
-
     return BaseView(
         viewModel: viewModel,
         child: Scaffold(
@@ -30,35 +29,16 @@ class AddNewCarView extends StatelessWidget {
                         runSpacing: 10,
                         alignment: WrapAlignment.center,
                         children: [
-                          BaseTextField(
-                              hintText: "Adı",
-                              controller: viewModel.controllerAdi),
-                          BaseTextField(
-                              hintText: "Yakıt Türü",
-                              controller: viewModel.controllerYakitTuru),
-                          BaseTextField(
-                              hintText: "LPG Depo Kapasite",
-                              controller: viewModel.controllerLpgDepo),
-                          BaseTextField(
-                              hintText: "Akaryakıt Depo Kapasite",
-                              controller: viewModel.controllerAracDepo),
+                          BaseTextField(hintText: "Adı", controller: viewModel.controllerAdi),
+                          BaseTextField(hintText: "Yakıt Türü", controller: viewModel.controllerYakitTuru),
+                          BaseTextField(hintText: "LPG Depo Kapasite", controller: viewModel.controllerLpgDepo),
+                          BaseTextField(hintText: "Akaryakıt Depo Kapasite", controller: viewModel.controllerAracDepo),
                           Center(
-                            child: Consumer<AracListViewModel>(
-                              builder: (context, value, child) {
-                                return ElevatedButton(
-                                    onPressed: () async {
-                                      viewModel.isNew
-                                          ? viewModel.addOrSet()
-                                          : viewModel.delete();
-
-                                      value.aracListesiniDoldur();
-                                      Navigator.pop(context);
-                                    },
-                                    child: Text(
-                                        viewModel.isNew ? "Kaydet" : "Sil"));
-                              },
-                            ),
-                          )
+                              child: ElevatedButton(
+                                  onPressed: () async {
+                                    Navigator.pop<CarModel>(context, viewModel.modeliHazirla());
+                                  },
+                                  child: Text(viewModel.isNew ? "Kaydet" : "Sil"))),
                         ],
                       ))),
             )));

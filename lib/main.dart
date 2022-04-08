@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:yakit_takip_2022/view/arac_list/arac_list_view.dart';
 import 'package:yakit_takip_2022/view/arac_list/arac_list_view_model.dart';
-
+import 'package:yakit_takip_2022/view/home/home_view_model.dart';
 
 void main() async {
   //WidgetsFlutterBinding();
@@ -11,12 +11,19 @@ void main() async {
 
   runApp(
 
-       MultiProvider(providers: [ChangeNotifierProvider<AracListViewModel>(create:(context) => AracListViewModel(),)],
-    
-    
-    child:  
+/*     MultiProvider(providers: [
+    ChangeNotifierProvider<AracListViewModel>(
+      create: (context) => AracListViewModel(),
+    ),
+    ChangeNotifierProvider<HomeViewModel>(
+      create: (context) => HomeViewModel(),
+    )
+  ], 
+  
+  
+  child:  */
 
-      const MyApp()));
+      const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -32,7 +39,7 @@ class MyApp extends StatelessWidget {
       ),
       home:
           //AddNewCarView(viewModel: AddNewCarViewModel.addNew())
-          AracListView(),
+          AracListView(viewModel: AracListViewModel()),
     );
   }
 }
