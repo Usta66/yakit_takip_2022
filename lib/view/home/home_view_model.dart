@@ -7,10 +7,12 @@ class HomeViewModel extends ChangeNotifier {
   DatabaseService _dbService = DatabaseService.instance!;
 
   late TextEditingController controllerAdi, controllerYakitTuru;
-  CarModel? carModel;
-
-  doldur(CarModel carModel) {
+  CarModel carModel;
+  HomeViewModel({
+    required this.carModel,
+  }) {
     controllerAdi = TextEditingController(text: carModel.adi ?? "yok");
-    controllerYakitTuru = TextEditingController(text: carModel.yakitTuru ?? "yok");
+    controllerYakitTuru =
+        TextEditingController(text: carModel.yakitTuru ?? "yok");
   }
 }

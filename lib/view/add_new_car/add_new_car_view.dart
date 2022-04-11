@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'package:yakit_takip_2022/base/base_view.dart';
 import 'package:yakit_takip_2022/components/base_text_field.dart';
-import 'package:yakit_takip_2022/services/database_service.dart';
+
 import 'package:yakit_takip_2022/view/add_new_car/add_new_car_view_model.dart';
-import 'package:yakit_takip_2022/view/arac_list/arac_list_view_model.dart';
 
 import '../../model/car_model.dart';
 
@@ -20,7 +18,10 @@ class AddNewCarView extends StatelessWidget {
     return BaseView(
         viewModel: viewModel,
         child: Scaffold(
-            appBar: AppBar(title: const Text("Yeni Araç Ekle")),
+            appBar: AppBar(
+                title: viewModel.isNew
+                    ? Text("Yeni Araç Ekle")
+                    : Text("Güncelle")),
             body: SingleChildScrollView(
               child: Center(
                   child: Padding(
@@ -29,16 +30,37 @@ class AddNewCarView extends StatelessWidget {
                         runSpacing: 10,
                         alignment: WrapAlignment.center,
                         children: [
-                          BaseTextField(hintText: "Adı", controller: viewModel.controllerAdi),
-                          BaseTextField(hintText: "Yakıt Türü", controller: viewModel.controllerYakitTuru),
-                          BaseTextField(hintText: "LPG Depo Kapasite", controller: viewModel.controllerLpgDepo),
-                          BaseTextField(hintText: "Akaryakıt Depo Kapasite", controller: viewModel.controllerAracDepo),
+                          BaseTextField(
+                              hintText: "Adı",
+                              controller: viewModel.controllerAdi),
+                          BaseTextField(
+                              hintText: "Yakıt Türü",
+                              controller: viewModel.controllerYakitTuru),
+                          BaseTextField(
+                              hintText: "LPG Depo Kapasite",
+                              controller: viewModel.controllerLpgDepo),
+                          BaseTextField(
+                              hintText: "Akaryakıt Depo Kapasite",
+                              controller: viewModel.controllerAracDepo),
                           Center(
-                              child: ElevatedButton(
-                                  onPressed: () async {
-                                    Navigator.pop<CarModel>(context, viewModel.modeliHazirla());
-                                  },
-                                  child: Text(viewModel.isNew ? "Kaydet" : "Sil"))),
+                            child: viewModel.isNew
+                                ? ElevatedButton(
+                                    onPressed: () async {
+                                      Navigator.pop<CarModel>(
+                                          context, viewModel.modeliHazirla());
+                                    },
+                                    child: const Text("Kaydet"))
+                                : Row(children: [
+                                    ElevatedButton(
+                                        onPressed: () {
+
+                                          
+                                        },
+                                        child: Text("Güncelle")),
+                                    ElevatedButton(
+                                        onPressed: () {}, child: Text("Sil"))
+                                  ]),
+                          )
                         ],
                       ))),
             )));

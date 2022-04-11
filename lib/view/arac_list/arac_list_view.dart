@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:yakit_takip_2022/base/base_view.dart';
 import 'package:yakit_takip_2022/model/car_model.dart';
-import 'package:yakit_takip_2022/services/database_service.dart';
 import 'package:yakit_takip_2022/view/add_new_car/add_new_car_view.dart';
 import 'package:yakit_takip_2022/view/add_new_car/add_new_car_view_model.dart';
 import 'package:yakit_takip_2022/view/arac_list/arac_list_view_model.dart';
 import 'package:yakit_takip_2022/view/home/home_view.dart';
+import 'package:yakit_takip_2022/view/home/home_view_model.dart';
 
 class AracListView extends StatelessWidget {
   final AracListViewModel viewModel;
@@ -30,13 +29,15 @@ class AracListView extends StatelessWidget {
                   itemCount: viewModel.listCarModel.length,
                   itemBuilder: (context, index) {
                     return ListTile(
-                        onTap: () {
+                           onTap: () {
                           Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => HomeView(), settings: RouteSettings(arguments: viewModel.listCarModel[index]!)));
+                              MaterialPageRoute<CarModel>(
+                                  builder: (context) => HomeView(viewModel: HomeViewModel(carModel:viewModel.listCarModel[index]! )),
+                                  ));
                         },
-                        title: Text(viewModel.listCarModel[index]!.adi ?? "yok"));
+                        title:
+                            Text(viewModel.listCarModel[index]!.adi ?? "yok"));
                   });
             },
           ),
@@ -45,7 +46,8 @@ class AracListView extends StatelessWidget {
               Navigator.push<CarModel>(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => AddNewCarView(viewModel: AddNewCarViewModel.addNew()),
+                    builder: (context) =>
+                        AddNewCarView(viewModel: AddNewCarViewModel.addNew()),
                   )).then((value) {
                 if (value != null) {
                   viewModel.modelInsert(value);
