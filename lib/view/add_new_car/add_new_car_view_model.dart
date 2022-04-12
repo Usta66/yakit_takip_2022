@@ -8,7 +8,7 @@ class AddNewCarViewModel extends ChangeNotifier {
   late CarModel carModel;
   late bool isNew;
   late TextEditingController controllerAdi, controllerYakitTuru, controllerLpgDepo, controllerAracDepo;
-
+  final AracListViewModel _aracListViewModel = AracListViewModel.instance!;
   final DatabaseService _dbServis = DatabaseService.instance!;
 
   AddNewCarViewModel.addNew() {
@@ -33,5 +33,31 @@ class AddNewCarViewModel extends ChangeNotifier {
         yakitTuru: controllerYakitTuru.text.trim().toUpperCase(),
         aracDepo: double.tryParse(controllerAracDepo.text.trim().toUpperCase()),
         aracLpgDepo: double.tryParse(controllerLpgDepo.text.trim().toUpperCase()));
+  }
+
+  Future<int> modelInsert(CarModel carModel) {
+    var resault = _dbServis.insert<CarModel>(carModel);
+
+    return resault;
+  }
+
+  addOrSet() {
+    modeliHazirla();
+    isNew ? modelInsert(carModel) : modelUpdate(carModel);
+    _aracListViewModel.aracListesiniDoldur();
+  }
+
+  Future<int> modelUpdate(CarModel carModel) {
+    return _dbServis.update<CarModel>(carModel);
+  }
+
+  Future<int> delete() {
+    if (carModel.id != null) {
+      var resualt = _dbServis.delete<CarModel>(carModel.id!);
+      _aracListViewModel.aracListesiniDoldur();
+      return resualt;
+    } else {
+      throw ("delet carmosel id null");
+    }
   }
 }

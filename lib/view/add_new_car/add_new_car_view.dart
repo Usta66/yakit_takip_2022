@@ -18,10 +18,7 @@ class AddNewCarView extends StatelessWidget {
     return BaseView(
         viewModel: viewModel,
         child: Scaffold(
-            appBar: AppBar(
-                title: viewModel.isNew
-                    ? Text("Yeni Araç Ekle")
-                    : Text("Güncelle")),
+            appBar: AppBar(title: viewModel.isNew ? Text("Yeni Araç Ekle") : Text("Güncelle")),
             body: SingleChildScrollView(
               child: Center(
                   child: Padding(
@@ -30,35 +27,30 @@ class AddNewCarView extends StatelessWidget {
                         runSpacing: 10,
                         alignment: WrapAlignment.center,
                         children: [
-                          BaseTextField(
-                              hintText: "Adı",
-                              controller: viewModel.controllerAdi),
-                          BaseTextField(
-                              hintText: "Yakıt Türü",
-                              controller: viewModel.controllerYakitTuru),
-                          BaseTextField(
-                              hintText: "LPG Depo Kapasite",
-                              controller: viewModel.controllerLpgDepo),
-                          BaseTextField(
-                              hintText: "Akaryakıt Depo Kapasite",
-                              controller: viewModel.controllerAracDepo),
+                          BaseTextField(hintText: "Adı", controller: viewModel.controllerAdi),
+                          BaseTextField(hintText: "Yakıt Türü", controller: viewModel.controllerYakitTuru),
+                          BaseTextField(hintText: "LPG Depo Kapasite", controller: viewModel.controllerLpgDepo),
+                          BaseTextField(hintText: "Akaryakıt Depo Kapasite", controller: viewModel.controllerAracDepo),
                           Center(
                             child: viewModel.isNew
                                 ? ElevatedButton(
                                     onPressed: () async {
-                                      Navigator.pop<CarModel>(
-                                          context, viewModel.modeliHazirla());
+                                      Navigator.pop<CarModel>(context, viewModel.addOrSet());
                                     },
                                     child: const Text("Kaydet"))
                                 : Row(children: [
                                     ElevatedButton(
                                         onPressed: () {
-
-                                          
+                                          viewModel.addOrSet();
+                                          Navigator.pop(context);
                                         },
                                         child: Text("Güncelle")),
                                     ElevatedButton(
-                                        onPressed: () {}, child: Text("Sil"))
+                                        onPressed: () {
+                                          viewModel.delete();
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text("Sil"))
                                   ]),
                           )
                         ],

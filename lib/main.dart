@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:yakit_takip_2022/services/database_service.dart';
 import 'package:yakit_takip_2022/view/add_new_car/add_new_car_view.dart';
 import 'package:yakit_takip_2022/view/add_new_car/add_new_car_view_model.dart';
-
 import 'package:yakit_takip_2022/view/arac_list/arac_list_view.dart';
 import 'package:yakit_takip_2022/view/arac_list/arac_list_view_model.dart';
 
@@ -12,9 +11,9 @@ void main() async {
   //DatabaseService.instance;
 
   runApp(MultiProvider(providers: [
-    ChangeNotifierProvider<AracListViewModel>(
-      create: (context) => AracListViewModel(),
-    )
+    ChangeNotifierProvider<DatabaseService>(
+      create: (context) => DatabaseService.instance!,
+    ),
   ], child: const MyApp()));
 }
 
@@ -31,9 +30,8 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: "/",
       routes: {
-        '/': (context) => AracListView(viewModel: AracListViewModel()),
-        'add': (context) =>
-            AddNewCarView(viewModel: AddNewCarViewModel.addNew())
+        '/': (context) => AracListView(viewModel: AracListViewModel.instance!),
+        'add': (context) => AddNewCarView(viewModel: AddNewCarViewModel.addNew())
       },
     );
   }
