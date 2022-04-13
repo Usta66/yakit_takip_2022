@@ -12,7 +12,12 @@ class HomeViewModel extends ChangeNotifier {
     required this.carModel,
   }) {
     controllerAdi = TextEditingController(text: carModel.adi ?? "yok");
-    controllerYakitTuru =
-        TextEditingController(text: carModel.yakitTuru ?? "yok");
+    controllerYakitTuru = TextEditingController(text: carModel.yakitTuru ?? "yok");
+  }
+
+  aracGuncelle() async {
+    carModel = (await _dbService.getModel<CarModel>(carModel.id!))!;
+    controllerAdi = TextEditingController(text: carModel.adi ?? "yok");
+    controllerYakitTuru = TextEditingController(text: carModel.yakitTuru ?? "yok");
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:yakit_takip_2022/model/base_model.dart';
+import 'package:yakit_takip_2022/model/yakit_islem_model.dart';
 
 abstract class IDatabaseService extends ChangeNotifier {
   Future<List<T?>> getModelList<T extends BaseModel>();
@@ -10,6 +10,8 @@ abstract class IDatabaseService extends ChangeNotifier {
   Future<int> delete<T extends BaseModel>(int id);
 
   Future<int> aracaAitTumYakitlariSil(int id);
+
+  Future<List<YakitIslemModel?>> getAracYakitListesi({required int aracId});
 
   close();
 }

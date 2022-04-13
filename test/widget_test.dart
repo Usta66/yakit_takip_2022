@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:yakit_takip_2022/main.dart';
+import 'package:yakit_takip_2022/model/car_model.dart';
+import 'package:yakit_takip_2022/services/database_service.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
@@ -27,4 +29,13 @@ void main() {
     expect(find.text('0'), findsNothing);
     expect(find.text('1'), findsOneWidget);
   });
+
+  test(
+    "deneme",
+    () async {
+      final db = DatabaseService.instance!;
+
+      expect((await db.getModel<CarModel>(1))!.id, 1);
+    },
+  );
 }

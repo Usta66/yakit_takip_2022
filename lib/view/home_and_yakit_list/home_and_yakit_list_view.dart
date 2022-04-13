@@ -22,7 +22,14 @@ class HomeAndYakitListView extends StatelessWidget {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => YakitEklemeView(viewModel: YakitEklemeViewModel())));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => YakitEklemeView(
+                        viewModel: YakitEklemeViewModel.addNew(
+                            carModel: viewModel.carModel,
+                            yakitListViewModel: viewModel.yakitListViewModel,
+                            homeViewModel: viewModel.homeViewModel))));
           },
         ),
         bottomNavigationBar: TabBar(tabs: [
@@ -40,7 +47,7 @@ class HomeAndYakitListView extends StatelessWidget {
           )
         ]),
         body: TabBarView(
-          children: [HomeView(viewModel: HomeViewModel(carModel: viewModel.carModel)), YakitListView(viewModel: YakitListViewModel())],
+          children: [HomeView(viewModel: viewModel.homeViewModel), YakitListView(viewModel: viewModel.yakitListViewModel)],
         ),
       ),
     );

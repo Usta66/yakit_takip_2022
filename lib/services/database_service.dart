@@ -59,6 +59,7 @@ class DatabaseService extends IDatabaseService {
     await db.execute('''CREATE TABLE
     ${EnumTableName.yakitIslemTablosu.name} 
     (${EnumYakitIslemTablosuColumnName.id.name} INTEGER PRIMARY KEY AUTOINCREMENT,
+     ${EnumYakitIslemTablosuColumnName.yakitTuru.name} VARCHAR(20),
     ${EnumYakitIslemTablosuColumnName.aracId.name} INTEGER,
     ${EnumYakitIslemTablosuColumnName.alisTarihi.name} VARCHAR(20),
     ${EnumYakitIslemTablosuColumnName.alisSaati.name} VARCHAR(20),
@@ -79,10 +80,10 @@ class DatabaseService extends IDatabaseService {
   @override
   Future<int> insert<T extends BaseModel>(T model) async {
     if (_db != null) {
-      var resualt = await _db!.insert(dbUtils.getTableName<T>(), model.toMap());
+      var result = await _db!.insert(dbUtils.getTableName<T>(), model.toMap());
 
       //notifyListeners();
-      return resualt;
+      return result;
     } else {
       throw ("insert hata!!!! model eklenemedi Database null");
     }
@@ -99,6 +100,7 @@ class DatabaseService extends IDatabaseService {
 
   @override
   Future<T?> getModel<T extends BaseModel>(int id) async {
+    _db = await db;
     if (_db != null) {
       Map<String, Object?> modelMaps =
           (await _db!.query(dbUtils.getTableName<T>(), where: "${EnumAraclarTablosuColumnName.id.name}=?", whereArgs: [id])).first;
@@ -111,19 +113,27 @@ class DatabaseService extends IDatabaseService {
 
   @override
   Future<List<T?>> getModelList<T extends BaseModel>() async {
-    Database dataBase = await db;
-    List<Map<String, dynamic>> modelMaps = await dataBase.query(dbUtils.getTableName<T>());
+    _db = await db;
 
-    var resualt = modelMaps.map((e) => dbUtils.fromMap<T>(e)).toList();
-    notifyListeners();
+    if (_db != null) {
+      List<Map<String, dynamic>> modelMaps = await _db!.query(dbUtils.getTableName<T>());
 
-    return resualt;
+      var result = modelMaps.map((e) => dbUtils.fromMap<T>(e)).toList();
+      notifyListeners();
+
+      return result;
+    } else {
+      throw (" getmodelList hata liste getirilemedi ");
+    }
   }
 
   @override
   Future<int> update<T extends BaseModel>(T model) async {
     if (_db != null) {
-      return await (_db!.update(dbUtils.getTableName<T>(), model.toMap(), where: "${EnumAraclarTablosuColumnName.id.name}=?", whereArgs: [model.id]));
+      var result =
+          await (_db!.update(dbUtils.getTableName<T>(), model.toMap(), where: "${EnumAraclarTablosuColumnName.id.name}=?", whereArgs: [model.id]));
+      //notifyListeners();
+      return result;
     } else {
       throw ("update hata");
     }
@@ -148,6 +158,22 @@ class DatabaseService extends IDatabaseService {
       _db!.close();
     } else {
       throw ("close db null");
+    }
+  }
+
+  @override
+  Future<List<YakitIslemModel?>> getAracYakitListesi({required int aracId}) async {
+    if (_db != null) {
+      List<Map<String, Object?>> modelMaps =
+          (await _db!.query(dbUtils.getTableName<YakitIslemModel>(), where: "${EnumYakitIslemTablosuColumnName.aracId.name}=?", whereArgs: [aracId]));
+
+      var result = modelMaps.map((e) => dbUtils.fromMap<YakitIslemModel>(e)).toList();
+
+      notifyListeners();
+
+      return result;
+    } else {
+      throw ("getAracYakitListesi hata liste çekilemedi ");
     }
   }
 }

@@ -47,4 +47,4 @@ enum EnumAraclarTablosuColumnName {
   mevcutYakitMiktari
 }
 
-enum EnumYakitIslemTablosuColumnName { id, aracId, alisTarihi, alisSaati, fiyati, miktari, tutar, aracKm, mesafe }
+enum EnumYakitIslemTablosuColumnName { id, aracId, yakitTuru, alisTarihi, alisSaati, fiyati, miktari, tutar, aracKm, mesafe }
