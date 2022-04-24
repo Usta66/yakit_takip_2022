@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yakit_takip_2022/model/base_model.dart';
 import 'package:yakit_takip_2022/model/yakit_islem_model.dart';
 
-abstract class IDatabaseService extends ChangeNotifier {
+abstract class IDatabaseService  {
   Future<List<T?>> getModelList<T extends BaseModel>();
   Future<int> insert<T extends BaseModel>(T model);
   Future<T?> getModel<T extends BaseModel>(int id);

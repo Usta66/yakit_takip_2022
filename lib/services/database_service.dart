@@ -119,7 +119,7 @@ class DatabaseService extends IDatabaseService {
       List<Map<String, dynamic>> modelMaps = await _db!.query(dbUtils.getTableName<T>());
 
       var result = modelMaps.map((e) => dbUtils.fromMap<T>(e)).toList();
-      notifyListeners();
+      
 
       return result;
     } else {
@@ -169,7 +169,7 @@ class DatabaseService extends IDatabaseService {
 
       var result = modelMaps.map((e) => dbUtils.fromMap<YakitIslemModel>(e)).toList();
 
-      notifyListeners();
+      
 
       return result;
     } else {

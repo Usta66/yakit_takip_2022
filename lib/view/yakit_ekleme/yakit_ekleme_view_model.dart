@@ -13,7 +13,7 @@ class YakitEklemeViewModel extends ChangeNotifier {
   late YakitIslemModel yakitIslemModel;
   late bool isNew;
   late TextEditingController controllerKm, controllerYakitTuru, controllerToplamtutar, controllerBirimFiyat, controllerMiktar;
-  final AracListViewModel _aracListViewModel = AracListViewModel.instance!;
+ // final AracListViewModel _aracListViewModel = AracListViewModel.instance!;
   final DatabaseService _dbServis = DatabaseService.instance!;
   late CarModel carModel;
   final YakitListViewModel yakitListViewModel;
@@ -62,7 +62,7 @@ class YakitEklemeViewModel extends ChangeNotifier {
   addOrSet() {
     modeliHazirla();
     isNew ? modelInsert(yakitIslemModel) : modelUpdate(yakitIslemModel);
-    _aracListViewModel.aracListesiniDoldur();
+    //_aracListViewModel.aracListesiniDoldur();
   }
 
   Future<int> modelUpdate(YakitIslemModel yakitIslemModel) {
@@ -72,7 +72,7 @@ class YakitEklemeViewModel extends ChangeNotifier {
   Future<int> delete() {
     if (yakitIslemModel.id != null) {
       var resualt = _dbServis.delete<CarModel>(yakitIslemModel.id!);
-      _aracListViewModel.aracListesiniDoldur();
+     // _aracListViewModel.aracListesiniDoldur();
       return resualt;
     } else {
       throw ("delet carmosel id null");
