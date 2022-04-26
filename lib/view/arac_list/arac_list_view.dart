@@ -4,14 +4,14 @@ import 'package:yakit_takip_2022/base/base_view.dart';
 import 'package:yakit_takip_2022/model/car_model.dart';
 import 'package:yakit_takip_2022/navigation/navigation_enum.dart';
 import 'package:yakit_takip_2022/navigation/navigation_services.dart';
-import 'package:yakit_takip_2022/services/database_service.dart';
+
 import 'package:yakit_takip_2022/view/arac_list/arac_list_view_model.dart';
-import 'package:yakit_takip_2022/view/home/home_view.dart';
-import 'package:yakit_takip_2022/view/home/home_view_model.dart';
+
 import 'package:yakit_takip_2022/view/home_and_yakit_list/home_and_yakit_list_view.dart';
 import 'package:yakit_takip_2022/view/home_and_yakit_list/home_and_yakit_list_view_model.dart';
 
-import '../add_new_car/add_new_car_view.dart';
+import '../../model/delet_model.dart';
+
 import '../add_new_car/add_new_car_view_model.dart';
 
 class AracListView extends StatelessWidget {
@@ -23,7 +23,6 @@ class AracListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("view çalıştı");
     return BaseView(
         viewModel: viewModel,
         child: Scaffold(
@@ -41,27 +40,23 @@ class AracListView extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute<CarModel>(
-                                builder: (context) => HomeAndYakitListView(
-                                    viewModel: HomeAndYakitListViewModel(
-                                        carModel: carModel)),
+                                builder: (context) => HomeAndYakitListView(viewModel: HomeAndYakitListViewModel(carModel: carModel)),
                               ));
                         },
                         onLongPress: () {
-                          goToWiewPush<CarDeletModel>(
+                          goToWiewPush<DeletModel<CarModel>>(
                               path: NavigationEnum.aracGuncelleme,
                               args: AddNewCarViewModel.show(carModel: carModel),
                               function: (gelenModel) {
                                 if (gelenModel.isDelet) {
-                                  viewModel.delete(gelenModel.carModel);
+                                  viewModel.delete(gelenModel.model);
                                 } else {
-                                  viewModel.modelUpdate(gelenModel.carModel);
+                                  viewModel.modelUpdate(gelenModel.model);
                                 }
                               });
-
-                      
                         },
-                        title:
-                            Text(viewModel.listCarModel[index]!.adi ?? "yok"));
+                        leading: Text(carModel.adi ?? "yok"),
+                        title: Text(carModel.yakitTuru ?? "yok"));
                   });
             },
           ),
@@ -72,25 +67,6 @@ class AracListView extends StatelessWidget {
                   function: (carModel) {
                     viewModel.modelInsert(carModel);
                   });
-
-              /*     NavigationServices.instance
-                  .navigatePush<CarModel>(path: NavigationEnum.aracEkleme)
-                  .then((value) {
-                if (value != null) {
-                  viewModel.modelInsert(value);
-                }
-              }); */
-
-              /*    Navigator.push<CarModel>(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => AddNewCarView(
-                              viewModel: AddNewCarViewModel.addNew())))
-                  .then((value) {
-                if (value != null) {
-                  viewModel.modelInsert(value);
-                }
-              }); */
             },
           ),
         ));

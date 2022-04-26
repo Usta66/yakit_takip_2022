@@ -119,7 +119,6 @@ class DatabaseService extends IDatabaseService {
       List<Map<String, dynamic>> modelMaps = await _db!.query(dbUtils.getTableName<T>());
 
       var result = modelMaps.map((e) => dbUtils.fromMap<T>(e)).toList();
-      
 
       return result;
     } else {
@@ -144,7 +143,7 @@ class DatabaseService extends IDatabaseService {
     if (_db != null) {
       return await _db!.delete(
         dbUtils.getTableName<YakitIslemModel>(),
-        where: "${EnumAraclarTablosuColumnName.id.name}=?",
+        where: "${EnumYakitIslemTablosuColumnName.aracId.name}=?",
         whereArgs: [id],
       );
     } else {
@@ -168,8 +167,6 @@ class DatabaseService extends IDatabaseService {
           (await _db!.query(dbUtils.getTableName<YakitIslemModel>(), where: "${EnumYakitIslemTablosuColumnName.aracId.name}=?", whereArgs: [aracId]));
 
       var result = modelMaps.map((e) => dbUtils.fromMap<YakitIslemModel>(e)).toList();
-
-      
 
       return result;
     } else {

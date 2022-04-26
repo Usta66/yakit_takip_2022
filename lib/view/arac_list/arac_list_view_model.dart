@@ -34,8 +34,10 @@ class AracListViewModel extends ChangeNotifier {
     return result;
   }
 
-  Future<int> delete(CarModel carModel) {
+  Future<int> delete(CarModel carModel) async {
     if (carModel.id != null) {
+      await _dbServis.aracaAitTumYakitlariSil(carModel.id!);
+
       var resualt = _dbServis.delete<CarModel>(carModel.id!);
       aracListesiniDoldur();
       return resualt;

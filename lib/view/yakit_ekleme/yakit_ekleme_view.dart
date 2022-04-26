@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yakit_takip_2022/base/base_view.dart';
+import 'package:yakit_takip_2022/model/yakit_islem_model.dart';
 import 'package:yakit_takip_2022/view/yakit_ekleme/yakit_ekleme_view_model.dart';
-import 'package:yakit_takip_2022/view/yakit_list/yakit_list_vie_model.dart';
 
 import '../../components/yakit_ekleme_text_form_field.dart';
+import '../../model/delet_model.dart';
 
 class YakitEklemeView extends StatelessWidget {
   const YakitEklemeView({Key? key, required this.viewModel}) : super(key: key);
@@ -22,30 +23,45 @@ class YakitEklemeView extends StatelessWidget {
           body: SingleChildScrollView(
               child: Column(
             children: [
-              const YakitEklemeTextFormField(icon: Icons.ac_unit_rounded, text: "ARAÇ KM", suffixTex: "KM"),
-              const YakitEklemeTextFormField(icon: Icons.ac_unit_rounded, text: "YAKIT TÜRÜ"),
-              const YakitEklemeTextFormField(icon: Icons.ac_unit_rounded, text: "Toplam Tutar", suffixTex: "TL"),
-              const YakitEklemeTextFormField(icon: Icons.ac_unit_rounded, text: "birim Fiyat", suffixTex: "TL"),
-              const YakitEklemeTextFormField(
+              YakitEklemeTextFormField(icon: Icons.ac_unit_rounded, text: "ARAÇ KM", suffixTex: "KM", controller: viewModel.controllerKm),
+              YakitEklemeTextFormField(
+                icon: Icons.ac_unit_rounded,
+                text: "YAKIT TÜRÜ",
+                controller: viewModel.controllerYakitTuru,
+              ),
+              YakitEklemeTextFormField(
+                  icon: Icons.ac_unit_rounded, text: "Toplam Tutar", suffixTex: "TL", controller: viewModel.controllerToplamtutar),
+              YakitEklemeTextFormField(
+                icon: Icons.ac_unit_rounded,
+                text: "Birim Fiyat",
+                suffixTex: "TL",
+                controller: viewModel.controllerBirimFiyat,
+              ),
+              YakitEklemeTextFormField(
                 icon: Icons.ac_unit_rounded,
                 text: "Miktar",
                 suffixTex: "L",
+                controller: viewModel.controllerMiktar,
               ),
-              ChangeNotifierProvider.value(
-                value: YakitListViewModel(carModel: viewModel.carModel),
-                child: Consumer<YakitListViewModel>(
-                  builder: (context, value, child) {
-                    return ElevatedButton(
+              Center(
+                child: viewModel.isNew
+                    ? ElevatedButton(
                         onPressed: () {
-                          viewModel.addOrSet();
-
-                          value.yakitListesiniDoldur();
-
-                          Navigator.pop(context);
+                          Navigator.pop<YakitIslemModel>(context, viewModel.modeliHazirla());
                         },
-                        child: Text("EKLE"));
-                  },
-                ),
+                        child: Text("EKLE"))
+                    : Row(children: [
+                        ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop<DeletModel>(context, DeletModel(model: viewModel.modeliHazirla(), isDelet: false));
+                            },
+                            child: Text("Güncelle")),
+                        ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop<DeletModel>(context, DeletModel(model: viewModel.modeliHazirla(), isDelet: true));
+                            },
+                            child: Text("Sil"))
+                      ]),
               )
             ],
           )),

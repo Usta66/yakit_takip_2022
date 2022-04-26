@@ -8,10 +8,7 @@ import '../../model/car_model.dart';
 class AddNewCarViewModel extends ChangeNotifier {
   late CarModel carModel;
   late bool isNew;
-  late TextEditingController controllerAdi,
-      controllerYakitTuru,
-      controllerLpgDepo,
-      controllerAracDepo;
+  late TextEditingController controllerAdi, controllerYakitTuru, controllerLpgDepo, controllerAracDepo;
 
   final DatabaseService _dbServis = DatabaseService.instance!;
 
@@ -27,10 +24,8 @@ class AddNewCarViewModel extends ChangeNotifier {
     isNew = false;
     controllerAdi = TextEditingController(text: carModel.adi);
     controllerYakitTuru = TextEditingController(text: carModel.yakitTuru);
-    controllerLpgDepo =
-        TextEditingController(text: carModel.aracLpgDepo.toString());
-    controllerAracDepo =
-        TextEditingController(text: carModel.aracDepo.toString());
+    controllerLpgDepo = TextEditingController(text: carModel.aracLpgDepo.toString());
+    controllerAracDepo = TextEditingController(text: carModel.aracDepo.toString());
   }
 
   CarModel modeliHazirla() {
@@ -38,18 +33,6 @@ class AddNewCarViewModel extends ChangeNotifier {
         adi: controllerAdi.text.trim().toUpperCase(),
         yakitTuru: controllerYakitTuru.text.trim().toUpperCase(),
         aracDepo: double.tryParse(controllerAracDepo.text.trim().toUpperCase()),
-        aracLpgDepo:
-            double.tryParse(controllerLpgDepo.text.trim().toUpperCase()));
+        aracLpgDepo: double.tryParse(controllerLpgDepo.text.trim().toUpperCase()));
   }
-}
-
-class CarDeletModel {
-  final CarModel carModel;
-  final bool isDelet;
-
-  
-  CarDeletModel({
-    required this.carModel,
-    required this.isDelet,
-  });
 }

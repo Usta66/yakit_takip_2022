@@ -6,22 +6,21 @@ import 'package:yakit_takip_2022/components/base_text_field.dart';
 import 'package:yakit_takip_2022/view/add_new_car/add_new_car_view_model.dart';
 
 import '../../model/car_model.dart';
+import '../../model/delet_model.dart';
 
 class AddNewCarView extends StatelessWidget {
-   const AddNewCarView({
+  const AddNewCarView({
     Key? key,
     required this.viewModel,
   }) : super(key: key);
+
   final AddNewCarViewModel viewModel;
   @override
   Widget build(BuildContext context) {
     return BaseView(
         viewModel: viewModel,
         child: Scaffold(
-            appBar: AppBar(
-                title: viewModel.isNew
-                    ? Text("Yeni Araç Ekle")
-                    : Text("Güncelle")),
+            appBar: AppBar(title: viewModel.isNew ? Text("Yeni Araç Ekle") : Text("Güncelle")),
             body: SingleChildScrollView(
               child: Center(
                   child: Padding(
@@ -30,45 +29,27 @@ class AddNewCarView extends StatelessWidget {
                         runSpacing: 10,
                         alignment: WrapAlignment.center,
                         children: [
-                          BaseTextField(
-                              hintText: "Adı",
-                              controller: viewModel.controllerAdi),
-                          BaseTextField(
-                              hintText: "Yakıt Türü",
-                              controller: viewModel.controllerYakitTuru),
-                          BaseTextField(
-                              hintText: "LPG Depo Kapasite",
-                              controller: viewModel.controllerLpgDepo),
-                          BaseTextField(
-                              hintText: "Akaryakıt Depo Kapasite",
-                              controller: viewModel.controllerAracDepo),
+                          BaseTextField(hintText: "Adı", controller: viewModel.controllerAdi),
+                          BaseTextField(hintText: "Yakıt Türü", controller: viewModel.controllerYakitTuru),
+                          BaseTextField(hintText: "LPG Depo Kapasite", controller: viewModel.controllerLpgDepo),
+                          BaseTextField(hintText: "Akaryakıt Depo Kapasite", controller: viewModel.controllerAracDepo),
                           Center(
                             child: viewModel.isNew
                                 ? ElevatedButton(
                                     onPressed: () async {
-                                      Navigator.pop<CarModel>(
-                                          context, viewModel.modeliHazirla());
+                                      Navigator.pop<CarModel>(context, viewModel.modeliHazirla());
                                     },
                                     child: const Text("Kaydet"))
                                 : Row(children: [
                                     ElevatedButton(
                                         onPressed: () {
-                                          Navigator.pop<CarDeletModel>(
-                                              context,
-                                              CarDeletModel(
-                                                  carModel:
-                                                      viewModel.modeliHazirla(),
-                                                  isDelet: false));
+                                          Navigator.pop<DeletModel<CarModel>>(
+                                              context, DeletModel<CarModel>(model: viewModel.modeliHazirla(), isDelet: false));
                                         },
                                         child: Text("Güncelle")),
                                     ElevatedButton(
                                         onPressed: () {
-                                          Navigator.pop<CarDeletModel>(
-                                              context,
-                                              CarDeletModel(
-                                                  carModel:
-                                                      viewModel.modeliHazirla(),
-                                                  isDelet: true));
+                                          Navigator.pop<DeletModel>(context, DeletModel<CarModel>(model: viewModel.modeliHazirla(), isDelet: true));
                                         },
                                         child: Text("Sil"))
                                   ]),
