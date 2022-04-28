@@ -28,7 +28,7 @@ class HomeAndYakitListView extends StatelessWidget {
             onPressed: () {
               goToWiewPush<YakitIslemModel>(
                   path: NavigationEnum.yakitEkleme,
-                  args: YakitEklemeViewModel.addNew(),
+                  args: YakitEklemeViewModel.addNew(carModel: viewModel.carModel),
                   function: (gelenModel) {
                     viewModel.modelInsert(gelenModel);
                   });

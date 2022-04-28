@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yakit_takip_2022/base/base_view.dart';
+import 'package:yakit_takip_2022/components/yakit_turu_secim_dialog.dart';
+import 'package:yakit_takip_2022/enum/yakit_turu_enum.dart';
 import 'package:yakit_takip_2022/model/yakit_islem_model.dart';
 import 'package:yakit_takip_2022/view/yakit_ekleme/yakit_ekleme_view_model.dart';
 
@@ -28,6 +30,20 @@ class YakitEklemeView extends StatelessWidget {
                 icon: Icons.ac_unit_rounded,
                 text: "YAKIT TÜRÜ",
                 controller: viewModel.controllerYakitTuru,
+                readOnly: true,
+                onTap: () {
+                  if (viewModel.carModel.yakitTuru == YakitTuruEnum.LPG) {
+                    showDialog<YakitTuruEnum>(
+                        context: context,
+                        builder: (context) {
+                          return YakitTuruSecimDialog(isLpg: true);
+                        }).then((value) {
+                      if (value != null) {
+                        viewModel.controllerYakitTuru.text = value.name.toUpperCase();
+                      }
+                    });
+                  }
+                },
               ),
               YakitEklemeTextFormField(
                   icon: Icons.ac_unit_rounded, text: "Toplam Tutar", suffixTex: "TL", controller: viewModel.controllerToplamtutar),

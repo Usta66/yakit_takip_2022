@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:yakit_takip_2022/enum/yakit_turu_enum.dart';
 import 'package:yakit_takip_2022/model/base_model.dart';
 
 class CarModel implements BaseModel {
@@ -7,7 +8,7 @@ class CarModel implements BaseModel {
   int? id;
 
   String? adi;
-  String? yakitTuru;
+  YakitTuruEnum? yakitTuru;
   String? imagePath;
   double? aracKm;
   num? ortalamaLitre;
@@ -40,7 +41,7 @@ class CarModel implements BaseModel {
     return {
       'id': id,
       'adi': adi,
-      'yakitTuru': yakitTuru,
+      'yakitTuru': yakitTuru!.name,
       'imagePath': imagePath,
       'aracKm': aracKm,
       'ortalamaLitre': ortalamaLitre,
@@ -55,7 +56,7 @@ class CarModel implements BaseModel {
   CarModel copyWith({
     int? id,
     String? adi,
-    String? yakitTuru,
+    YakitTuruEnum? yakitTuru,
     String? imagePath,
     double? aracKm,
     num? ortalamaLitre,
@@ -84,7 +85,7 @@ class CarModel implements BaseModel {
     return CarModel(
       id: map['id']?.toInt(),
       adi: map['adi'],
-      yakitTuru: map['yakitTuru'],
+      yakitTuru: map['yakitTuru'] != null ? ((map['yakitTuru'] as String).YakitTuruValu) : null,
       imagePath: map['imagePath'],
       aracKm: map['aracKm']?.toDouble(),
       ortalamaLitre: map['ortalamaLitre'],

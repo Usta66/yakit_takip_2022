@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:yakit_takip_2022/enum/yakit_turu_enum.dart';
 
 import 'package:yakit_takip_2022/model/base_model.dart';
 import 'package:yakit_takip_2022/utils/date_time_extension.dart';
@@ -9,7 +10,7 @@ class YakitIslemModel implements BaseModel {
   @override
   int? id;
   int? aracId;
-  String? yakitTuru;
+  YakitTuruEnum? yakitTuru;
   DateTime? alisTarihi;
   TimeOfDay? alisSaati;
 
@@ -41,7 +42,7 @@ class YakitIslemModel implements BaseModel {
     return {
       'id': id,
       'aracId': aracId,
-      'yakitTuru': yakitTuru,
+      'yakitTuru': yakitTuru!.name,
       'alisTarihi': alisTarihi?.stringValue,
       'alisSaati': alisSaati?.stringValue,
       'fiyati': fiyati,
@@ -55,7 +56,7 @@ class YakitIslemModel implements BaseModel {
   YakitIslemModel copyWith({
     int? id,
     int? aracId,
-    String? yakitTuru,
+    YakitTuruEnum? yakitTuru,
     DateTime? alisTarihi,
     TimeOfDay? alisSaati,
     double? fiyati,
@@ -82,7 +83,7 @@ class YakitIslemModel implements BaseModel {
     return YakitIslemModel(
       id: map['id']?.toInt(),
       aracId: map['aracId']?.toInt(),
-      yakitTuru: map['yakitTuru'],
+      yakitTuru: (map['yakitTuru'] as String).YakitTuruValu,
       alisTarihi: map['alisTarihi'] != null ? (map['alisTarihi'] as String).stringToDateTime : null,
       alisSaati: map['alisSaati'] != null ? (map['alisSaati'] as String).stringFromTimeOfDay : null,
       fiyati: map['fiyati']?.toDouble(),

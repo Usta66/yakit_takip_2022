@@ -38,11 +38,7 @@ class HomeView extends StatelessWidget {
                   );
                 },
               ),
-              ElevatedButton(
-                  onPressed: () async {
-                    await viewModel.tuketilenToplamLpg();
-                  },
-                  child: Text("data"))
+              ElevatedButton(onPressed: () async {}, child: Text("data"))
             ],
           );
         },

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:yakit_takip_2022/base/base_view.dart';
 import 'package:yakit_takip_2022/components/base_text_field.dart';
+import 'package:yakit_takip_2022/components/yakit_turu_secim_dialog.dart';
+import 'package:yakit_takip_2022/enum/yakit_turu_enum.dart';
 
 import 'package:yakit_takip_2022/view/add_new_car/add_new_car_view_model.dart';
 
@@ -29,8 +31,25 @@ class AddNewCarView extends StatelessWidget {
                         runSpacing: 10,
                         alignment: WrapAlignment.center,
                         children: [
-                          BaseTextField(hintText: "Adı", controller: viewModel.controllerAdi),
-                          BaseTextField(hintText: "Yakıt Türü", controller: viewModel.controllerYakitTuru),
+                          BaseTextField(
+                            hintText: "Adı",
+                            controller: viewModel.controllerAdi,
+                          ),
+                          BaseTextField(
+                              hintText: "Yakıt Türü",
+                              controller: viewModel.controllerYakitTuru,
+                              readOnly: true,
+                              onTap: () {
+                                return showDialog<YakitTuruEnum>(
+                                    context: context,
+                                    builder: (context) {
+                                      return const YakitTuruSecimDialog();
+                                    }).then((value) {
+                                  if (value != null) {
+                                    viewModel.controllerYakitTuru.text = value.name.toUpperCase();
+                                  }
+                                });
+                              }),
                           BaseTextField(hintText: "LPG Depo Kapasite", controller: viewModel.controllerLpgDepo),
                           BaseTextField(hintText: "Akaryakıt Depo Kapasite", controller: viewModel.controllerAracDepo),
                           Center(

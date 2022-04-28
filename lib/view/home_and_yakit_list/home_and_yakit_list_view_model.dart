@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yakit_takip_2022/services/database_service.dart';
 
 import '../../model/car_model.dart';
+import '../../model/yakit_hesap_model.dart';
 import '../../model/yakit_islem_model.dart';
 
 class HomeAndYakitListViewModel extends ChangeNotifier {
@@ -10,24 +11,24 @@ class HomeAndYakitListViewModel extends ChangeNotifier {
   final DatabaseService _dbServis = DatabaseService.instance!;
   late TextEditingController controllerAdi, controllerYakitTuru, controllerMiktar;
   List<YakitIslemModel?> listYakitIslemModel = [];
+  late YakitHesapModel yakitHesapModel = YakitHesapModel(listYakitIslemModel: listYakitIslemModel, carModel: carModel);
 
   HomeAndYakitListViewModel({
     required this.carModel,
   }) {
     controllerAdi = TextEditingController(text: carModel.adi ?? "yok");
-    controllerYakitTuru = TextEditingController(text: carModel.yakitTuru ?? "yok");
+    controllerYakitTuru = TextEditingController(text: carModel.yakitTuru!.name);
     controllerMiktar = TextEditingController();
 
     yakitListesiniDoldur();
+
+    ;
   }
 
   Future<int> modelInsert(YakitIslemModel yakitIslemModel) {
-    yakitIslemModel = yakitIslemModel.copyWith(aracId: carModel.id);
-
     var result = _dbServis.insert<YakitIslemModel>(yakitIslemModel);
 
     yakitListesiniDoldur();
-    //homeViewModel.yakitListesiniDoldur();
 
     return result;
   }
@@ -44,7 +45,9 @@ class HomeAndYakitListViewModel extends ChangeNotifier {
 
     listYakitIslemModel = result;
 
-    tuketilenToplamLpg();
+    yakitHesapModel = YakitHesapModel(listYakitIslemModel: listYakitIslemModel, carModel: carModel);
+
+    controllerMiktar.text = yakitHesapModel.getTlKm().toStringAsFixed(2);
 
     notifyListeners();
 
@@ -59,23 +62,5 @@ class HomeAndYakitListViewModel extends ChangeNotifier {
     } else {
       throw ("delet carmosel id null");
     }
-  }
-
-  double tuketilenToplamLpg() {
-    double tuketilenLpgMiktari = 0;
-
-    if (listYakitIslemModel.isNotEmpty) {
-      var result = listYakitIslemModel.where((element) => element!.yakitTuru == "LPG");
-
-      for (var element in result) {
-        if (element!.miktari != null) {
-          tuketilenLpgMiktari = tuketilenLpgMiktari + element.miktari!;
-        }
-      }
-    }
-
-    controllerMiktar = TextEditingController(text: tuketilenLpgMiktari.toString());
-
-    return tuketilenLpgMiktari;
   }
 }

@@ -31,7 +31,7 @@ class YakitListView extends StatelessWidget {
               onTap: () {
                 goToWiewPush<DeletModel>(
                     path: NavigationEnum.yakitGuncelleme,
-                    args: YakitEklemeViewModel.show(yakitIslemModel: viewModel.listYakitIslemModel[index]!),
+                    args: YakitEklemeViewModel.show(yakitIslemModel: viewModel.listYakitIslemModel[index]!, carModel: viewModel.carModel),
                     function: (gelenModel) {
                       if (gelenModel.isDelet) {
                         viewModel.delete(gelenModel.model);

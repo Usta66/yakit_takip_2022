@@ -27,7 +27,7 @@ class AracListView extends StatelessWidget {
         viewModel: viewModel,
         child: Scaffold(
           appBar: AppBar(
-            title: Text("Araç Listesi"),
+            title: const Text("Araç Listesi"),
           ),
           body: Consumer<AracListViewModel>(
             builder: (context, db, child) {
@@ -56,7 +56,7 @@ class AracListView extends StatelessWidget {
                               });
                         },
                         leading: Text(carModel.adi ?? "yok"),
-                        title: Text(carModel.yakitTuru ?? "yok"));
+                        title: Text(carModel.yakitTuru!.name));
                   });
             },
           ),
