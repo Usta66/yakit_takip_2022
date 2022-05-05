@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:yakit_takip_2022/base/base_view.dart';
 import 'package:yakit_takip_2022/components/base_text_field.dart';
+import 'package:yakit_takip_2022/components/circle_avatar_image_and_alphabet.dart';
 import 'package:yakit_takip_2022/components/yakit_turu_secim_dialog.dart';
 import 'package:yakit_takip_2022/enum/yakit_turu_enum.dart';
 
@@ -9,6 +11,7 @@ import 'package:yakit_takip_2022/view/add_new_car/add_new_car_view_model.dart';
 
 import '../../model/car_model.dart';
 import '../../model/delet_model.dart';
+import 'package:kartal/kartal.dart';
 
 class AddNewCarView extends StatelessWidget {
   const AddNewCarView({
@@ -26,11 +29,27 @@ class AddNewCarView extends StatelessWidget {
             body: SingleChildScrollView(
               child: Center(
                   child: Padding(
-                      padding: EdgeInsets.all(1),
+                      padding: context.paddingLow,
                       child: Wrap(
                         runSpacing: 10,
                         alignment: WrapAlignment.center,
                         children: [
+                          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                            IconButton(
+                                onPressed: () {
+                                  viewModel.getImage(false);
+                                },
+                                icon: const Icon(Icons.add_a_photo_outlined)),
+                            Consumer<AddNewCarViewModel>(
+                              builder: (context, value, child) {
+                                return CircleAvatarImageAndAlphabet(
+                                  imagePath: viewModel.image == null ? null : viewModel.image!.path,
+                                  radius: context.highValue,
+                                );
+                              },
+                            ),
+                            IconButton(onPressed: () {}, icon: const Icon(Icons.file_upload))
+                          ]),
                           BaseTextField(
                             hintText: "Adı",
                             controller: viewModel.controllerAdi,
@@ -46,11 +65,16 @@ class AddNewCarView extends StatelessWidget {
                                       return const YakitTuruSecimDialog();
                                     }).then((value) {
                                   if (value != null) {
-                                    viewModel.controllerYakitTuru.text = value.name.toUpperCase();
+                                    viewModel.yakitTuruDegistir(value);
                                   }
                                 });
                               }),
-                          BaseTextField(hintText: "LPG Depo Kapasite", controller: viewModel.controllerLpgDepo),
+                          Consumer<AddNewCarViewModel>(
+                            builder: (context, value, child) => Visibility(
+                              visible: viewModel.controllerYakitTuru.text == YakitTuruEnum.LPG.name,
+                              child: BaseTextField(hintText: "LPG Depo Kapasite", controller: viewModel.controllerLpgDepo),
+                            ),
+                          ),
                           BaseTextField(hintText: "Akaryakıt Depo Kapasite", controller: viewModel.controllerAracDepo),
                           Center(
                             child: viewModel.isNew

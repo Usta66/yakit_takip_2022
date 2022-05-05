@@ -8,27 +8,23 @@ import '../model/car_model.dart';
 class CircleAvatarImageAndAlphabet extends StatelessWidget {
   Function()? onTap;
 
-  final CarModel carModel;
+  String? imagePath;
+  String? aracAdi;
 
   late double radius;
 
-  CircleAvatarImageAndAlphabet({
-    Key? key,
-    this.onTap,
-    required this.radius,
-    required this.carModel,
-  }) : super(key: key);
+  CircleAvatarImageAndAlphabet({Key? key, this.onTap, required this.radius, this.aracAdi, this.imagePath}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
       child: CircleAvatar(
-        backgroundImage: carModel.imagePath == null ? null : FileImage(File(carModel.imagePath!)),
+        backgroundImage: imagePath == null ? null : FileImage(File(imagePath!)),
         radius: radius,
-        child: carModel.imagePath == null
+        child: imagePath == null
             ? Text(
-                carModel.adi != null ? carModel.adi!.toUpperCase()[0] : " ",
+                aracAdi != null ? aracAdi!.toUpperCase()[0] : " ",
                 style: Theme.of(context).textTheme.headline4,
               )
             : null,
