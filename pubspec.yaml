@@ -57,6 +57,10 @@ dependencies:
   
   flutter_svg: ^1.0.3
 
+  auto_size_text: ^3.0.0
+
+  flutter_colorpicker: ^1.0.3
+
  
 
 dev_dependencies:

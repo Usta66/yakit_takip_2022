@@ -12,8 +12,19 @@ import '../../model/car_model.dart';
 class AddNewCarViewModel extends ChangeNotifier {
   late CarModel carModel;
   late bool isNew;
+  Color _color = Color(0xFFFF9000);
 
-  late TextEditingController controllerAdi, controllerYakitTuru, controllerLpgDepo, controllerAracDepo;
+  set color(Color color) {
+    _color = color;
+    notifyListeners();
+  }
+
+  Color get color => _color;
+
+  late TextEditingController controllerAdi,
+      controllerYakitTuru,
+      controllerLpgDepo,
+      controllerAracDepo;
 
   final DatabaseService _dbServis = DatabaseService.instance!;
 
@@ -22,7 +33,8 @@ class AddNewCarViewModel extends ChangeNotifier {
   final picker = ImagePicker();
 
   getImage(bool issourceGallery) async {
-    final pickedFile = await picker.pickImage(source: issourceGallery ? ImageSource.gallery : ImageSource.camera);
+    final pickedFile = await picker.pickImage(
+        source: issourceGallery ? ImageSource.gallery : ImageSource.camera);
 
     if (pickedFile != null) {
       image = File(pickedFile.path);
@@ -34,7 +46,8 @@ class AddNewCarViewModel extends ChangeNotifier {
   }
 
   Future _cropImage(File? image) async {
-    var croppedFile = await ImageCropper.platform.cropImage(sourcePath: image!.path, aspectRatioPresets: [
+    var croppedFile = await ImageCropper.platform
+        .cropImage(sourcePath: image!.path, aspectRatioPresets: [
       CropAspectRatioPreset.square,
       CropAspectRatioPreset.ratio3x2,
       CropAspectRatioPreset.original,
@@ -62,8 +75,14 @@ class AddNewCarViewModel extends ChangeNotifier {
   AddNewCarViewModel.addNew() {
     isNew = true;
     carModel = CarModel();
-    controllerAdi = TextEditingController();
-    controllerYakitTuru = TextEditingController();
+    controllerAdi = TextEditingController()
+      ..addListener(() {
+        notifyListeners();
+      });
+    controllerYakitTuru = TextEditingController()
+      ..addListener(() {
+        notifyListeners();
+      });
     controllerLpgDepo = TextEditingController();
     controllerAracDepo = TextEditingController();
   }
@@ -71,8 +90,10 @@ class AddNewCarViewModel extends ChangeNotifier {
     isNew = false;
     controllerAdi = TextEditingController(text: carModel.adi);
     controllerYakitTuru = TextEditingController(text: carModel.yakitTuru!.name);
-    controllerLpgDepo = TextEditingController(text: carModel.aracLpgDepo.toString());
-    controllerAracDepo = TextEditingController(text: carModel.aracDepo.toString());
+    controllerLpgDepo =
+        TextEditingController(text: carModel.aracLpgDepo.toString());
+    controllerAracDepo =
+        TextEditingController(text: carModel.aracDepo.toString());
     image = carModel.imagePath == null ? null : File(carModel.imagePath!);
   }
 
@@ -81,12 +102,8 @@ class AddNewCarViewModel extends ChangeNotifier {
         adi: controllerAdi.text.trim().toUpperCase(),
         yakitTuru: (controllerYakitTuru.text.trim()).YakitTuruValu,
         aracDepo: double.tryParse(controllerAracDepo.text.trim().toUpperCase()),
-        aracLpgDepo: double.tryParse(controllerLpgDepo.text.trim().toUpperCase()),
+        aracLpgDepo:
+            double.tryParse(controllerLpgDepo.text.trim().toUpperCase()),
         imagePath: image == null ? null : image!.path);
-  }
-
-  yakitTuruDegistir(YakitTuruEnum yakitTuru) {
-    controllerYakitTuru.text = yakitTuru.name;
-    notifyListeners();
   }
 }
