@@ -44,7 +44,8 @@ enum EnumAraclarTablosuColumnName {
   aracLpgDepo,
   aracDepo,
   mevcutLpgMiktari,
-  mevcutYakitMiktari
+  mevcutYakitMiktari,
+  color
 }
 
 enum EnumYakitIslemTablosuColumnName { id, aracId, yakitTuru, alisTarihi, alisSaati, fiyati, miktari, tutar, aracKm, mesafe }

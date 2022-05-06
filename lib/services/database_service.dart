@@ -52,7 +52,8 @@ class DatabaseService extends IDatabaseService {
     ${EnumAraclarTablosuColumnName.aracLpgDepo.name} DOUBLE,
     ${EnumAraclarTablosuColumnName.aracDepo.name} DOUBLE,
     ${EnumAraclarTablosuColumnName.mevcutLpgMiktari.name} DOUBLE,
-    ${EnumAraclarTablosuColumnName.mevcutYakitMiktari.name} DOUBLE
+    ${EnumAraclarTablosuColumnName.mevcutYakitMiktari.name} DOUBLE,
+     ${EnumAraclarTablosuColumnName.color.name} INT
 
     )    ''');
 

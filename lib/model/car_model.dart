@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:yakit_takip_2022/enum/yakit_turu_enum.dart';
 import 'package:yakit_takip_2022/model/base_model.dart';
 
@@ -17,19 +18,20 @@ class CarModel implements BaseModel {
   double? aracDepo;
   double? mevcutLpgMiktari;
   double? mevcutYakitMiktari;
-  CarModel({
-    this.id,
-    this.adi,
-    this.yakitTuru,
-    this.imagePath,
-    this.aracKm,
-    this.ortalamaLitre,
-    this.ortalamaKrs,
-    this.aracLpgDepo,
-    this.aracDepo,
-    this.mevcutLpgMiktari,
-    this.mevcutYakitMiktari,
-  });
+  int? color;
+  CarModel(
+      {this.id,
+      this.adi,
+      this.yakitTuru,
+      this.imagePath,
+      this.aracKm,
+      this.ortalamaLitre,
+      this.ortalamaKrs,
+      this.aracLpgDepo,
+      this.aracDepo,
+      this.mevcutLpgMiktari,
+      this.mevcutYakitMiktari,
+      this.color});
 
   @override
   CarModel fromMap(Map<String, dynamic> map) {
@@ -50,51 +52,52 @@ class CarModel implements BaseModel {
       'aracDepo': aracDepo,
       'mevcutLpgMiktari': mevcutLpgMiktari,
       'mevcutYakitMiktari': mevcutYakitMiktari,
+      'color': color
     };
   }
 
-  CarModel copyWith({
-    int? id,
-    String? adi,
-    YakitTuruEnum? yakitTuru,
-    String? imagePath,
-    double? aracKm,
-    num? ortalamaLitre,
-    num? ortalamaKrs,
-    double? aracLpgDepo,
-    double? aracDepo,
-    double? mevcutLpgMiktari,
-    double? mevcutYakitMiktari,
-  }) {
+  CarModel copyWith(
+      {int? id,
+      String? adi,
+      YakitTuruEnum? yakitTuru,
+      String? imagePath,
+      double? aracKm,
+      num? ortalamaLitre,
+      num? ortalamaKrs,
+      double? aracLpgDepo,
+      double? aracDepo,
+      double? mevcutLpgMiktari,
+      double? mevcutYakitMiktari,
+      int? color}) {
     return CarModel(
-      id: id ?? this.id,
-      adi: adi ?? this.adi,
-      yakitTuru: yakitTuru ?? this.yakitTuru,
-      imagePath: imagePath ?? this.imagePath,
-      aracKm: aracKm ?? this.aracKm,
-      ortalamaLitre: ortalamaLitre ?? this.ortalamaLitre,
-      ortalamaKrs: ortalamaKrs ?? this.ortalamaKrs,
-      aracLpgDepo: aracLpgDepo ?? this.aracLpgDepo,
-      aracDepo: aracDepo ?? this.aracDepo,
-      mevcutLpgMiktari: mevcutLpgMiktari ?? this.mevcutLpgMiktari,
-      mevcutYakitMiktari: mevcutYakitMiktari ?? this.mevcutYakitMiktari,
-    );
+        id: id ?? this.id,
+        adi: adi ?? this.adi,
+        yakitTuru: yakitTuru ?? this.yakitTuru,
+        imagePath: imagePath ?? this.imagePath,
+        aracKm: aracKm ?? this.aracKm,
+        ortalamaLitre: ortalamaLitre ?? this.ortalamaLitre,
+        ortalamaKrs: ortalamaKrs ?? this.ortalamaKrs,
+        aracLpgDepo: aracLpgDepo ?? this.aracLpgDepo,
+        aracDepo: aracDepo ?? this.aracDepo,
+        mevcutLpgMiktari: mevcutLpgMiktari ?? this.mevcutLpgMiktari,
+        mevcutYakitMiktari: mevcutYakitMiktari ?? this.mevcutYakitMiktari,
+        color: color ?? this.color);
   }
 
   factory CarModel.fromMap(Map<String, dynamic> map) {
     return CarModel(
-      id: map['id']?.toInt(),
-      adi: map['adi'],
-      yakitTuru: map['yakitTuru'] != null ? ((map['yakitTuru'] as String).YakitTuruValu) : null,
-      imagePath: map['imagePath'],
-      aracKm: map['aracKm']?.toDouble(),
-      ortalamaLitre: map['ortalamaLitre'],
-      ortalamaKrs: map['ortalamaKrs'],
-      aracLpgDepo: map['aracLpgDepo']?.toDouble(),
-      aracDepo: map['aracDepo']?.toDouble(),
-      mevcutLpgMiktari: map['mevcutLpgMiktari']?.toDouble(),
-      mevcutYakitMiktari: map['mevcutYakitMiktari']?.toDouble(),
-    );
+        id: map['id']?.toInt(),
+        adi: map['adi'],
+        yakitTuru: map['yakitTuru'] != null ? ((map['yakitTuru'] as String).YakitTuruValu) : null,
+        imagePath: map['imagePath'],
+        aracKm: map['aracKm']?.toDouble(),
+        ortalamaLitre: map['ortalamaLitre'],
+        ortalamaKrs: map['ortalamaKrs'],
+        aracLpgDepo: map['aracLpgDepo']?.toDouble(),
+        aracDepo: map['aracDepo']?.toDouble(),
+        mevcutLpgMiktari: map['mevcutLpgMiktari']?.toDouble(),
+        mevcutYakitMiktari: map['mevcutYakitMiktari']?.toDouble(),
+        color: map['color']);
   }
 
   String toJson() => json.encode(toMap());
@@ -103,7 +106,7 @@ class CarModel implements BaseModel {
 
   @override
   String toString() {
-    return 'CarModel(id: $id, adi: $adi, yakitTuru: $yakitTuru, imagePath: $imagePath, aracKm: $aracKm, ortalamaLitre: $ortalamaLitre, ortalamaKrs: $ortalamaKrs, aracLpgDepo: $aracLpgDepo, aracDepo: $aracDepo, mevcutLpgMiktari: $mevcutLpgMiktari, mevcutYakitMiktari: $mevcutYakitMiktari)';
+    return 'CarModel(id: $id, adi: $adi, yakitTuru: $yakitTuru, imagePath: $imagePath, aracKm: $aracKm, ortalamaLitre: $ortalamaLitre, ortalamaKrs: $ortalamaKrs, aracLpgDepo: $aracLpgDepo, aracDepo: $aracDepo, mevcutLpgMiktari: $mevcutLpgMiktari, mevcutYakitMiktari: $mevcutYakitMiktari,color:$color)';
   }
 
   @override
@@ -121,7 +124,8 @@ class CarModel implements BaseModel {
         other.aracLpgDepo == aracLpgDepo &&
         other.aracDepo == aracDepo &&
         other.mevcutLpgMiktari == mevcutLpgMiktari &&
-        other.mevcutYakitMiktari == mevcutYakitMiktari;
+        other.mevcutYakitMiktari == mevcutYakitMiktari &&
+        other.color == color;
   }
 
   @override
@@ -136,6 +140,7 @@ class CarModel implements BaseModel {
         aracLpgDepo.hashCode ^
         aracDepo.hashCode ^
         mevcutLpgMiktari.hashCode ^
-        mevcutYakitMiktari.hashCode;
+        mevcutYakitMiktari.hashCode ^
+        color.hashCode;
   }
 }

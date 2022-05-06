@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:yakit_takip_2022/enum/yakit_turu_enum.dart';
@@ -12,19 +13,16 @@ import '../../model/car_model.dart';
 class AddNewCarViewModel extends ChangeNotifier {
   late CarModel carModel;
   late bool isNew;
-  Color _color = Color(0xFFFF9000);
+  late int _color;
 
-  set color(Color color) {
+  set color(int color) {
     _color = color;
     notifyListeners();
   }
 
-  Color get color => _color;
+  int get color => _color;
 
-  late TextEditingController controllerAdi,
-      controllerYakitTuru,
-      controllerLpgDepo,
-      controllerAracDepo;
+  late TextEditingController controllerAdi, controllerYakitTuru, controllerLpgDepo, controllerAracDepo;
 
   final DatabaseService _dbServis = DatabaseService.instance!;
 
@@ -33,8 +31,7 @@ class AddNewCarViewModel extends ChangeNotifier {
   final picker = ImagePicker();
 
   getImage(bool issourceGallery) async {
-    final pickedFile = await picker.pickImage(
-        source: issourceGallery ? ImageSource.gallery : ImageSource.camera);
+    final pickedFile = await picker.pickImage(source: issourceGallery ? ImageSource.gallery : ImageSource.camera);
 
     if (pickedFile != null) {
       image = File(pickedFile.path);
@@ -45,9 +42,8 @@ class AddNewCarViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future _cropImage(File? image) async {
-    var croppedFile = await ImageCropper.platform
-        .cropImage(sourcePath: image!.path, aspectRatioPresets: [
+  Future<File?>? _cropImage(File? image) async {
+    var croppedFile = await ImageCropper.platform.cropImage(sourcePath: image!.path, aspectRatioPresets: [
       CropAspectRatioPreset.square,
       CropAspectRatioPreset.ratio3x2,
       CropAspectRatioPreset.original,
@@ -74,6 +70,7 @@ class AddNewCarViewModel extends ChangeNotifier {
 
   AddNewCarViewModel.addNew() {
     isNew = true;
+    color = Color(0xFFFF1451).value;
     carModel = CarModel();
     controllerAdi = TextEditingController()
       ..addListener(() {
@@ -88,12 +85,11 @@ class AddNewCarViewModel extends ChangeNotifier {
   }
   AddNewCarViewModel.show({required this.carModel}) {
     isNew = false;
+    color = carModel.color ?? Color(0xFFFF1451).value;
     controllerAdi = TextEditingController(text: carModel.adi);
     controllerYakitTuru = TextEditingController(text: carModel.yakitTuru!.name);
-    controllerLpgDepo =
-        TextEditingController(text: carModel.aracLpgDepo.toString());
-    controllerAracDepo =
-        TextEditingController(text: carModel.aracDepo.toString());
+    controllerLpgDepo = TextEditingController(text: carModel.aracLpgDepo.toString());
+    controllerAracDepo = TextEditingController(text: carModel.aracDepo.toString());
     image = carModel.imagePath == null ? null : File(carModel.imagePath!);
   }
 
@@ -102,8 +98,30 @@ class AddNewCarViewModel extends ChangeNotifier {
         adi: controllerAdi.text.trim().toUpperCase(),
         yakitTuru: (controllerYakitTuru.text.trim()).YakitTuruValu,
         aracDepo: double.tryParse(controllerAracDepo.text.trim().toUpperCase()),
-        aracLpgDepo:
-            double.tryParse(controllerLpgDepo.text.trim().toUpperCase()),
-        imagePath: image == null ? null : image!.path);
+        aracLpgDepo: double.tryParse(controllerLpgDepo.text.trim().toUpperCase()),
+        imagePath: image == null ? null : image!.path,
+        color: color);
+  }
+
+  renkSec(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: SingleChildScrollView(
+              child: MaterialPicker(
+                pickerColor: Colors.deepOrange,
+                onColorChanged: (secilenRenk) {
+                  color = secilenRenk.value;
+
+                  image = null;
+                  carModel.imagePath = null;
+
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+          );
+        });
   }
 }
