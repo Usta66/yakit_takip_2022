@@ -10,18 +10,27 @@ class CircleAvatarImageAndAlphabet extends StatelessWidget {
 
   String? imagePath;
   String? text;
-  Color? color;
+  int? color;
 
   late double radius;
 
-  CircleAvatarImageAndAlphabet({Key? key, this.onTap, required this.radius, this.text, this.imagePath, this.color}) : super(key: key);
+  CircleAvatarImageAndAlphabet(
+      {Key? key,
+      this.onTap,
+      required this.radius,
+      this.text,
+      this.imagePath,
+      this.color})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+  
     return GestureDetector(
       onTap: onTap,
       child: CircleAvatar(
-          backgroundImage: imagePath == null ? null : FileImage(File(imagePath!)),
+          backgroundImage:
+              imagePath == null ? null : FileImage(File(imagePath!)),
           radius: radius,
           child: imagePath == null
               ? Padding(
@@ -36,7 +45,7 @@ class CircleAvatarImageAndAlphabet extends StatelessWidget {
                   ),
                 )
               : null,
-          backgroundColor: color
+          backgroundColor: color!=null?Color(color!):null
 
           // Colors.primaries[Random().nextInt(17)],
           ),

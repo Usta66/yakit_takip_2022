@@ -6,7 +6,7 @@ class BaseTextField extends StatelessWidget {
   final Function()? onTap;
   final Function(String)? onChanged;
 
-  final bool? readOnly;
+  final bool readOnly;
 
   const BaseTextField({
     Key? key,
@@ -21,7 +21,7 @@ class BaseTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      readOnly: readOnly!,
+      readOnly: readOnly,
       onTap: onTap,
       onChanged: onChanged,
       controller: controller,

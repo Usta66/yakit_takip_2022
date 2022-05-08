@@ -22,7 +22,10 @@ class AddNewCarViewModel extends ChangeNotifier {
 
   int get color => _color;
 
-  late TextEditingController controllerAdi, controllerYakitTuru, controllerLpgDepo, controllerAracDepo;
+  late TextEditingController controllerAdi,
+      controllerYakitTuru,
+      controllerLpgDepo,
+      controllerAracDepo;
 
   final DatabaseService _dbServis = DatabaseService.instance!;
 
@@ -31,7 +34,8 @@ class AddNewCarViewModel extends ChangeNotifier {
   final picker = ImagePicker();
 
   getImage(bool issourceGallery) async {
-    final pickedFile = await picker.pickImage(source: issourceGallery ? ImageSource.gallery : ImageSource.camera);
+    final pickedFile = await picker.pickImage(
+        source: issourceGallery ? ImageSource.gallery : ImageSource.camera);
 
     if (pickedFile != null) {
       image = File(pickedFile.path);
@@ -43,7 +47,8 @@ class AddNewCarViewModel extends ChangeNotifier {
   }
 
   Future<File?>? _cropImage(File? image) async {
-    var croppedFile = await ImageCropper.platform.cropImage(sourcePath: image!.path, aspectRatioPresets: [
+    var croppedFile = await ImageCropper.platform
+        .cropImage(sourcePath: image!.path, aspectRatioPresets: [
       CropAspectRatioPreset.square,
       CropAspectRatioPreset.ratio3x2,
       CropAspectRatioPreset.original,
@@ -86,10 +91,18 @@ class AddNewCarViewModel extends ChangeNotifier {
   AddNewCarViewModel.show({required this.carModel}) {
     isNew = false;
     color = carModel.color ?? Color(0xFFFF1451).value;
-    controllerAdi = TextEditingController(text: carModel.adi);
-    controllerYakitTuru = TextEditingController(text: carModel.yakitTuru!.name);
-    controllerLpgDepo = TextEditingController(text: carModel.aracLpgDepo.toString());
-    controllerAracDepo = TextEditingController(text: carModel.aracDepo.toString());
+    controllerAdi = TextEditingController(text: carModel.adi)
+      ..addListener(() {
+        notifyListeners();
+      });
+    controllerYakitTuru = TextEditingController(text: carModel.yakitTuru!.name)
+      ..addListener(() {
+        notifyListeners();
+      });
+    controllerLpgDepo =
+        TextEditingController(text: carModel.aracLpgDepo.toString());
+    controllerAracDepo =
+        TextEditingController(text: carModel.aracDepo.toString());
     image = carModel.imagePath == null ? null : File(carModel.imagePath!);
   }
 
@@ -98,7 +111,8 @@ class AddNewCarViewModel extends ChangeNotifier {
         adi: controllerAdi.text.trim().toUpperCase(),
         yakitTuru: (controllerYakitTuru.text.trim()).YakitTuruValu,
         aracDepo: double.tryParse(controllerAracDepo.text.trim().toUpperCase()),
-        aracLpgDepo: double.tryParse(controllerLpgDepo.text.trim().toUpperCase()),
+        aracLpgDepo:
+            double.tryParse(controllerLpgDepo.text.trim().toUpperCase()),
         imagePath: image == null ? null : image!.path,
         color: color);
   }

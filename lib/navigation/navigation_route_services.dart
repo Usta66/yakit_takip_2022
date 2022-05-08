@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:yakit_takip_2022/model/yakit_islem_model.dart';
-import 'package:yakit_takip_2022/navigation/navigation_enum.dart';
 import 'package:yakit_takip_2022/view/add_new_car/add_new_car_view.dart';
 import 'package:yakit_takip_2022/view/add_new_car/add_new_car_view_model.dart';
 import 'package:yakit_takip_2022/view/arac_list/arac_list_view.dart';
@@ -29,7 +28,7 @@ class NavigatorRouteServices {
         } else {
           _viewModel = settings.arguments as AddNewCarViewModel;
         }
-        return _navigateToDeafult<DeletModel<CarModel>>(page: AddNewCarView(viewModel: _viewModel));
+        return _navigateToDeafult<CarModel>(page: AddNewCarView(viewModel: _viewModel));
 
       case "yakitEkleme":
         YakitEklemeViewModel? _viewModel;
