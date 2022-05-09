@@ -6,15 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 
 class CircleAvatarImageAndAlphabet extends StatelessWidget {
-  Function()? onTap;
+  final Function()? onTap;
 
-  String? imagePath;
-  String? text;
-  int? color;
+ final String? imagePath;
+ final String? text;
+ final  int? color;
 
-  late double radius;
+final double radius;
 
-  CircleAvatarImageAndAlphabet(
+  const CircleAvatarImageAndAlphabet(
       {Key? key,
       this.onTap,
       required this.radius,

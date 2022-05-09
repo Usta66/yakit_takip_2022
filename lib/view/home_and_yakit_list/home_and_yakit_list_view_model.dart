@@ -47,7 +47,7 @@ class HomeAndYakitListViewModel extends ChangeNotifier {
 
     yakitHesapModel = YakitHesapModel(listYakitIslemModel: listYakitIslemModel, carModel: carModel);
 
-    controllerMiktar.text = yakitHesapModel.getTlKm().toStringAsFixed(2);
+    controllerMiktar.text = yakitHesapModel.getTlKm();
 
     notifyListeners();
 

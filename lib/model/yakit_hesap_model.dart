@@ -5,23 +5,24 @@ import 'yakit_islem_model.dart';
 class YakitHesapModel {
   final List<YakitIslemModel?> listYakitIslemModel;
   final CarModel carModel;
-  double toplamLpgMiktari = 1;
-  double toplamLpgMaliyeti = 1;
-  double toplamAkaryakitMiktari = 1;
-  double toplamAkaryakitMaliyeti = 1;
-  double toplamMaliyet = 1;
-  double toplamKm = 1;
-  double tLKm = 1;
-  double tLKmLpg = 1;
-  double tlKmAkaryakit = 1;
-  double litreKmLpg = 1;
-  double litreKmAkaryakit = 1;
+   late String toplamLpgMiktari;
+  late String toplamLpgMaliyeti;
+  late String toplamAkaryakitMiktari;
+  late String toplamAkaryakitMaliyeti;
+  late String toplamMaliyet;
+  late String toplamKm;
+  late String tLKm;
+  late String tLKmLpg;
+  late String tlKmAkaryakit;
+  late String litreKmLpg;
+  late String litreKmAkaryakit;
+  late String sonKm;
 
   YakitHesapModel({required this.listYakitIslemModel, required this.carModel}) {
-    if (carModel.yakitTuru == YakitTuruEnum.LPG) {
+    
       toplamLpgMiktari = getToplamLpgMiktari();
       toplamLpgMaliyeti = getToplamLpgMaliyeti();
-    }
+    
 
     toplamAkaryakitMiktari = getToplamAkaryakitMiktari();
     toplamAkaryakitMaliyeti = getToplamAkaryakitMaliyeti();
@@ -32,13 +33,15 @@ class YakitHesapModel {
     tlKmAkaryakit = getTlKmAkaryakit();
     litreKmLpg = getLitreKmLpg();
     litreKmAkaryakit = getLitreKmAkaryakit();
+    sonKm = getSonKm();
   }
 
-  double getToplamLpgMiktari() {
+  String getToplamLpgMiktari() {
     double tuketilenLpgMiktari = 0;
 
-    if (listYakitIslemModel.isNotEmpty) {
-      var result = listYakitIslemModel.where((element) => element!.yakitTuru == YakitTuruEnum.LPG);
+    if (listYakitIslemModel.isNotEmpty&&carModel.yakitTuru==YakitTuruEnum.LPG) {
+      var result = listYakitIslemModel
+          .where((element) => element!.yakitTuru == YakitTuruEnum.LPG);
 
       for (var element in result) {
         if (element!.miktari != null) {
@@ -47,14 +50,17 @@ class YakitHesapModel {
       }
     }
 
-    return tuketilenLpgMiktari;
+
+    return tuketilenLpgMiktari.toStringAsFixed(2);
   }
 
-  double getToplamLpgMaliyeti() {
+  String getToplamLpgMaliyeti() {
     double tuketilenLpgMaliyeti = 0;
 
-    if (listYakitIslemModel.isNotEmpty) {
-      var result = listYakitIslemModel.where((element) => element!.yakitTuru == YakitTuruEnum.LPG);
+    if (listYakitIslemModel.isNotEmpty &&
+        carModel.yakitTuru == YakitTuruEnum.LPG) {
+      var result = listYakitIslemModel
+          .where((element) => element!.yakitTuru == YakitTuruEnum.LPG);
 
       for (var element in result) {
         if (element!.tutar != null) {
@@ -62,43 +68,48 @@ class YakitHesapModel {
         }
       }
     }
+      
 
-    return tuketilenLpgMaliyeti;
+    return tuketilenLpgMaliyeti.toStringAsFixed(2);
   }
 
-  double getToplamAkaryakitMiktari() {
+  String getToplamAkaryakitMiktari() {
     double tuketilenToplamAkaryakitMiktari = 0;
 
     if (listYakitIslemModel.isNotEmpty) {
-      var result = listYakitIslemModel.where((element) => element!.yakitTuru != YakitTuruEnum.LPG);
+      var result = listYakitIslemModel
+          .where((element) => element!.yakitTuru != YakitTuruEnum.LPG);
 
       for (var element in result) {
         if (element!.miktari != null) {
-          tuketilenToplamAkaryakitMiktari = tuketilenToplamAkaryakitMiktari + element.miktari!;
+          tuketilenToplamAkaryakitMiktari =
+              tuketilenToplamAkaryakitMiktari + element.miktari!;
         }
       }
     }
 
-    return tuketilenToplamAkaryakitMiktari;
+    return tuketilenToplamAkaryakitMiktari.toStringAsFixed(2);
   }
 
-  double getToplamAkaryakitMaliyeti() {
+  String getToplamAkaryakitMaliyeti() {
     double tuketilenToplamAkaryakitMaliyeti = 0;
 
     if (listYakitIslemModel.isNotEmpty) {
-      var result = listYakitIslemModel.where((element) => element!.yakitTuru != YakitTuruEnum.LPG);
+      var result = listYakitIslemModel
+          .where((element) => element!.yakitTuru != YakitTuruEnum.LPG);
 
       for (var element in result) {
         if (element!.tutar != null) {
-          tuketilenToplamAkaryakitMaliyeti = tuketilenToplamAkaryakitMaliyeti + element.tutar!;
+          tuketilenToplamAkaryakitMaliyeti =
+              tuketilenToplamAkaryakitMaliyeti + element.tutar!;
         }
       }
     }
 
-    return tuketilenToplamAkaryakitMaliyeti;
+    return tuketilenToplamAkaryakitMaliyeti.toStringAsFixed(2);
   }
 
-  double getToplamMaliyet() {
+  String getToplamMaliyet() {
     double toplamMaliyet = 0;
 
     if (listYakitIslemModel.isNotEmpty) {
@@ -109,37 +120,61 @@ class YakitHesapModel {
       }
     }
 
-    return toplamMaliyet;
+    return toplamMaliyet.toStringAsFixed(2);
   }
 
-  getToplamKm() {
+  String getToplamKm() {
     double toplamKm = 0;
     if (listYakitIslemModel.isNotEmpty) {
-      if (listYakitIslemModel.last!.aracKm != null && listYakitIslemModel.first!.aracKm != null) {
-        toplamKm = (listYakitIslemModel.last!.aracKm!) - (listYakitIslemModel.first!.aracKm!);
+      if (listYakitIslemModel.last!.aracKm != null &&
+          listYakitIslemModel.first!.aracKm != null) {
+        toplamKm = (listYakitIslemModel.last!.aracKm!) -
+            (listYakitIslemModel.first!.aracKm!);
       }
     }
 
-    return toplamKm;
+    return toplamKm.toStringAsFixed(2);
   }
 
-  double getTlKm() {
-    return getToplamMaliyet() / getToplamKm();
+  String getTlKm() {
+    double tlKm = 0;
+
+    tlKm = (double.tryParse(getToplamMaliyet()))! /
+        (double.tryParse(getToplamKm()))!;
+
+    return tlKm.toStringAsFixed(2);
   }
 
-  double getTlKmLpg() {
-    return getToplamLpgMaliyeti() / getToplamKm();
+  String getTlKmLpg() {
+    return (double.tryParse(getToplamLpgMaliyeti())! /
+            double.tryParse(getToplamKm())!)
+        .toStringAsFixed(2);
   }
 
-  double getTlKmAkaryakit() {
-    return getToplamAkaryakitMaliyeti() / getToplamKm();
+  String getTlKmAkaryakit() {
+    return (double.tryParse(getToplamAkaryakitMaliyeti())! /
+            double.tryParse(getToplamKm())!)
+        .toStringAsFixed(2);
   }
 
-  double getLitreKmLpg() {
-    return getToplamLpgMiktari() / getToplamKm();
+  String getLitreKmLpg() {
+    return (double.tryParse(getToplamLpgMiktari())! /
+            double.tryParse(getToplamKm())!)
+        .toStringAsFixed(2);
   }
 
-  getLitreKmAkaryakit() {
-    return getToplamAkaryakitMiktari() / getToplamKm();
+  String getLitreKmAkaryakit() {
+    return (double.tryParse(getToplamAkaryakitMiktari())! /
+            double.tryParse(getToplamKm())!)
+        .toStringAsFixed(2);
+  }
+
+  String getSonKm() {
+    double? sonKm = 0;
+
+    sonKm =
+        listYakitIslemModel.isNotEmpty ? listYakitIslemModel.last!.aracKm : 0;
+
+    return sonKm.toString();
   }
 }
