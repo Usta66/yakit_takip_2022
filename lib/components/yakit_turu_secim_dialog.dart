@@ -10,32 +10,30 @@ class YakitTuruSecimDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      content: Container(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ElevatedButton(
+      content: ButtonBar(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop<YakitTuruEnum>(YakitTuruEnum.LPG);
+              },
+              child: const Text("LPG")),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop<YakitTuruEnum>(YakitTuruEnum.BENZIN);
+              },
+              child: const Text("BENZİN")),
+          Visibility(
+            visible: !isLpg,
+            child: ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pop<YakitTuruEnum>(YakitTuruEnum.LPG);
+                  Navigator.of(context).pop<YakitTuruEnum>(YakitTuruEnum.DIZEL);
                 },
-                child: const Text("LPG")),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop<YakitTuruEnum>(YakitTuruEnum.BENZIN);
-                },
-                child: const Text("BENZİN")),
-            Visibility(
-              visible: !isLpg,
-              child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop<YakitTuruEnum>(YakitTuruEnum.DIZEL);
-                  },
-                  child: const Text("DİZEL")),
-            )
-          ],
-        ),
+                child: const Text("DİZEL")),
+          )
+        ],
       ),
-      title: const Text("YAKIT TÜRÜ SEÇİNİZ"),
+      title: const Text("YAKIT TÜRÜ SEÇİNİZ", textAlign: TextAlign.center),
     );
   }
 }

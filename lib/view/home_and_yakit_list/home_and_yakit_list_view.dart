@@ -3,13 +3,14 @@
 import 'package:flutter/material.dart';
 import 'package:yakit_takip_2022/base/base_view.dart';
 import 'package:yakit_takip_2022/model/yakit_islem_model.dart';
-import 'package:yakit_takip_2022/navigation/navigation_enum.dart';
+
 import 'package:yakit_takip_2022/navigation/navigation_services.dart';
 import 'package:yakit_takip_2022/view/home_and_yakit_list/home/home_view.dart';
 
 import 'package:yakit_takip_2022/view/home_and_yakit_list/home_and_yakit_list_view_model.dart';
 import 'package:yakit_takip_2022/view/home_and_yakit_list/yakit_list/yakit_list_view.dart';
 
+import '../../navigation/navigation_route_services.dart';
 import '../yakit_ekleme/yakit_ekleme_view_model.dart';
 
 class HomeAndYakitListView extends StatelessWidget {

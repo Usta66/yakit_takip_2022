@@ -11,14 +11,7 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("home");
-    return
-
-/*     BaseView(
-      viewModel: viewModel,
-      child: */
-
-        Scaffold(
+    return Scaffold(
       appBar: AppBar(
         title: Text("Home"),
       ),
@@ -26,19 +19,35 @@ class HomeView extends StatelessWidget {
         builder: (context, viewModel, child) {
           return Column(
             children: [
-              BaseTextField(controller: viewModel.controllerAdi, readOnly: true),
-              BaseTextField(
-                controller: viewModel.controllerYakitTuru,
-                readOnly: true,
+              SizedBox(height: 15),
+              Card(
+                child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Text(viewModel.yakitHesapModel.tLKm.toString(), style: Theme.of(context).textTheme.headline5),
+                  Text("TL/KM", style: Theme.of(context).textTheme.headline5),
+                ]),
               ),
-              Consumer<HomeAndYakitListViewModel>(
-                builder: (context, value, child) {
-                  return TextField(
-                    controller: viewModel.controllerMiktar,
-                  );
-                },
+              const Divider(),
+              const Text(
+                "Akaryakıt Verileri",
+                textAlign: TextAlign.center,
               ),
-              ElevatedButton(onPressed: () async {}, child: Text("data"))
+              Card(
+                  child: Row(
+                children: [
+                  Column(
+                    children: [
+                      Text("${viewModel.yakitHesapModel.tlKmAkaryakit.toString()} TL/KM"),
+                      Text("${viewModel.yakitHesapModel.litreKmAkaryakit} L/100KM")
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text("${viewModel.yakitHesapModel.toplamAkaryakitMaliyeti.toString()} TL Toplam Maliyet"),
+                      Text("${viewModel.yakitHesapModel.toplamAkaryakitMiktari.toString()} L Toplam Miktar")
+                    ],
+                  )
+                ],
+              ))
             ],
           );
         },

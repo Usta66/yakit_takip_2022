@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:yakit_takip_2022/model/yakit_islem_model.dart';
-import 'package:yakit_takip_2022/navigation/navigation_enum.dart';
 import 'package:yakit_takip_2022/navigation/navigation_services.dart';
 
 import 'package:yakit_takip_2022/view/home_and_yakit_list/home_and_yakit_list_view_model.dart';
 import 'package:yakit_takip_2022/view/yakit_ekleme/yakit_ekleme_view_model.dart';
 
 import '../../../model/delet_model.dart';
+import '../../../navigation/navigation_route_services.dart';
 
 class YakitListView extends StatelessWidget {
   const YakitListView({

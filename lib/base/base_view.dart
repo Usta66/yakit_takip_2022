@@ -9,9 +9,11 @@ class BaseView<T extends ChangeNotifier> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => viewModel,
-      child: child,
+    return SafeArea(
+      child: ChangeNotifierProvider(
+        create: (context) => viewModel,
+        child: child,
+      ),
     );
   }
 }

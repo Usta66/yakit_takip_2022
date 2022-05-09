@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yakit_takip_2022/model/car_model.dart';
 import 'package:yakit_takip_2022/services/database_service.dart';
+import 'package:kartal/kartal.dart';
 
 class AracListViewModel extends ChangeNotifier {
   late DatabaseService _dbServis;
@@ -35,14 +36,16 @@ class AracListViewModel extends ChangeNotifier {
     return result;
   }
 
-  Future<int> delete(CarModel carModel) async {
+  delete(CarModel carModel) async {
     showDialog<bool>(
         context: scaffoldKey.currentState!.context,
         builder: (context) {
           return AlertDialog(
-            content: Column(children: [
-              const Text("Araca Ait Bütün Veriler Silinsin mi?"),
-              Row(
+            title: const Text(
+              'Araca Ait Bütün Veriler Silinsin mi?',
+            ),
+            content: Column(mainAxisSize: MainAxisSize.min, children: [
+              ButtonBar(
                 children: [
                   ElevatedButton(
                     child: const Text("TAMAM"),
@@ -60,16 +63,13 @@ class AracListViewModel extends ChangeNotifier {
               )
             ]),
           );
-        });
+        }).then((value) async {
+      if (carModel.id != null && value != null && value) {
+        await _dbServis.aracaAitTumYakitlariSil(carModel.id!);
 
-    if (carModel.id != null) {
-      await _dbServis.aracaAitTumYakitlariSil(carModel.id!);
-
-      var resualt = _dbServis.delete<CarModel>(carModel.id!);
-      aracListesiniDoldur();
-      return resualt;
-    } else {
-      throw ("delet carmosel id null");
-    }
+        var resualt = _dbServis.delete<CarModel>(carModel.id!);
+        aracListesiniDoldur();
+      }
+    });
   }
 }
