@@ -61,6 +61,8 @@ dependencies:
 
   flutter_colorpicker: ^1.0.3
 
+  syncfusion_flutter_charts: ^20.1.52
+
  
 
 dev_dependencies:

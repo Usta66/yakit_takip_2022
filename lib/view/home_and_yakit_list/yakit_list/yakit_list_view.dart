@@ -26,7 +26,7 @@ class YakitListView extends StatelessWidget {
           itemBuilder: (context, index) {
             return ListTile(
               title: Text(viewModel.listYakitIslemModel[index]!.aracKm.toString()),
-              leading: Text(viewModel.listYakitIslemModel[index]!.miktari == null ? "yok" : viewModel.listYakitIslemModel[index]!.miktari.toString()),
+              leading: Text(viewModel.listYakitIslemModel[index]!.aracId == null ? "yok" : viewModel.listYakitIslemModel[index]!.aracId.toString()),
               onTap: () {
                 goToWiewPush<DeletModel>(
                     path: NavigationEnum.yakitGuncelleme,

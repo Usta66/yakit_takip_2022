@@ -6,6 +6,7 @@ import 'package:yakit_takip_2022/view/add_new_car/add_new_car_view.dart';
 import 'package:yakit_takip_2022/view/add_new_car/add_new_car_view_model.dart';
 import 'package:yakit_takip_2022/view/arac_list/arac_list_view.dart';
 import 'package:yakit_takip_2022/view/arac_list/arac_list_view_model.dart';
+import 'package:yakit_takip_2022/view/deneme/deneme.dart';
 
 import 'navigation/navigation_route_services.dart';
 
@@ -29,8 +30,10 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: "aracListesi",
       navigatorKey: NavigationServices.instance.navigatorKey,
-      onGenerateRoute: (settings)=>NavigatorRouteServices.onRouteGenarete(settings),
-     
+
+      onGenerateRoute: (settings) => NavigatorRouteServices.onRouteGenarete(settings),
+
+      //home: MyHomePage(),
     );
   }
 }

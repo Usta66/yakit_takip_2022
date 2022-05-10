@@ -4,6 +4,7 @@ import 'package:yakit_takip_2022/base/base_view.dart';
 import 'package:yakit_takip_2022/components/yakit_turu_secim_dialog.dart';
 import 'package:yakit_takip_2022/enum/yakit_turu_enum.dart';
 import 'package:yakit_takip_2022/model/yakit_islem_model.dart';
+import 'package:yakit_takip_2022/utils/date_time_extension.dart';
 import 'package:yakit_takip_2022/view/yakit_ekleme/yakit_ekleme_view_model.dart';
 
 import '../../components/yakit_ekleme_text_form_field.dart';
@@ -25,6 +26,20 @@ class YakitEklemeView extends StatelessWidget {
           body: SingleChildScrollView(
               child: Column(
             children: [
+              TextField(
+                onTap: () {
+                  showDatePicker(
+                          context: context,
+                          initialEntryMode: DatePickerEntryMode.calendar,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime.now().subtract(Duration(days: 3000)),
+                          lastDate: DateTime.now().add(Duration(days: 300)))
+                      .then((value) => viewModel.controllerAlisTarihi.text = value!.stringValue);
+                },
+                decoration: InputDecoration(prefixIcon: Icon(Icons.calendar_today_outlined)),
+                controller: viewModel.controllerAlisTarihi,
+                readOnly: true,
+              ),
               YakitEklemeTextFormField(icon: Icons.ac_unit_rounded, text: "ARAÇ KM", suffixTex: "KM", controller: viewModel.controllerKm),
               YakitEklemeTextFormField(
                 icon: Icons.ac_unit_rounded,
