@@ -87,7 +87,7 @@ class AracListView extends StatelessWidget {
                                           style: Theme.of(context).textTheme.headline5,
                                           textAlign: TextAlign.center,
                                         ),
-                                        const Text("120.000 KM")
+                                        Text(carModel.aracKm.toString())
                                       ],
                                     ),
                                   ),

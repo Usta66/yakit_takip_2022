@@ -6,29 +6,31 @@ import '../../model/yakit_hesap_model.dart';
 import '../../model/yakit_islem_model.dart';
 
 class HomeAndYakitListViewModel extends ChangeNotifier {
-  final CarModel carModel;
+  late CarModel carModel;
 
   final DatabaseService _dbServis = DatabaseService.instance!;
-  late TextEditingController controllerAdi, controllerYakitTuru, controllerMiktar;
+
   List<YakitIslemModel?> listYakitIslemModel = [];
   late YakitHesapModel yakitHesapModel = YakitHesapModel(listYakitIslemModel: listYakitIslemModel, carModel: carModel);
 
   HomeAndYakitListViewModel({
     required this.carModel,
   }) {
-    controllerAdi = TextEditingController(text: carModel.adi ?? "yok");
-    controllerYakitTuru = TextEditingController(text: carModel.yakitTuru!.name);
-    controllerMiktar = TextEditingController();
-
     yakitListesiniDoldur();
 
     ;
   }
 
-  Future<int> modelInsert(YakitIslemModel yakitIslemModel) {
-    var result = _dbServis.insert<YakitIslemModel>(yakitIslemModel);
+  Future<int> modelInsert(YakitIslemModel yakitIslemModel) async {
+    var result = await _dbServis.insert<YakitIslemModel>(yakitIslemModel);
 
-    yakitListesiniDoldur();
+    await yakitListesiniDoldur();
+
+    carModel = carModel.copyWith(
+      aracKm: double.tryParse(yakitHesapModel.sonKm),
+    );
+
+    _dbServis.update<CarModel>(carModel);
 
     return result;
   }
@@ -46,8 +48,6 @@ class HomeAndYakitListViewModel extends ChangeNotifier {
     listYakitIslemModel = result;
 
     yakitHesapModel = YakitHesapModel(listYakitIslemModel: listYakitIslemModel, carModel: carModel);
-
-    controllerMiktar.text = yakitHesapModel.getTlKm();
 
     notifyListeners();
 

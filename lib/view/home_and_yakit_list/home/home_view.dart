@@ -124,13 +124,38 @@ class HomeView extends StatelessWidget {
                             "Toplam Maliyet = ${viewModel.yakitHesapModel.toplamAkaryakitMaliyeti} TL ",
                             style: Theme.of(context).textTheme.titleSmall,
                           ),
-                          Text("Toplam Miktar   = ${viewModel.yakitHesapModel.toplamAkaryakitMiktari} L ")
+                          Text("Toplam Miktar   = ${viewModel.yakitHesapModel.toplamAkaryakitMiktari} L "),
                         ],
                       ),
                     )
                   ],
                 ),
               )),
+              SfCartesianChart(
+                  primaryXAxis: CategoryAxis(),
+                  // Chart title
+                  title: ChartTitle(text: 'Akaryakıt Grafik'),
+                  // Enable legend
+                  legend: Legend(isVisible: true),
+                  // Enable tooltip
+                  tooltipBehavior: TooltipBehavior(enable: true),
+                  series: <ChartSeries<YakitIslemModel?, String>>[
+                    LineSeries<YakitIslemModel?, String>(
+                        dataSource: viewModel.yakitHesapModel.listYakitIslemModelAkaryakit,
+                        xValueMapper: (YakitIslemModel? sales, _) => sales!.alisTarihi!.stringValue,
+                        yValueMapper: (YakitIslemModel? sales, _) => sales!.fiyati,
+                        name: "Fiyat",
+
+                        // Enable data label
+                        dataLabelSettings: DataLabelSettings(isVisible: true)),
+                    LineSeries<YakitIslemModel?, String>(
+                        dataSource: viewModel.yakitHesapModel.listYakitIslemModelAkaryakit,
+                        xValueMapper: (YakitIslemModel? sales, _) => sales!.alisTarihi!.stringValue,
+                        yValueMapper: (YakitIslemModel? sales, _) => sales!.miktari! * 0.1,
+                        name: 'Miktar',
+                        // Enable data label
+                        dataLabelSettings: DataLabelSettings(isVisible: true))
+                  ])
             ],
           );
         },
