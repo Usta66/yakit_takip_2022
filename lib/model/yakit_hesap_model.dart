@@ -1,9 +1,11 @@
+import 'package:yakit_takip_2022/services/database_service.dart';
+
 import '../enum/yakit_turu_enum.dart';
 import 'car_model.dart';
 import 'yakit_islem_model.dart';
 
 class YakitHesapModel {
-  final List<YakitIslemModel?> listYakitIslemModel;
+  late List<YakitIslemModel?> listYakitIslemModel;
   final CarModel carModel;
   late String toplamLpgMiktari;
   late String toplamLpgMaliyeti;
@@ -20,7 +22,13 @@ class YakitHesapModel {
   late List<YakitIslemModel?> listYakitIslemModelLpg;
   late List<YakitIslemModel?> listYakitIslemModelAkaryakit;
 
-  YakitHesapModel({required this.listYakitIslemModel, required this.carModel}) {
+  YakitHesapModel({required this.carModel}) {
+    init();
+  }
+
+  Future<void> init() async {
+    listYakitIslemModel = await DatabaseService.instance!.getAracYakitListesi(aracId: carModel.id!);
+
     toplamLpgMiktari = getToplamLpgMiktari();
     toplamLpgMaliyeti = getToplamLpgMaliyeti();
 
@@ -42,6 +50,10 @@ class YakitHesapModel {
     listYakitIslemModelLpg.sort((a, b) => a!.alisTarihi!.compareTo(b!.alisTarihi!));
 
     sonKm = getSonKm();
+  }
+
+  Future<List<YakitIslemModel?>> getYakitislemModel() async {
+    return await DatabaseService.instance!.getAracYakitListesi(aracId: carModel.id!);
   }
 
   String getToplamLpgMiktari() {
@@ -150,25 +162,17 @@ class YakitHesapModel {
   }
 
   String getLitreKmLpg() {
-    return (double.tryParse(getToplamLpgMiktari())! / double.tryParse(getToplamKm())!).toStringAsFixed(2);
+    return (double.tryParse(getToplamLpgMiktari())! * 100 / double.tryParse(getToplamKm())!).toStringAsFixed(2);
   }
 
   String getLitreKmAkaryakit() {
-    return (double.tryParse(getToplamAkaryakitMiktari())! / double.tryParse(getToplamKm())!).toStringAsFixed(2);
+    return (double.tryParse(getToplamAkaryakitMiktari())! * 100 / double.tryParse(getToplamKm())!).toStringAsFixed(2);
   }
 
   String getSonKm() {
     double? sonKm = 0;
 
-    //en büyük km sort
-
-    /*  var listYakitIslemModelSort = listYakitIslemModel;
-    listYakitIslemModelSort.sort((a, b) => a!.aracKm!.compareTo(b!.aracKm!)); */
-
     sonKm = listYakitIslemModel.isNotEmpty ? listYakitIslemModel.last!.aracKm : 0;
-
-    print("listYakitIslemModel.last");
-    print(listYakitIslemModel.last);
 
     return sonKm.toString();
   }

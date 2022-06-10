@@ -66,7 +66,9 @@ class AracListView extends StatelessWidget {
                             padding: context.paddingLow,
                             child: GestureDetector(
                               onTap: () {
-                                goToWiewPush(path: NavigationEnum.homeAndYakitList, args: HomeAndYakitListViewModel(carModel: carModel));
+                                goToWiewPush(
+                                    path: NavigationEnum.homeAndYakitList,
+                                    args: HomeAndYakitListViewModel(carModel: carModel, aracListViewModel: viewModel));
                               },
                               child: Row(
                                 children: [
@@ -87,27 +89,21 @@ class AracListView extends StatelessWidget {
                                           style: Theme.of(context).textTheme.headline5,
                                           textAlign: TextAlign.center,
                                         ),
-                                        Text(carModel.aracKm.toString())
+                                        Text("${carModel.aracKm} KM", style: Theme.of(context).textTheme.subtitle1)
                                       ],
                                     ),
                                   ),
                                   Expanded(
-                                    child: Column(
-                                      // ignore: prefer_const_literals_to_create_immutables
-                                      children: [
-                                        const Text(
-                                          "1.5",
-                                          style: TextStyle(color: Colors.red),
-                                        ),
-                                        const Text("5.8", style: TextStyle(color: Colors.red))
-                                      ],
-                                    ),
-                                  ),
+                                      flex: 2,
+                                      child: Text(
+                                        carModel.ortalamaKrs.toString(),
+                                        style: TextStyle(color: Colors.red, fontSize: 30),
+                                      )),
                                   Expanded(
                                     flex: 2,
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [const Text("TL/KM"), const Text("L/100KM")],
+                                      children: [Text("TL/KM", style: Theme.of(context).textTheme.subtitle1)],
                                     ),
                                   )
                                 ],

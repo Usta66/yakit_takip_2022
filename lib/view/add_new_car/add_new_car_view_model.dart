@@ -22,10 +22,7 @@ class AddNewCarViewModel extends ChangeNotifier {
 
   int get color => _color;
 
-  late TextEditingController controllerAdi,
-      controllerYakitTuru,
-      controllerLpgDepo,
-      controllerAracDepo;
+  late TextEditingController controllerAdi, controllerYakitTuru, controllerLpgDepo, controllerAracDepo, controllerAracKm;
 
   final DatabaseService _dbServis = DatabaseService.instance!;
 
@@ -34,8 +31,7 @@ class AddNewCarViewModel extends ChangeNotifier {
   final picker = ImagePicker();
 
   getImage(bool issourceGallery) async {
-    final pickedFile = await picker.pickImage(
-        source: issourceGallery ? ImageSource.gallery : ImageSource.camera);
+    final pickedFile = await picker.pickImage(source: issourceGallery ? ImageSource.gallery : ImageSource.camera);
 
     if (pickedFile != null) {
       image = File(pickedFile.path);
@@ -47,8 +43,7 @@ class AddNewCarViewModel extends ChangeNotifier {
   }
 
   Future<File?>? _cropImage(File? image) async {
-    var croppedFile = await ImageCropper.platform
-        .cropImage(sourcePath: image!.path, aspectRatioPresets: [
+    var croppedFile = await ImageCropper.platform.cropImage(sourcePath: image!.path, aspectRatioPresets: [
       CropAspectRatioPreset.square,
       CropAspectRatioPreset.ratio3x2,
       CropAspectRatioPreset.original,
@@ -87,6 +82,7 @@ class AddNewCarViewModel extends ChangeNotifier {
       });
     controllerLpgDepo = TextEditingController();
     controllerAracDepo = TextEditingController();
+    controllerAracKm = TextEditingController();
   }
   AddNewCarViewModel.show({required this.carModel}) {
     isNew = false;
@@ -99,20 +95,19 @@ class AddNewCarViewModel extends ChangeNotifier {
       ..addListener(() {
         notifyListeners();
       });
-    controllerLpgDepo =
-        TextEditingController(text: carModel.aracLpgDepo.toString());
-    controllerAracDepo =
-        TextEditingController(text: carModel.aracDepo.toString());
+    controllerLpgDepo = TextEditingController(text: carModel.aracLpgDepo.toString());
+    controllerAracDepo = TextEditingController(text: carModel.aracDepo.toString());
+    controllerAracKm = TextEditingController(text: carModel.aracKm.toString());
     image = carModel.imagePath == null ? null : File(carModel.imagePath!);
   }
 
   CarModel modeliHazirla() {
     return carModel = carModel.copyWith(
+        aracKm: double.tryParse(controllerAracKm.text.trim().toUpperCase()),
         adi: controllerAdi.text.trim().toUpperCase(),
         yakitTuru: (controllerYakitTuru.text.trim()).YakitTuruValu,
         aracDepo: double.tryParse(controllerAracDepo.text.trim().toUpperCase()),
-        aracLpgDepo:
-            double.tryParse(controllerLpgDepo.text.trim().toUpperCase()),
+        aracLpgDepo: double.tryParse(controllerLpgDepo.text.trim().toUpperCase()),
         imagePath: image == null ? null : image!.path,
         color: color);
   }

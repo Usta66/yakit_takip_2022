@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
-import 'package:yakit_takip_2022/components/base_text_field.dart';
+
 import 'package:yakit_takip_2022/enum/yakit_turu_enum.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:syncfusion_flutter_charts/sparkcharts.dart';
+
 import 'package:yakit_takip_2022/model/yakit_islem_model.dart';
 import 'package:yakit_takip_2022/utils/date_time_extension.dart';
 
@@ -18,7 +19,7 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home"),
+        title: Text("Ana Ekran"),
       ),
       body: SingleChildScrollView(child: Consumer<HomeAndYakitListViewModel>(
         builder: (context, viewModel, child) {
@@ -27,46 +28,82 @@ class HomeView extends StatelessWidget {
               SizedBox(height: 15),
               Card(
                   child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center, children: [Text("Yakıt Alınan Son Km = ${viewModel.yakitHesapModel.sonKm} KM")])),
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    Text(
+                      "Yakıt Alınan Son KM = ${viewModel.yakitHesapModel.sonKm} KM",
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                    Text(
+                      "Toplam KM= ${viewModel.yakitHesapModel.toplamKm} KM",
+                      style: Theme.of(context).textTheme.headline6,
+                    )
+                  ]),
+                ],
+              )),
               Visibility(
                   visible: viewModel.carModel.yakitTuru == YakitTuruEnum.LPG,
                   child: Column(
                     children: [
-                      Divider(),
-                      Text("Karma Yakıt Verileri"),
-                      Divider(),
-                      Card(
-                        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                          Text(viewModel.yakitHesapModel.tLKm, style: Theme.of(context).textTheme.headline5),
-                          Text("TL/KM", style: Theme.of(context).textTheme.headline5),
-                        ]),
-                      ),
                       const Divider(),
-                      const Text("LPG Verileri"),
+                      Card(
+                        child: Column(
+                          children: [
+                            Container(
+                              color: Colors.amberAccent,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("Karma Yakıt Verileri", style: Theme.of(context).textTheme.headline5),
+                                ],
+                              ),
+                            ),
+                            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                              Text(viewModel.yakitHesapModel.tLKm, style: Theme.of(context).textTheme.headline5),
+                              Text("TL/KM", style: Theme.of(context).textTheme.headline5),
+                            ]),
+                          ],
+                        ),
+                      ),
                       const Divider(),
                       Card(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Row(children: [
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("${viewModel.yakitHesapModel.tLKmLpg} TL/KM"),
-                                  Text("${viewModel.yakitHesapModel.litreKmLpg} L/100KM")
-                                ],
+                          child: Column(
+                            children: [
+                              Container(
+                                color: Colors.amberAccent,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text("LPG VERİLERİ", style: Theme.of(context).textTheme.headline5),
+                                  ],
+                                ),
                               ),
-                            ),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Toplam Maliyet = ${viewModel.yakitHesapModel.toplamLpgMaliyeti} TL"),
-                                  Text("Toplam Miktar   = ${viewModel.yakitHesapModel.toplamLpgMiktari} L ")
-                                ],
-                              ),
-                            )
-                          ]),
+                              Row(children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text("${viewModel.yakitHesapModel.tLKmLpg} TL/KM"),
+                                      Text("${viewModel.yakitHesapModel.litreKmLpg} L/100KM"),
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Text("Toplam Maliyet = ${viewModel.yakitHesapModel.toplamLpgMaliyeti} TL"),
+                                      Text("Toplam Miktar   = ${viewModel.yakitHesapModel.toplamLpgMiktari} L ")
+                                    ],
+                                  ),
+                                )
+                              ]),
+                            ],
+                          ),
                         ),
                       ),
                       SfCartesianChart(

@@ -11,7 +11,10 @@ class YakitTuruSecimDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       content: ButtonBar(
+        buttonAlignedDropdown: true,
         mainAxisSize: MainAxisSize.min,
+        alignment: MainAxisAlignment.center,
+        overflowDirection: VerticalDirection.down,
         children: [
           ElevatedButton(
               onPressed: () {

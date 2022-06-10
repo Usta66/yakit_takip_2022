@@ -27,10 +27,7 @@ class AddNewCarView extends StatelessWidget {
     return BaseView(
         viewModel: viewModel,
         child: Scaffold(
-            appBar: AppBar(
-                title: viewModel.isNew
-                    ? Text("Yeni Araç Ekle")
-                    : Text("Güncelle")),
+            appBar: AppBar(title: viewModel.isNew ? Text("Yeni Araç Ekle") : Text("Güncelle")),
             body: SingleChildScrollView(
               child: Center(
                   child: Padding(
@@ -39,38 +36,31 @@ class AddNewCarView extends StatelessWidget {
                         runSpacing: 10,
                         alignment: WrapAlignment.center,
                         children: [
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                IconButton(
-                                    onPressed: () {
-                                      viewModel.getImage(false);
-                                    },
-                                    icon:
-                                        const Icon(Icons.add_a_photo_outlined)),
-                                Consumer<AddNewCarViewModel>(
-                                  builder: (context, value, child) {
-                                    return CircleAvatarImageAndAlphabet(
-                                      color: viewModel.color,
-                                      imagePath: viewModel.image == null
-                                          ? null
-                                          : viewModel.image!.path,
-                                      radius: context.width * 0.2,
-                                      text: viewModel.controllerAdi.text.isEmpty
-                                          ? null
-                                          : viewModel.controllerAdi.text,
-                                      onTap: () {
-                                        viewModel.renkSec(context);
-                                      },
-                                    );
+                          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                            IconButton(
+                                onPressed: () {
+                                  viewModel.getImage(false);
+                                },
+                                icon: const Icon(Icons.add_a_photo_outlined)),
+                            Consumer<AddNewCarViewModel>(
+                              builder: (context, value, child) {
+                                return CircleAvatarImageAndAlphabet(
+                                  color: viewModel.color,
+                                  imagePath: viewModel.image == null ? null : viewModel.image!.path,
+                                  radius: context.width * 0.2,
+                                  text: viewModel.controllerAdi.text.isEmpty ? null : viewModel.controllerAdi.text,
+                                  onTap: () {
+                                    viewModel.renkSec(context);
                                   },
-                                ),
-                                IconButton(
-                                    onPressed: () {
-                                      viewModel.getImage(true);
-                                    },
-                                    icon: const Icon(Icons.file_upload))
-                              ]),
+                                );
+                              },
+                            ),
+                            IconButton(
+                                onPressed: () {
+                                  viewModel.getImage(true);
+                                },
+                                icon: const Icon(Icons.file_upload))
+                          ]),
                           BaseTextField(
                             labelText: "Adı",
                             controller: viewModel.controllerAdi,
@@ -89,35 +79,28 @@ class AddNewCarView extends StatelessWidget {
                                       return const YakitTuruSecimDialog();
                                     }).then((value) {
                                   if (value != null) {
-                                    viewModel.controllerYakitTuru.text =
-                                        value.name;
+                                    viewModel.controllerYakitTuru.text = value.name;
                                   }
                                 });
                               }),
                           Consumer<AddNewCarViewModel>(
                             builder: (context, value, child) => Visibility(
-                              visible: viewModel.controllerYakitTuru.text ==
-                                  YakitTuruEnum.LPG.name,
-                              child: BaseTextField(
-                                  labelText: "LPG Depo Kapasite",
-                                  controller: viewModel.controllerLpgDepo),
+                              visible: viewModel.controllerYakitTuru.text == YakitTuruEnum.LPG.name,
+                              child: BaseTextField(labelText: "LPG Depo Kapasite", controller: viewModel.controllerLpgDepo),
                             ),
                           ),
-                          BaseTextField(
-                              labelText: "Akaryakıt Depo Kapasite",
-                              controller: viewModel.controllerAracDepo),
+                          BaseTextField(labelText: "Araçın KM'si", controller: viewModel.controllerAracKm),
+                          BaseTextField(labelText: "Akaryakıt Depo Kapasite", controller: viewModel.controllerAracDepo),
                           Center(
                             child: viewModel.isNew
                                 ? ElevatedButton(
                                     onPressed: () async {
-                                      Navigator.pop<CarModel>(
-                                          context, viewModel.modeliHazirla());
+                                      Navigator.pop<CarModel>(context, viewModel.modeliHazirla());
                                     },
                                     child: const Text("Kaydet"))
                                 : ElevatedButton(
                                     onPressed: () {
-                                      Navigator.pop<CarModel>(
-                                          context, viewModel.modeliHazirla());
+                                      Navigator.pop<CarModel>(context, viewModel.modeliHazirla());
                                     },
                                     child: Text("Güncelle")),
                             /*   ElevatedButton(

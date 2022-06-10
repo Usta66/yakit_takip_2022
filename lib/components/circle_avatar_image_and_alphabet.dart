@@ -8,29 +8,20 @@ import 'package:kartal/kartal.dart';
 class CircleAvatarImageAndAlphabet extends StatelessWidget {
   final Function()? onTap;
 
- final String? imagePath;
- final String? text;
- final  int? color;
+  final String? imagePath;
+  final String? text;
+  final int? color;
 
-final double radius;
+  final double radius;
 
-  const CircleAvatarImageAndAlphabet(
-      {Key? key,
-      this.onTap,
-      required this.radius,
-      this.text,
-      this.imagePath,
-      this.color})
-      : super(key: key);
+  const CircleAvatarImageAndAlphabet({Key? key, this.onTap, required this.radius, this.text, this.imagePath, this.color}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-  
     return GestureDetector(
       onTap: onTap,
       child: CircleAvatar(
-          backgroundImage:
-              imagePath == null ? null : FileImage(File(imagePath!)),
+          backgroundImage: imagePath == null ? null : FileImage(File(imagePath!)),
           radius: radius,
           child: imagePath == null
               ? Padding(
@@ -40,12 +31,12 @@ final double radius;
                       text != null ? text!.toUpperCase() : " ",
                       style: Theme.of(context).textTheme.headline3,
                       textAlign: TextAlign.center,
-                      maxLines: 2,
+                      maxLines: 1,
                     ),
                   ),
                 )
               : null,
-          backgroundColor: color!=null?Color(color!):null
+          backgroundColor: color != null ? Color(color!) : null
 
           // Colors.primaries[Random().nextInt(17)],
           ),

@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:easy_localization/easy_localization.dart';
+
 import 'package:yakit_takip_2022/navigation/navigation_services.dart';
-import 'package:yakit_takip_2022/services/database_service.dart';
-import 'package:yakit_takip_2022/view/add_new_car/add_new_car_view.dart';
-import 'package:yakit_takip_2022/view/add_new_car/add_new_car_view_model.dart';
-import 'package:yakit_takip_2022/view/arac_list/arac_list_view.dart';
-import 'package:yakit_takip_2022/view/arac_list/arac_list_view_model.dart';
-import 'package:yakit_takip_2022/view/deneme/deneme.dart';
 
 import 'navigation/navigation_route_services.dart';
 
@@ -14,7 +9,8 @@ void main() async {
   //WidgetsFlutterBinding();
   //DatabaseService.instance;
 
-  runApp(const MyApp());
+  runApp(EasyLocalization(
+      startLocale: const Locale("tr", "TR"), supportedLocales: [const Locale("tr", "TR")], path: "assets/lang", child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -24,10 +20,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData(useMaterial3: true, primarySwatch: Colors.blue, textTheme: TextTheme(subtitle2: TextStyle(color: Colors.amber))),
       initialRoute: "aracListesi",
       navigatorKey: NavigationServices.instance.navigatorKey,
 

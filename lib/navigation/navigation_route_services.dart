@@ -50,7 +50,7 @@ class NavigatorRouteServices {
         } else {
           _viewModel = settings.arguments as YakitEklemeViewModel;
         }
-        return _navigateToDeafult<DeletModel>(page: YakitEklemeView(viewModel: _viewModel));
+        return _navigateToDeafult<YakitIslemModel>(page: YakitEklemeView(viewModel: _viewModel));
 
       case "homeAndYakitList":
         HomeAndYakitListViewModel? _viewModel;
