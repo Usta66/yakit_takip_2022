@@ -20,19 +20,19 @@ class YakitTuruSecimDialog extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pop<YakitTuruEnum>(YakitTuruEnum.LPG);
               },
-              child: const Text("LPG")),
+              child:  Text(YakitTuruEnum.LPG.name.toUpperCase())),
           ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pop<YakitTuruEnum>(YakitTuruEnum.BENZIN);
               },
-              child: const Text("BENZİN")),
+              child:  Text(YakitTuruEnum.BENZIN.name.toUpperCase())),
           Visibility(
             visible: !isLpg,
             child: ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pop<YakitTuruEnum>(YakitTuruEnum.DIZEL);
                 },
-                child: const Text("DİZEL")),
+                child:  Text(YakitTuruEnum.DIZEL.name.toUpperCase())),
           )
         ],
       ),

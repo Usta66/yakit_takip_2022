@@ -10,7 +10,10 @@ void main() async {
   //DatabaseService.instance;
 
   runApp(EasyLocalization(
-      startLocale: const Locale("tr", "TR"), supportedLocales: [const Locale("tr", "TR")], path: "assets/lang", child: const MyApp()));
+      startLocale: const Locale("tr", "TR"),
+      supportedLocales: [const Locale("tr", "TR")],
+      path: "assets/lang",
+      child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -20,14 +23,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+    
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       title: 'Flutter Demo',
-      theme: ThemeData(useMaterial3: true, primarySwatch: Colors.blue, textTheme: TextTheme(subtitle2: TextStyle(color: Colors.amber))),
+      theme: ThemeData(
+          
+          useMaterial3: true,
+          primarySwatch: Colors.amber,
+          textTheme:
+              const TextTheme(subtitle2: TextStyle(color: Colors.amber))),
       initialRoute: "aracListesi",
       navigatorKey: NavigationServices.instance.navigatorKey,
 
-      onGenerateRoute: (settings) => NavigatorRouteServices.onRouteGenarete(settings),
+      onGenerateRoute: (settings) =>
+          NavigatorRouteServices.onRouteGenarete(settings),
 
       //home: MyHomePage(),
     );

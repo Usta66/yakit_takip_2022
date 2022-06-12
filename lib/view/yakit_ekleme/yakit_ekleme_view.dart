@@ -10,7 +10,7 @@ import 'package:yakit_takip_2022/utils/date_time_extension.dart';
 import 'package:yakit_takip_2022/view/yakit_ekleme/yakit_ekleme_view_model.dart';
 
 import '../../components/yakit_ekleme_text_form_field.dart';
-import '../../model/delet_model.dart';
+
 import '../../utils/validator.dart';
 
 class YakitEklemeView extends StatelessWidget with Validator {
@@ -24,7 +24,25 @@ class YakitEklemeView extends StatelessWidget with Validator {
         viewModel: viewModel,
         child: Scaffold(
           appBar: AppBar(
-            title: const Text("Yakit Ekleme"),
+            title: viewModel.isNew
+                ? const Text("Yakit Ekleme")
+                : const Text("Yakit Güncelleme"),
+            actions: [
+              Padding(
+                padding: context.paddingLow,
+                child: IconButton(
+                  onPressed: () {
+                    if (viewModel.formKey.currentState!.validate()) {
+                      Navigator.pop<YakitIslemModel>(
+                          context, viewModel.modeliHazirla());
+                    }
+                  },
+                  icon: Icon(Icons.check_rounded),
+                  iconSize: context.mediumValue,
+                  color: Colors.amber,
+                ),
+              )
+            ],
           ),
           body: SingleChildScrollView(
               child: Padding(
@@ -33,7 +51,7 @@ class YakitEklemeView extends StatelessWidget with Validator {
               key: viewModel.formKey,
               child: Wrap(
                 children: [
-                  Divider(),
+                  const Divider(),
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -43,13 +61,20 @@ class YakitEklemeView extends StatelessWidget with Validator {
                           onTap: () {
                             showDatePicker(
                                     context: context,
-                                    initialEntryMode: DatePickerEntryMode.calendar,
+                                    initialEntryMode:
+                                        DatePickerEntryMode.calendar,
                                     initialDate: DateTime.now(),
-                                    firstDate: DateTime.now().subtract(const Duration(days: 3000)),
-                                    lastDate: DateTime.now().add(const Duration(days: 300)))
-                                .then((value) => value != null ? viewModel.controllerAlisTarihi.text = value.stringValue : null);
+                                    firstDate: DateTime.now()
+                                        .subtract(const Duration(days: 3000)),
+                                    lastDate: DateTime.now()
+                                        .add(const Duration(days: 300)))
+                                .then((value) => value != null
+                                    ? viewModel.controllerAlisTarihi.text =
+                                        value.stringValue
+                                    : null);
                           },
-                          decoration: InputDecoration(prefixIcon: Icon(Icons.calendar_today_outlined)),
+                          decoration: const InputDecoration(
+                              prefixIcon: Icon(Icons.calendar_today_outlined)),
                           controller: viewModel.controllerAlisTarihi,
                           readOnly: true,
                         ),
@@ -62,10 +87,16 @@ class YakitEklemeView extends StatelessWidget with Validator {
                             showTimePicker(
                                     useRootNavigator: false,
                                     context: context,
-                                    initialTime: viewModel.isNew ? TimeOfDay.now() : viewModel.yakitIslemModel.alisSaati!)
-                                .then((value) => viewModel.controllerAlisSaati.text = (value?.stringValue)!);
+                                    initialTime: viewModel.isNew
+                                        ? TimeOfDay.now()
+                                        : viewModel.yakitIslemModel.alisSaati!)
+                                .then((value) => value != null
+                                    ? viewModel.controllerAlisSaati.text =
+                                        (value.stringValue)
+                                    : null);
                           },
-                          decoration: const InputDecoration(prefixIcon: Icon(Icons.watch_later_outlined)),
+                          decoration: const InputDecoration(
+                              prefixIcon: Icon(Icons.watch_later_outlined)),
                           controller: viewModel.controllerAlisSaati,
                           readOnly: true,
                         ),
@@ -79,24 +110,50 @@ class YakitEklemeView extends StatelessWidget with Validator {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           viewModel.isNew
-                              ? Text("Son Km:${viewModel.carModel.aracKm}")
-                              : Text(
-                                  "${viewModel.birOncekiBirSonrakiKmHesapla().birOnceki}   ${viewModel.birOncekiBirSonrakiKmHesapla().birSonraki}"),
+                              ? Text(
+                                  "Son Km:${viewModel.carModel.aracKm}",
+                                  style: const TextStyle(color: Colors.green),
+                                )
+                              : Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Text(
+                                      "Bir Önceki Km:${viewModel.birOncekiBirSonrakiKmHesapla().birOnceki ?? "---"}",
+                                      style:
+                                          const TextStyle(color: Colors.green),
+                                    ),
+                                    Text(
+                                        "Bir Sonraki KM: ${viewModel.birOncekiBirSonrakiKmHesapla().birSonraki ?? "---"}",
+                                        style: const TextStyle(
+                                            color: Colors.green))
+                                  ],
+                                ),
                           YakitEklemeTextFormField(
                               validator: viewModel.isNew
-                                  ? (value) => value == "" ? bosOlamaz(value!) : kucukOlamaz(value!, viewModel.carModel.aracKm!)
-                                  : (value) => kmKontrol(value!, viewModel.birOncekiBirSonrakiKmHesapla().birOnceki,
-                                      viewModel.birOncekiBirSonrakiKmHesapla().birSonraki),
-                              icon: Icons.ac_unit_rounded,
+                                  ? (value) => value == ""
+                                      ? bosOlamaz(value!)
+                                      : kucukOlamaz(
+                                          value!, viewModel.carModel.aracKm!)
+                                  : (value) => kmKontrol(
+                                      value!,
+                                      viewModel
+                                          .birOncekiBirSonrakiKmHesapla()
+                                          .birOnceki,
+                                      viewModel
+                                          .birOncekiBirSonrakiKmHesapla()
+                                          .birSonraki),
+                              icon: Icons.add_road_rounded,
                               text: "ARAÇ KM",
                               suffixTex: "KM",
-                              controller: viewModel.controllerKm),
+                              controller: viewModel.controllerKm,
+                              keyboardType: TextInputType.number),
                         ],
                       );
                     },
                   ),
                   YakitEklemeTextFormField(
-                    icon: Icons.ac_unit_rounded,
+                    icon: Icons.local_gas_station_outlined,
                     text: "YAKIT TÜRÜ",
                     controller: viewModel.controllerYakitTuru,
                     readOnly: true,
@@ -105,74 +162,43 @@ class YakitEklemeView extends StatelessWidget with Validator {
                         showDialog<YakitTuruEnum>(
                             context: context,
                             builder: (context) {
-                              return YakitTuruSecimDialog(isLpg: true);
+                              return const YakitTuruSecimDialog(isLpg: true);
                             }).then((value) {
                           if (value != null) {
-                            viewModel.controllerYakitTuru.text = value.name.toUpperCase();
+                            viewModel.controllerYakitTuru.text =
+                                value.name.toUpperCase();
                           }
                         });
                       }
                     },
                   ),
                   YakitEklemeTextFormField(
-                    icon: Icons.ac_unit_rounded,
+                    icon: Icons.money,
                     text: "Tutar",
                     suffixTex: "TL",
                     controller: viewModel.controllerToplamTutar,
+                    keyboardType: TextInputType.number,
                     onChanged: (value) {
                       viewModel.yakitMiktariHesapla();
                     },
                   ),
                   YakitEklemeTextFormField(
-                    icon: Icons.ac_unit_rounded,
+                    icon: Icons.money,
                     text: "Birim Fiyat",
                     suffixTex: "TL",
                     controller: viewModel.controllerBirimFiyat,
+                    keyboardType: TextInputType.number,
                     onChanged: (value) {
                       viewModel.yakitMiktariHesapla();
                     },
                   ),
                   YakitEklemeTextFormField(
-                    icon: Icons.ac_unit_rounded,
+                    icon: Icons.gas_meter_outlined,
                     text: "Miktar",
                     suffixTex: "L",
                     controller: viewModel.controllerMiktar,
+                    keyboardType: TextInputType.number,
                   ),
-                  ButtonBar(alignment: MainAxisAlignment.center, children: [
-                    viewModel.isNew
-                        ? ElevatedButton(
-                            onPressed: () {
-                              if (viewModel.formKey.currentState!.validate()) {
-                                Navigator.pop<YakitIslemModel>(context, viewModel.modeliHazirla());
-                              }
-                            },
-                            child: Text("EKLE"))
-                        : Row(children: [
-                            Padding(
-                              padding: context.paddingLow,
-                              child: ElevatedButton(
-                                child: const Text("Güncelle"),
-                                onPressed: () {
-                                  if (viewModel.formKey.currentState!.validate()) {
-                                    Navigator.pop<YakitIslemModel>(
-                                      context,
-                                      viewModel.modeliHazirla(),
-                                    );
-                                  }
-                                },
-                              ),
-                            ),
-                            Padding(
-                              padding: context.paddingLow,
-                              child: ElevatedButton(
-                                child: const Text("Sil"),
-                                onPressed: () {
-                                  Navigator.pop<YakitIslemModel>(context, viewModel.modeliHazirla());
-                                },
-                              ),
-                            )
-                          ]),
-                  ])
                 ],
               ),
             ),

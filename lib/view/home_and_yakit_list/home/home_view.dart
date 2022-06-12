@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kartal/kartal.dart';
 
 import 'package:provider/provider.dart';
 
@@ -9,6 +10,7 @@ import 'package:yakit_takip_2022/model/yakit_islem_model.dart';
 import 'package:yakit_takip_2022/utils/date_time_extension.dart';
 
 import 'package:yakit_takip_2022/view/home_and_yakit_list/home_and_yakit_list_view_model.dart';
+import '../../../utils/date_time_extension.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({
@@ -25,12 +27,19 @@ class HomeView extends StatelessWidget {
         builder: (context, viewModel, child) {
           return Column(
             children: [
-              SizedBox(height: 15),
               Card(
-                  child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                child: Column(
+                  children: [
+                    Container(
+                      color: Colors.amberAccent,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Araç KM Verileri",
+                              style: Theme.of(context).textTheme.headline5),
+                        ],
+                      ),
+                    ),
                     Text(
                       "Yakıt Alınan Son KM = ${viewModel.yakitHesapModel.sonKm} KM",
                       style: Theme.of(context).textTheme.headline6,
@@ -38,15 +47,14 @@ class HomeView extends StatelessWidget {
                     Text(
                       "Toplam KM= ${viewModel.yakitHesapModel.toplamKm} KM",
                       style: Theme.of(context).textTheme.headline6,
-                    )
-                  ]),
-                ],
-              )),
+                    ),
+                  ],
+                ),
+              ),
               Visibility(
                   visible: viewModel.carModel.yakitTuru == YakitTuruEnum.LPG,
                   child: Column(
                     children: [
-                      const Divider(),
                       Card(
                         child: Column(
                           children: [
@@ -55,88 +63,148 @@ class HomeView extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text("Karma Yakıt Verileri", style: Theme.of(context).textTheme.headline5),
+                                  Text("Karma Yakıt Verileri",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline5),
                                 ],
                               ),
                             ),
-                            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                              Text(viewModel.yakitHesapModel.tLKm, style: Theme.of(context).textTheme.headline5),
-                              Text("TL/KM", style: Theme.of(context).textTheme.headline5),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(viewModel.yakitHesapModel.tLKm,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline5),
+                                  Text("TL/KM",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline5),
+                                ])
+                          ],
+                        ),
+                      ),
+                      Card(
+                        child: Column(
+                          children: [
+                            Container(
+                              color: Colors.amberAccent,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("LPG Verileri",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline5),
+                                ],
+                              ),
+                            ),
+                            Row(children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "${viewModel.yakitHesapModel.tLKmLpg} TL/KM",
+                                      style:
+                                          Theme.of(context).textTheme.subtitle1,
+                                    ),
+                                    Text(
+                                      "${viewModel.yakitHesapModel.litreKmLpg} L/100KM",
+                                      style:
+                                          Theme.of(context).textTheme.subtitle1,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      "Toplam Maliyet = ${viewModel.yakitHesapModel.toplamLpgMaliyeti} TL",
+                                      style:
+                                          Theme.of(context).textTheme.subtitle1,
+                                    ),
+                                    Text(
+                                      "Toplam Miktar   = ${viewModel.yakitHesapModel.toplamLpgMiktari} L ",
+                                      style:
+                                          Theme.of(context).textTheme.subtitle1,
+                                    )
+                                  ],
+                                ),
+                              )
                             ]),
                           ],
                         ),
                       ),
-                      const Divider(),
                       Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              Container(
-                                color: Colors.amberAccent,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text("LPG VERİLERİ", style: Theme.of(context).textTheme.headline5),
-                                  ],
+                        child: viewModel.yakitHesapModel.listYakitIslemModelLpg
+                                .isNotNullOrEmpty
+                            ? Padding(
+                                padding: context.paddingLow,
+                                child: Text(
+                                  "${viewModel.yakitHesapModel.listYakitIslemModelLpg.first!.alisTarihi!.stringValue} tarihinden itibaren tolpam ${viewModel.yakitHesapModel.listYakitIslemModelLpg.length} kez LPG alınmış olup ortalam LPG fiyatı ${viewModel.yakitHesapModel.ortalamaLpgMaliyeti} TL'dir.",
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context).textTheme.subtitle1,
                                 ),
-                              ),
-                              Row(children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text("${viewModel.yakitHesapModel.tLKmLpg} TL/KM"),
-                                      Text("${viewModel.yakitHesapModel.litreKmLpg} L/100KM"),
-                                    ],
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Text("Toplam Maliyet = ${viewModel.yakitHesapModel.toplamLpgMaliyeti} TL"),
-                                      Text("Toplam Miktar   = ${viewModel.yakitHesapModel.toplamLpgMiktari} L ")
-                                    ],
-                                  ),
-                                )
-                              ]),
-                            ],
-                          ),
-                        ),
+                              )
+                            : Text(""),
                       ),
-                      SfCartesianChart(
-                          primaryXAxis: CategoryAxis(),
-                          // Chart title
-                          title: ChartTitle(text: 'LPG Grafik'),
-                          // Enable legend
-                          legend: Legend(isVisible: true),
-                          // Enable tooltip
-                          tooltipBehavior: TooltipBehavior(enable: true),
-                          series: <ChartSeries<YakitIslemModel?, String>>[
-                            LineSeries<YakitIslemModel?, String>(
-                                dataSource: viewModel.yakitHesapModel.listYakitIslemModelLpg,
-                                xValueMapper: (YakitIslemModel? sales, _) => sales!.alisTarihi!.stringValue,
-                                yValueMapper: (YakitIslemModel? sales, _) => sales!.fiyati,
-                                name: "Fiyat",
+                      Padding(
+                        padding: context.paddingLow,
+                        child: SfCartesianChart(
+                            primaryXAxis: CategoryAxis(),
+                            // Chart title
 
-                                // Enable data label
-                                dataLabelSettings: DataLabelSettings(isVisible: true)),
-                            LineSeries<YakitIslemModel?, String>(
-                                dataSource: viewModel.yakitHesapModel.listYakitIslemModelLpg,
-                                xValueMapper: (YakitIslemModel? sales, _) => sales!.alisTarihi!.stringValue,
-                                yValueMapper: (YakitIslemModel? sales, _) => sales!.miktari! * 0.1,
-                                name: 'Miktar',
-                                // Enable data label
-                                dataLabelSettings: DataLabelSettings(isVisible: true))
-                          ])
+                            // Enable legend
+                            legend: Legend(
+                                isVisible: true,
+                                position: LegendPosition.bottom),
+
+                            // Enable tooltip
+                            tooltipBehavior: TooltipBehavior(enable: true),
+                            series: <ChartSeries<YakitIslemModel?, String>>[
+                              LineSeries<YakitIslemModel?, String>(
+                                  dataSource: viewModel
+                                      .yakitHesapModel.listYakitIslemModelLpg,
+                                  xValueMapper: (YakitIslemModel? sales, _) =>
+                                      sales!.alisTarihi!.stringValue,
+                                  yValueMapper: (YakitIslemModel? sales, _) =>
+                                      sales!.fiyati,
+                                  name: "Fiyat TL",
+
+                                  // Enable data label
+                                  dataLabelSettings:
+                                      DataLabelSettings(isVisible: true)),
+                              LineSeries<YakitIslemModel?, String>(
+                                  dataSource: viewModel
+                                      .yakitHesapModel.listYakitIslemModelLpg,
+                                  xValueMapper: (YakitIslemModel? sales, _) =>
+                                      sales!.alisTarihi!.stringValue,
+                                  yValueMapper: (YakitIslemModel? sales, _) =>
+                                      sales!.miktari!,
+                                  name: 'Miktar L',
+                                  // Enable data label
+                                  dataLabelSettings: DataLabelSettings(
+                                    isVisible: true,
+                                  ))
+                            ]),
+                      )
                     ],
                   )),
               const Divider(),
-              const Text(
-                "Akaryakıt Verileri",
-                textAlign: TextAlign.center,
+              Container(
+                color: Colors.amberAccent,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Akaryakıt Verileri",
+                        style: Theme.of(context).textTheme.headline5),
+                  ],
+                ),
               ),
               Divider(),
               Card(
@@ -148,51 +216,81 @@ class HomeView extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("${viewModel.yakitHesapModel.tlKmAkaryakit} TL/KM"),
-                          Text("${viewModel.yakitHesapModel.litreKmAkaryakit} L/100KM")
+                          Text(
+                              "${viewModel.yakitHesapModel.tlKmAkaryakit} TL/KM",
+                              style: Theme.of(context).textTheme.subtitle1),
+                          Text(
+                              "${viewModel.yakitHesapModel.litreKmAkaryakit} L/100KM",
+                              style: Theme.of(context).textTheme.subtitle1)
                         ],
                       ),
                     ),
                     Expanded(
+                      flex: 2,
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
                             "Toplam Maliyet = ${viewModel.yakitHesapModel.toplamAkaryakitMaliyeti} TL ",
-                            style: Theme.of(context).textTheme.titleSmall,
+                            style: Theme.of(context).textTheme.subtitle1,
                           ),
-                          Text("Toplam Miktar   = ${viewModel.yakitHesapModel.toplamAkaryakitMiktari} L "),
+                          Text(
+                              "Toplam Miktar   = ${viewModel.yakitHesapModel.toplamAkaryakitMiktari} L ",
+                              style: Theme.of(context).textTheme.subtitle1)
                         ],
                       ),
                     )
                   ],
                 ),
               )),
-              SfCartesianChart(
-                  primaryXAxis: CategoryAxis(),
-                  // Chart title
-                  title: ChartTitle(text: 'Akaryakıt Grafik'),
-                  // Enable legend
-                  legend: Legend(isVisible: true),
-                  // Enable tooltip
-                  tooltipBehavior: TooltipBehavior(enable: true),
-                  series: <ChartSeries<YakitIslemModel?, String>>[
-                    LineSeries<YakitIslemModel?, String>(
-                        dataSource: viewModel.yakitHesapModel.listYakitIslemModelAkaryakit,
-                        xValueMapper: (YakitIslemModel? sales, _) => sales!.alisTarihi!.stringValue,
-                        yValueMapper: (YakitIslemModel? sales, _) => sales!.fiyati,
-                        name: "Fiyat",
+              Card(
+                child: viewModel.yakitHesapModel.listYakitIslemModelAkaryakit
+                        .isNotNullOrEmpty
+                    ? Padding(
+                        padding: context.paddingLow,
+                        child: Text(
+                          "${viewModel.yakitHesapModel.listYakitIslemModelAkaryakit.first!.alisTarihi!.stringValue} tarihinden itibaren tolpam ${viewModel.yakitHesapModel.listYakitIslemModelAkaryakit.length} kez Akaryakıt alınmış olup ortalam Akaryakıt fiyatı ${viewModel.yakitHesapModel.ortalamaAkaryakitMaliyeti} TL'dir.",
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.subtitle1,
+                        ),
+                      )
+                    : Text(""),
+              ),
+              Padding(
+                padding: context.paddingLow,
+                child: SfCartesianChart(
+                    primaryXAxis: CategoryAxis(),
+                    legend: Legend(
+                      isVisible: true,
+                      position: LegendPosition.bottom,
+                    ),
+                    // Enable tooltip
+                    tooltipBehavior: TooltipBehavior(enable: true),
+                    series: <ChartSeries<YakitIslemModel?, String>>[
+                      LineSeries<YakitIslemModel?, String>(
+                          dataSource: viewModel
+                              .yakitHesapModel.listYakitIslemModelAkaryakit,
+                          xValueMapper: (YakitIslemModel? sales, _) =>
+                              sales!.alisTarihi!.stringValue,
+                          yValueMapper: (YakitIslemModel? sales, _) =>
+                              sales!.fiyati,
+                          name: "Fiyat",
 
-                        // Enable data label
-                        dataLabelSettings: DataLabelSettings(isVisible: true)),
-                    LineSeries<YakitIslemModel?, String>(
-                        dataSource: viewModel.yakitHesapModel.listYakitIslemModelAkaryakit,
-                        xValueMapper: (YakitIslemModel? sales, _) => sales!.alisTarihi!.stringValue,
-                        yValueMapper: (YakitIslemModel? sales, _) => sales!.miktari! * 0.1,
-                        name: 'Miktar',
-                        // Enable data label
-                        dataLabelSettings: DataLabelSettings(isVisible: true))
-                  ])
+                          // Enable data label
+                          dataLabelSettings:
+                              DataLabelSettings(isVisible: true)),
+                      LineSeries<YakitIslemModel?, String>(
+                          dataSource: viewModel
+                              .yakitHesapModel.listYakitIslemModelAkaryakit,
+                          xValueMapper: (YakitIslemModel? sales, _) =>
+                              sales!.alisTarihi!.stringValue,
+                          yValueMapper: (YakitIslemModel? sales, _) =>
+                              sales!.miktari!,
+                          name: 'Miktar',
+                          // Enable data label
+                          dataLabelSettings: DataLabelSettings(isVisible: true))
+                    ]),
+              )
             ],
           );
         },

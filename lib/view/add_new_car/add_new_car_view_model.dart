@@ -14,6 +14,7 @@ class AddNewCarViewModel extends ChangeNotifier {
   late CarModel carModel;
   late bool isNew;
   late int _color;
+  final formKey = GlobalKey<FormState>();
 
   set color(int color) {
     _color = color;
@@ -86,7 +87,7 @@ class AddNewCarViewModel extends ChangeNotifier {
   }
   AddNewCarViewModel.show({required this.carModel}) {
     isNew = false;
-    color = carModel.color ?? Color(0xFFFF1451).value;
+    color = carModel.color ?? const Color(0xFFFF1451).value;
     controllerAdi = TextEditingController(text: carModel.adi)
       ..addListener(() {
         notifyListeners();

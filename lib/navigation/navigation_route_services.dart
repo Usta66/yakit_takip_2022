@@ -9,7 +9,7 @@ import 'package:yakit_takip_2022/view/home_and_yakit_list/home_and_yakit_list_vi
 import 'package:yakit_takip_2022/view/yakit_ekleme/yakit_ekleme_view.dart';
 
 import '../model/car_model.dart';
-import '../model/delet_model.dart';
+
 import '../view/yakit_ekleme/yakit_ekleme_view_model.dart';
 
 enum NavigationEnum { homeAndYakitList, aracListesi, aracEkleme, aracGuncelleme, yakitEkleme, yakitGuncelleme }

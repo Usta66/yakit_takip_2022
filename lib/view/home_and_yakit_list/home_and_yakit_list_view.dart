@@ -14,7 +14,8 @@ import '../../navigation/navigation_route_services.dart';
 import '../yakit_ekleme/yakit_ekleme_view_model.dart';
 
 class HomeAndYakitListView extends StatelessWidget {
-  const HomeAndYakitListView({Key? key, required this.viewModel}) : super(key: key);
+  const HomeAndYakitListView({Key? key, required this.viewModel})
+      : super(key: key);
   final HomeAndYakitListViewModel viewModel;
   @override
   Widget build(BuildContext context) {
@@ -24,32 +25,36 @@ class HomeAndYakitListView extends StatelessWidget {
         initialIndex: 0,
         length: 2,
         child: Scaffold(
-          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
           floatingActionButton: FloatingActionButton(
             onPressed: () {
               goToWiewPush<YakitIslemModel>(
                   path: NavigationEnum.yakitEkleme,
-                  args: YakitEklemeViewModel.addNew(carModel: viewModel.carModel, yakitHesapModel: viewModel.yakitHesapModel),
+                  args: YakitEklemeViewModel.addNew(
+                      carModel: viewModel.carModel,
+                      yakitHesapModel: viewModel.yakitHesapModel),
                   function: (gelenModel) {
                     viewModel.modelInsert(gelenModel);
                   });
             },
+            child: Icon(Icons.add),
           ),
-          bottomNavigationBar: TabBar(tabs: [
+          bottomNavigationBar: const TabBar(tabs: [
             Tab(
               icon: Icon(
                 Icons.car_repair,
                 color: const Color(0xFF871092),
               ),
             ),
-            Tab(
-              icon: Icon(
+            const Tab(
+              icon: const Icon(
                 Icons.local_gas_station_outlined,
-                color: Color(0xFF871092),
+                color: const Color(0xFF871092),
               ),
             )
           ]),
-          body: TabBarView(
+          body: const TabBarView(
             children: [HomeView(), YakitListView()],
           ),
         ),

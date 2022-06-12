@@ -45,7 +45,7 @@ class YakitEklemeTextFormField extends StatelessWidget {
           )
         ],
       ),
-      Padding(padding: context.paddingLow, child: Divider())
+      Padding(padding: context.paddingLow, child: const Divider())
     ]);
   }
 }

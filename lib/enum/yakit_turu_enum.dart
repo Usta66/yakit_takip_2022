@@ -1,6 +1,9 @@
+// ignore_for_file: constant_identifier_names
+
 enum YakitTuruEnum { BENZIN, LPG, DIZEL, ELEKTIRIK }
 
 extension YakitTuruExtension on String {
+  // ignore: non_constant_identifier_names
   YakitTuruEnum? get YakitTuruValu {
     switch (this) {
       case "BENZIN":

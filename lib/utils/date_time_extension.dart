@@ -25,7 +25,7 @@ extension StringFromDateTime on String {
   }
 
   TimeOfDay get stringFromTimeOfDay {
-    return TimeOfDay.fromDateTime(this.stringToDayOfTime);
+    return TimeOfDay.fromDateTime(stringToDayOfTime);
   }
 }
 
