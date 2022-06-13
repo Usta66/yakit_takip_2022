@@ -63,6 +63,9 @@ dependencies:
 
   syncfusion_flutter_charts: ^20.1.56
 
+
+  google_mobile_ads: ^1.2.0
+
  
 
 dev_dependencies:
