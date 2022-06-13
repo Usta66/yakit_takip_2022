@@ -5,6 +5,7 @@ import 'package:kartal/kartal.dart';
 
 class AracListViewModel extends ChangeNotifier {
   late DatabaseService _dbServis;
+
   GlobalKey scaffoldKey = GlobalKey<ScaffoldState>();
   List<CarModel?> listCarModel = [];
 

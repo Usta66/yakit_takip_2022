@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:yakit_takip_2022/base/base_view.dart';
 import 'package:yakit_takip_2022/components/circle_avatar_image_and_alphabet.dart';
 import 'package:yakit_takip_2022/components/my_app_bar.dart';
+import 'package:yakit_takip_2022/constants/app_constants.dart';
 import 'package:yakit_takip_2022/model/car_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -66,7 +67,7 @@ class AracListView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text("Hakkında", style: Theme.of(context).textTheme.subtitle1),
-                  Text("Bu uygulama aracınızın yakıt tüketimini tüm detaylarıyla takip edebilmeniz amaçıyla geliştirilmiştir.")
+                  const Text("Bu uygulama aracınızın yakıt tüketimini tüm detaylarıyla takip edebilmeniz amaçıyla geliştirilmiştir.")
                 ],
               )),
           const Divider(),
@@ -75,25 +76,35 @@ class AracListView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Dil", style: Theme.of(context).textTheme.subtitle1),
-                Row(
-                  children: [
-                    Text("Türkçe", style: Theme.of(context).textTheme.bodyText1),
-                    Switch(
-                      value: true,
-                      onChanged: (value) {},
-                    )
-                  ],
-                ),
-                Switch(
-                    value: true,
-                    onChanged: (_) {
-                      ThemeData(brightness: Brightness.dark);
-                    }),
+                Text("dil".tr(), style: Theme.of(context).textTheme.subtitle1),
+                Center(
+                  child: DropdownButton<String>(
+                      hint: Text(context.locale.languageCode == "en" ? "English" : "Türkçe"),
+                      items: const [
+                        DropdownMenuItem<String>(child: Text("Türkçe"), value: "tr"),
+                        DropdownMenuItem<String>(child: Text("English"), value: "en")
+                      ],
+                      onChanged: (value) {
+                        if (value == "tr") {
+                          context.setLocale(LocaleConstants.TR_LOCALE);
+                        } else if (value == "en") {
+                          context.setLocale(LocaleConstants.EN_LOCALE);
+                        }
+                      }),
+                )
               ],
             ),
           ),
-          Divider()
+          const Divider(),
+          ButtonBar(
+            alignment: MainAxisAlignment.start,
+            children: [
+              IconButton(onPressed: () {}, icon: Icon(Icons.mail_outline)),
+              IconButton(onPressed: () {}, icon: Icon(Icons.ac_unit_outlined))
+            ],
+          ),
+          Divider(),
+          Text("v.1.0.0")
         ],
       ),
     );
@@ -168,7 +179,7 @@ class AracListView extends StatelessWidget {
                                 flex: 2,
                                 child: Text(
                                   carModel.ortalamaTl.toString(),
-                                  style: TextStyle(color: Colors.red, fontSize: 30),
+                                  style: const TextStyle(color: Colors.red, fontSize: 30),
                                 )),
                             Expanded(
                               flex: 2,
