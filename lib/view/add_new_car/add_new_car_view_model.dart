@@ -52,13 +52,13 @@ class AddNewCarViewModel extends ChangeNotifier {
       CropAspectRatioPreset.ratio16x9
     ], uiSettings: [
       AndroidUiSettings(
-          toolbarTitle: 'Cropper',
+          toolbarTitle: 'Kırp',
           toolbarColor: Colors.deepOrange,
           toolbarWidgetColor: Colors.white,
           initAspectRatio: CropAspectRatioPreset.original,
           lockAspectRatio: false),
       IOSUiSettings(
-        title: 'Cropper',
+        title: 'Kırp',
       )
     ]);
 
@@ -71,7 +71,7 @@ class AddNewCarViewModel extends ChangeNotifier {
 
   AddNewCarViewModel.addNew() {
     isNew = true;
-    color = Color(0xFFFF1451).value;
+    color = Color.fromARGB(198, 255, 228, 20).value;
     carModel = CarModel();
     controllerAdi = TextEditingController()
       ..addListener(() {

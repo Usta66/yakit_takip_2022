@@ -28,25 +28,19 @@ class AddNewCarView extends StatelessWidget with Validator {
     return BaseView(
         viewModel: viewModel,
         child: Scaffold(
-            appBar: AppBar(
-                title:
-                    viewModel.isNew ? Text("Yeni Araç Ekle") : Text("Güncelle"),
-                actions: [
-                  Padding(
-                    padding: context.paddingLow,
-                    child: IconButton(
-                      onPressed: () {
-                        viewModel.formKey.currentState!.validate()
-                            ? Navigator.pop<CarModel>(
-                                context, viewModel.modeliHazirla())
-                            : null;
-                      },
-                      icon: Icon(Icons.check),
-                      iconSize: context.mediumValue,
-                      color: Colors.amber,
-                    ),
-                  )
-                ]),
+            appBar: AppBar(title: viewModel.isNew ? Text("Yeni Araç Ekle") : Text("Güncelle"), actions: [
+              Padding(
+                padding: context.paddingLow,
+                child: IconButton(
+                  onPressed: () {
+                    viewModel.formKey.currentState!.validate() ? Navigator.pop<CarModel>(context, viewModel.modeliHazirla()) : null;
+                  },
+                  icon: Icon(Icons.check),
+                  iconSize: context.mediumValue,
+                  color: Colors.amber,
+                ),
+              )
+            ]),
             body: SingleChildScrollView(
               child: Center(
                   child: Padding(
@@ -55,46 +49,36 @@ class AddNewCarView extends StatelessWidget with Validator {
                         runSpacing: 10,
                         alignment: WrapAlignment.center,
                         children: [
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                IconButton(
-                                    onPressed: () {
-                                      viewModel.getImage(false);
-                                    },
-                                    icon:
-                                        const Icon(Icons.add_a_photo_outlined)),
-                                Consumer<AddNewCarViewModel>(
-                                  builder: (context, value, child) {
-                                    return CircleAvatarImageAndAlphabet(
-                                      color: viewModel.color,
-                                      imagePath: viewModel.image == null
-                                          ? null
-                                          : viewModel.image!.path,
-                                      radius: context.width * 0.2,
-                                      text: viewModel.controllerAdi.text.isEmpty
-                                          ? null
-                                          : viewModel.controllerAdi.text,
-                                      onTap: () {
-                                        viewModel.renkSec(context);
-                                      },
-                                    );
+                          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                            IconButton(
+                                onPressed: () {
+                                  viewModel.getImage(false);
+                                },
+                                icon: const Icon(Icons.add_a_photo_outlined)),
+                            Consumer<AddNewCarViewModel>(
+                              builder: (context, value, child) {
+                                return CircleAvatarImageAndAlphabet(
+                                  color: viewModel.color,
+                                  imagePath: viewModel.image == null ? null : viewModel.image!.path,
+                                  radius: context.width * 0.2,
+                                  text: viewModel.controllerAdi.text.isEmpty ? null : viewModel.controllerAdi.text,
+                                  onTap: () {
+                                    viewModel.renkSec(context);
                                   },
-                                ),
-                                IconButton(
-                                    onPressed: () {
-                                      viewModel.getImage(true);
-                                    },
-                                    icon: const Icon(Icons.file_upload))
-                              ]),
+                                );
+                              },
+                            ),
+                            IconButton(
+                                onPressed: () {
+                                  viewModel.getImage(true);
+                                },
+                                icon: const Icon(Icons.file_upload))
+                          ]),
                           Form(
                             key: viewModel.formKey,
                             child: Column(
                               children: [
-                                BaseTextFormField(
-                                    labelText: "Adı",
-                                    controller: viewModel.controllerAdi,
-                                    validator: (value) => bosOlamaz(value)),
+                                BaseTextFormField(labelText: "Adı", controller: viewModel.controllerAdi, validator: (value) => bosOlamaz(value)),
                                 BaseTextFormField(
                                     validator: (value) => bosOlamaz(value),
                                     labelText: "Araçın KM'si",
@@ -112,22 +96,15 @@ class AddNewCarView extends StatelessWidget with Validator {
                                             return const YakitTuruSecimDialog();
                                           }).then((value) {
                                         if (value != null) {
-                                          viewModel.controllerYakitTuru.text =
-                                              value.name;
+                                          viewModel.controllerYakitTuru.text = value.name;
                                         }
                                       });
                                     }),
                                 Consumer<AddNewCarViewModel>(
-                                  builder: (context, value, child) =>
-                                      Visibility(
-                                    visible:
-                                        viewModel.controllerYakitTuru.text ==
-                                            YakitTuruEnum.LPG.name,
+                                  builder: (context, value, child) => Visibility(
+                                    visible: viewModel.controllerYakitTuru.text == YakitTuruEnum.LPG.name,
                                     child: BaseTextFormField(
-                                        keyboardType: TextInputType.number,
-                                        labelText: "LPG Depo Kapasite",
-                                        controller:
-                                            viewModel.controllerLpgDepo),
+                                        keyboardType: TextInputType.number, labelText: "LPG Depo Kapasite", controller: viewModel.controllerLpgDepo),
                                   ),
                                 ),
                                 BaseTextFormField(
