@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:yakit_takip_2022/base/base_view.dart';
 import 'package:yakit_takip_2022/components/circle_avatar_image_and_alphabet.dart';
@@ -9,6 +10,7 @@ import 'package:yakit_takip_2022/model/car_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:yakit_takip_2022/navigation/navigation_services.dart';
+import 'package:yakit_takip_2022/services/admob_service.dart';
 
 import 'package:yakit_takip_2022/view/arac_list/arac_list_view_model.dart';
 import 'package:yakit_takip_2022/view/home_and_yakit_list/home_and_yakit_list_view_model.dart';
@@ -37,15 +39,37 @@ class AracListView extends StatelessWidget {
           ),
           drawer: buildDrawer(context),
           body: buildBody(context),
-          floatingActionButton: FloatingActionButton(
-            child: const Icon(Icons.add),
-            onPressed: () {
-              goToWiewPush<CarModel>(
-                  path: NavigationEnum.aracEkleme,
-                  function: (carModel) {
-                    viewModel.modelInsert(carModel);
-                  });
+          bottomSheet: Consumer<AdmobService>(
+            builder: (context, admobService, child) {
+              AdmobService.instance!.bannerAdStart(size: AdSize.largeBanner);
+              print(admobService.isBannerReady);
+              if (admobService.isBannerReady) {
+                return Padding(
+                  padding: EdgeInsets.only(bottom: context.highValue),
+                  child: SizedBox(
+                    child: AdWidget(
+                      ad: admobService.bannerAd,
+                    ),
+                    height: admobService.bannerAd.size.height.toDouble(),
+                  ),
+                );
+              } else {
+                return SizedBox();
+              }
             },
+          ),
+          floatingActionButton: Align(
+            alignment: Alignment.bottomRight,
+            child: FloatingActionButton(
+              child: const Icon(Icons.add),
+              onPressed: () {
+                goToWiewPush<CarModel>(
+                    path: NavigationEnum.aracEkleme,
+                    function: (carModel) {
+                      viewModel.modelInsert(carModel);
+                    });
+              },
+            ),
           ),
         ));
   }
@@ -147,6 +171,7 @@ class AracListView extends StatelessWidget {
                       padding: context.paddingLow,
                       child: GestureDetector(
                         onTap: () {
+                          AdmobService.instance!.bannerAd.dispose();
                           goToWiewPush(
                               path: NavigationEnum.homeAndYakitList,
                               args: HomeAndYakitListViewModel(carModel: carModel, aracListViewModel: viewModel));
