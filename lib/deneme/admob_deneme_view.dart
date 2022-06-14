@@ -65,10 +65,12 @@ class _AdmobDenemeViewState extends State<AdmobDenemeView> {
               Container(
                 height: _bannerAd.size.height.toDouble(),
                 width: _bannerAd.size.width.toDouble(),
-                child: AdWidget(ad: _bannerAd),
+                child: AdWidget(ad: _bannerAd,key: Key("value"),),
               ),
             Container(height: 70, color: Colors.amber),
+            
             Container(height: 70, color: Colors.amber),
+           
             ElevatedButton(
                 onPressed: () {
                   if (_isInterstitialAdReady) {

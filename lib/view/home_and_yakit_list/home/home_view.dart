@@ -42,7 +42,8 @@ class HomeView extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("Araç KM Verileri", style: Theme.of(context).textTheme.headline5),
+                            Text("Araç KM Verileri",
+                                style: Theme.of(context).textTheme.headline5),
                           ],
                         ),
                       ),
@@ -69,14 +70,25 @@ class HomeView extends StatelessWidget {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text("Karma Yakıt Verileri", style: Theme.of(context).textTheme.headline5),
+                                    Text("Karma Yakıt Verileri",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline5),
                                   ],
                                 ),
                               ),
-                              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                                Text(viewModel.yakitHesapModel.tLKm, style: Theme.of(context).textTheme.headline5),
-                                Text("TL/KM", style: Theme.of(context).textTheme.headline5),
-                              ])
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(viewModel.yakitHesapModel.tLKm,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline5),
+                                    Text("TL/KM",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline5),
+                                  ])
                             ],
                           ),
                         ),
@@ -88,22 +100,30 @@ class HomeView extends StatelessWidget {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text("LPG Verileri", style: Theme.of(context).textTheme.headline5),
+                                    Text("LPG Verileri",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline5),
                                   ],
                                 ),
                               ),
                               Row(children: [
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         "${viewModel.yakitHesapModel.tLKmLpg} TL/KM",
-                                        style: Theme.of(context).textTheme.subtitle1,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle1,
                                       ),
                                       Text(
                                         "${viewModel.yakitHesapModel.litreKmLpg} L/100KM",
-                                        style: Theme.of(context).textTheme.subtitle1,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle1,
                                       ),
                                     ],
                                   ),
@@ -115,11 +135,15 @@ class HomeView extends StatelessWidget {
                                     children: [
                                       Text(
                                         "Toplam Maliyet = ${viewModel.yakitHesapModel.toplamLpgMaliyeti} TL",
-                                        style: Theme.of(context).textTheme.subtitle1,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle1,
                                       ),
                                       Text(
                                         "Toplam Miktar   = ${viewModel.yakitHesapModel.toplamLpgMiktari} L ",
-                                        style: Theme.of(context).textTheme.subtitle1,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle1,
                                       )
                                     ],
                                   ),
@@ -129,20 +153,23 @@ class HomeView extends StatelessWidget {
                           ),
                         ),
                         Card(
-                          child: viewModel.yakitHesapModel.listYakitIslemModelLpg.isNotNullOrEmpty
+                          child: viewModel.yakitHesapModel
+                                  .listYakitIslemModelLpg.isNotNullOrEmpty
                               ? Padding(
                                   padding: context.paddingLow,
                                   child: Text(
                                     "${viewModel.yakitHesapModel.listYakitIslemModelLpg.first!.alisTarihi!.stringValue} tarihinden itibaren tolpam ${viewModel.yakitHesapModel.listYakitIslemModelLpg.length} kez LPG alınmış olup ortalam LPG fiyatı ${viewModel.yakitHesapModel.ortalamaLpgMaliyeti} TL'dir.",
                                     textAlign: TextAlign.center,
-                                    style: Theme.of(context).textTheme.subtitle1,
+                                    style:
+                                        Theme.of(context).textTheme.subtitle1,
                                   ),
                                 )
                               : Text(""),
                         ),
                         Consumer<AdmobService>(
                           builder: (context, admobService, child) {
-                            AdmobService.instance!.bannerAdStart(size: AdSize.banner);
+                            AdmobService.instance!
+                                .bannerAdStart(size: AdSize.largeBanner);
                             print(admobService.isBannerReady);
                             if (admobService.isBannerReady) {
                               return Padding(
@@ -151,7 +178,8 @@ class HomeView extends StatelessWidget {
                                   child: AdWidget(
                                     ad: admobService.bannerAd,
                                   ),
-                                  height: admobService.bannerAd.size.height.toDouble(),
+                                  height: admobService.bannerAd.size.height
+                                      .toDouble(),
                                 ),
                               );
                             } else {
@@ -163,26 +191,36 @@ class HomeView extends StatelessWidget {
                           padding: context.paddingLow,
                           child: SfCartesianChart(
                               primaryXAxis: CategoryAxis(),
+                              title: ChartTitle(text: "LPG"),
                               // Chart title
 
                               // Enable legend
-                              legend: Legend(isVisible: true, position: LegendPosition.bottom),
+                              legend: Legend(
+                                  isVisible: true,
+                                  position: LegendPosition.bottom),
 
                               // Enable tooltip
                               tooltipBehavior: TooltipBehavior(enable: true),
                               series: <ChartSeries<YakitIslemModel?, String>>[
                                 LineSeries<YakitIslemModel?, String>(
-                                    dataSource: viewModel.yakitHesapModel.listYakitIslemModelLpg,
-                                    xValueMapper: (YakitIslemModel? sales, _) => sales!.alisTarihi!.stringValue,
-                                    yValueMapper: (YakitIslemModel? sales, _) => sales!.fiyati,
+                                    dataSource: viewModel
+                                        .yakitHesapModel.listYakitIslemModelLpg,
+                                    xValueMapper: (YakitIslemModel? sales, _) =>
+                                        sales!.alisTarihi!.stringValue,
+                                    yValueMapper: (YakitIslemModel? sales, _) =>
+                                        sales!.fiyati,
                                     name: "Fiyat TL",
 
                                     // Enable data label
-                                    dataLabelSettings: DataLabelSettings(isVisible: true)),
+                                    dataLabelSettings:
+                                        DataLabelSettings(isVisible: true)),
                                 LineSeries<YakitIslemModel?, String>(
-                                    dataSource: viewModel.yakitHesapModel.listYakitIslemModelLpg,
-                                    xValueMapper: (YakitIslemModel? sales, _) => sales!.alisTarihi!.stringValue,
-                                    yValueMapper: (YakitIslemModel? sales, _) => sales!.miktari!,
+                                    dataSource: viewModel
+                                        .yakitHesapModel.listYakitIslemModelLpg,
+                                    xValueMapper: (YakitIslemModel? sales, _) =>
+                                        sales!.alisTarihi!.stringValue,
+                                    yValueMapper: (YakitIslemModel? sales, _) =>
+                                        sales!.miktari!,
                                     name: 'Miktar L',
                                     // Enable data label
                                     dataLabelSettings: DataLabelSettings(
@@ -198,7 +236,8 @@ class HomeView extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Akaryakıt Verileri", style: Theme.of(context).textTheme.headline5),
+                      Text("Akaryakıt Verileri",
+                          style: Theme.of(context).textTheme.headline5),
                     ],
                   ),
                 ),
@@ -212,8 +251,12 @@ class HomeView extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("${viewModel.yakitHesapModel.tlKmAkaryakit} TL/KM", style: Theme.of(context).textTheme.subtitle1),
-                            Text("${viewModel.yakitHesapModel.litreKmAkaryakit} L/100KM", style: Theme.of(context).textTheme.subtitle1)
+                            Text(
+                                "${viewModel.yakitHesapModel.tlKmAkaryakit} TL/KM",
+                                style: Theme.of(context).textTheme.subtitle1),
+                            Text(
+                                "${viewModel.yakitHesapModel.litreKmAkaryakit} L/100KM",
+                                style: Theme.of(context).textTheme.subtitle1)
                           ],
                         ),
                       ),
@@ -226,7 +269,8 @@ class HomeView extends StatelessWidget {
                               "Toplam Maliyet = ${viewModel.yakitHesapModel.toplamAkaryakitMaliyeti} TL ",
                               style: Theme.of(context).textTheme.subtitle1,
                             ),
-                            Text("Toplam Miktar   = ${viewModel.yakitHesapModel.toplamAkaryakitMiktari} L ",
+                            Text(
+                                "Toplam Miktar   = ${viewModel.yakitHesapModel.toplamAkaryakitMiktari} L ",
                                 style: Theme.of(context).textTheme.subtitle1)
                           ],
                         ),
@@ -235,7 +279,8 @@ class HomeView extends StatelessWidget {
                   ),
                 )),
                 Card(
-                  child: viewModel.yakitHesapModel.listYakitIslemModelAkaryakit.isNotNullOrEmpty
+                  child: viewModel.yakitHesapModel.listYakitIslemModelAkaryakit
+                          .isNotNullOrEmpty
                       ? Padding(
                           padding: context.paddingLow,
                           child: Text(
@@ -246,10 +291,34 @@ class HomeView extends StatelessWidget {
                         )
                       : Text(""),
                 ),
+                Consumer<AdmobService>(
+                  builder: (context, admobService, child) {
+                    AdmobService.instance!
+                        .bannerAdStart(size: AdSize.largeBanner);
+                    print(admobService.isBannerReady);
+                    if (admobService.isBannerReady) {
+                      return Padding(
+                        padding: context.paddingLow,
+                        child: SizedBox(
+                          child: AdWidget(
+                            ad: admobService.bannerAd,
+                          ),
+                          height: admobService.bannerAd.size.height.toDouble(),
+                        ),
+                      );
+                    } else {
+                      return SizedBox();
+                    }
+                  },
+                ),
                 Padding(
-                  padding: context.paddingLow,
+                  padding: EdgeInsets.only(bottom: context.mediumValue),
                   child: SfCartesianChart(
                       primaryXAxis: CategoryAxis(),
+                      title: ChartTitle(
+                          text: "Akaryakıt",
+                          backgroundColor: Colors.amber,
+                          textStyle: Theme.of(context).textTheme.headline5),
                       legend: Legend(
                         isVisible: true,
                         position: LegendPosition.bottom,
@@ -258,20 +327,28 @@ class HomeView extends StatelessWidget {
                       tooltipBehavior: TooltipBehavior(enable: true),
                       series: <ChartSeries<YakitIslemModel?, String>>[
                         LineSeries<YakitIslemModel?, String>(
-                            dataSource: viewModel.yakitHesapModel.listYakitIslemModelAkaryakit,
-                            xValueMapper: (YakitIslemModel? sales, _) => sales!.alisTarihi!.stringValue,
-                            yValueMapper: (YakitIslemModel? sales, _) => sales!.fiyati,
+                            dataSource: viewModel
+                                .yakitHesapModel.listYakitIslemModelAkaryakit,
+                            xValueMapper: (YakitIslemModel? sales, _) =>
+                                sales!.alisTarihi!.stringValue,
+                            yValueMapper: (YakitIslemModel? sales, _) =>
+                                sales!.fiyati,
                             name: "Fiyat",
 
                             // Enable data label
-                            dataLabelSettings: DataLabelSettings(isVisible: true)),
+                            dataLabelSettings:
+                                DataLabelSettings(isVisible: true)),
                         LineSeries<YakitIslemModel?, String>(
-                            dataSource: viewModel.yakitHesapModel.listYakitIslemModelAkaryakit,
-                            xValueMapper: (YakitIslemModel? sales, _) => sales!.alisTarihi!.stringValue,
-                            yValueMapper: (YakitIslemModel? sales, _) => sales!.miktari!,
+                            dataSource: viewModel
+                                .yakitHesapModel.listYakitIslemModelAkaryakit,
+                            xValueMapper: (YakitIslemModel? sales, _) =>
+                                sales!.alisTarihi!.stringValue,
+                            yValueMapper: (YakitIslemModel? sales, _) =>
+                                sales!.miktari!,
                             name: 'Miktar',
                             // Enable data label
-                            dataLabelSettings: DataLabelSettings(isVisible: true))
+                            dataLabelSettings:
+                                DataLabelSettings(isVisible: true))
                       ]),
                 )
               ],

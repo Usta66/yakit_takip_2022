@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'package:provider/provider.dart';
 
@@ -16,6 +17,8 @@ import '../../model/car_model.dart';
 
 import 'package:kartal/kartal.dart';
 
+import '../../services/admob_service.dart';
+
 class AddNewCarView extends StatelessWidget with Validator {
   const AddNewCarView({
     Key? key,
@@ -25,6 +28,8 @@ class AddNewCarView extends StatelessWidget with Validator {
   final AddNewCarViewModel viewModel;
   @override
   Widget build(BuildContext context) {
+
+     
     return BaseView(
         viewModel: viewModel,
         child: Scaffold(
@@ -41,6 +46,24 @@ class AddNewCarView extends StatelessWidget with Validator {
                 ),
               )
             ]),
+               bottomNavigationBar: Consumer<AdmobService>(
+            builder: (context, admobService, child) {
+              print("consumer çalıştı");
+              AdmobService.instance!.bannerAdStart(size: AdSize.largeBanner);
+              print(admobService.isBannerReady);
+              if (admobService.isBannerReady) {
+                return SizedBox(
+                  child: AdWidget(
+                    ad: admobService.bannerAd,
+                  ),
+                  height: admobService.bannerAd.size.height.toDouble(),
+                );
+              } else {
+                return SizedBox(
+                    height: admobService.bannerAd.size.height.toDouble());
+              }
+            },
+          ),
             body: SingleChildScrollView(
               child: Center(
                   child: Padding(

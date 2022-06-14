@@ -34,7 +34,7 @@ class AdmobService extends ChangeNotifier {
         request: AdRequest())
       ..load(); */
 
-    /*    InterstitialAd.load(
+        InterstitialAd.load(
         adUnitId: "ca-app-pub-3940256099942544/1033173712",
         request: AdRequest(),
         adLoadCallback: InterstitialAdLoadCallback(onAdLoaded: (ad) {
@@ -42,14 +42,15 @@ class AdmobService extends ChangeNotifier {
           _isInterstitialAdReady = true;
         }, onAdFailedToLoad: (eror) {
           print(eror.message);
-        })); */
+        })); 
   }
 
   // BannerAd get getBannerAd => _bannerAd;
   void setIsBannerReady(bool value) {
     isBannerReady = value;
+    print("------------------------------------------------------------------------------------------setIsBannerReady");
 
-    notifyListeners();
+     notifyListeners();
   }
 
   void bannerAdStart({required AdSize size}) {
@@ -66,15 +67,15 @@ class AdmobService extends ChangeNotifier {
         }, onAdFailedToLoad: (ad, error) {
           print(" admob hata${error.message}");
 
-          isBannerReady = false;
+          // isBannerReady = false;
           ad.dispose();
         }),
         request: AdRequest())
       ..load();
   }
 
-  /* InterstitialAd get getInterstitialAd => _interstitialAd;
-  bool get getIsInterstitialAdReady => _isInterstitialAdReady; */
+   InterstitialAd get getInterstitialAd => _interstitialAd;
+  bool get getIsInterstitialAdReady => _isInterstitialAdReady;
 
 /*   @override
   void dispose() {

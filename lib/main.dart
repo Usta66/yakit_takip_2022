@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
 
       onGenerateRoute: (settings) => NavigatorRouteServices.onRouteGenarete(settings),
 
-      // home: AdmobView(viewModel: AdmobStatelessViewModel())//
+     //home: AdmobDenemeView()//
       //
     );
   }

@@ -11,6 +11,8 @@ import 'package:yakit_takip_2022/services/database_service.dart';
 import '../../model/car_model.dart';
 
 class AddNewCarViewModel extends ChangeNotifier {
+
+  
   late CarModel carModel;
   late bool isNew;
   late int _color;
