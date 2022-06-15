@@ -18,23 +18,7 @@ class AdmobService extends ChangeNotifier {
   bool _isInterstitialAdReady = false;
 
   AdmobService._init() {
-    /*   bannerAd = BannerAd(
-        size: AdSize.largeBanner,
-        adUnitId: "ca-app-pub-3940256099942544/6300978111",
-        listener: BannerAdListener(onAdLoaded: (ad) {
-          isBannerReady = true;
-          notifyListeners();
-          print("admob calıştı");
-        }, onAdFailedToLoad: (ad, error) {
-          print(" admob hata${error.message}");
-
-          isBannerReady = false;
-          ad.dispose();
-        }),
-        request: AdRequest())
-      ..load(); */
-
-        InterstitialAd.load(
+    InterstitialAd.load(
         adUnitId: "ca-app-pub-3940256099942544/1033173712",
         request: AdRequest(),
         adLoadCallback: InterstitialAdLoadCallback(onAdLoaded: (ad) {
@@ -42,15 +26,14 @@ class AdmobService extends ChangeNotifier {
           _isInterstitialAdReady = true;
         }, onAdFailedToLoad: (eror) {
           print(eror.message);
-        })); 
+        }));
   }
 
   // BannerAd get getBannerAd => _bannerAd;
   void setIsBannerReady(bool value) {
     isBannerReady = value;
-    print("------------------------------------------------------------------------------------------setIsBannerReady");
 
-     notifyListeners();
+    notifyListeners();
   }
 
   void bannerAdStart({required AdSize size}) {
@@ -61,9 +44,6 @@ class AdmobService extends ChangeNotifier {
           if (isBannerReady == false) {
             setIsBannerReady(true);
           }
-
-          //notifyListeners();
-          print("admob calıştı");
         }, onAdFailedToLoad: (ad, error) {
           print(" admob hata${error.message}");
 
@@ -74,15 +54,6 @@ class AdmobService extends ChangeNotifier {
       ..load();
   }
 
-   InterstitialAd get getInterstitialAd => _interstitialAd;
+  InterstitialAd get getInterstitialAd => _interstitialAd;
   bool get getIsInterstitialAdReady => _isInterstitialAdReady;
-
-/*   @override
-  void dispose() {
-    print("dispos çalıştı" * 10);
-    // TODO: implement dispose
-    super.dispose();
-
-    _bannerAd.dispose();
-  } */
 }

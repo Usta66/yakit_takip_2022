@@ -165,9 +165,9 @@ class DatabaseService extends IDatabaseService {
   Future<List<YakitIslemModel?>> getAracYakitListesi({required int aracId}) async {
     if (_db != null) {
       List<Map<String, Object?>> modelMaps =
-          (await _db!.query(dbUtils.getTableName<YakitIslemModel>(), where: "${EnumYakitIslemTablosuColumnName.aracId.name}=?", whereArgs: [aracId]));
+          await _db!.query(dbUtils.getTableName<YakitIslemModel>(), where: "${EnumYakitIslemTablosuColumnName.aracId.name}=?", whereArgs: [aracId]);
 
-      var result = modelMaps.map((e) => dbUtils.fromMap<YakitIslemModel>(e)).toList();
+      List<YakitIslemModel?> result = modelMaps.map((e) => dbUtils.fromMap<YakitIslemModel>(e)).toList();
 
       return result;
     } else {

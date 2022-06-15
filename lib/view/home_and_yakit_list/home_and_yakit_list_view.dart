@@ -11,11 +11,11 @@ import 'package:yakit_takip_2022/view/home_and_yakit_list/home_and_yakit_list_vi
 import 'package:yakit_takip_2022/view/home_and_yakit_list/yakit_list/yakit_list_view.dart';
 
 import '../../navigation/navigation_route_services.dart';
+import '../../services/admob_service.dart';
 import '../yakit_ekleme/yakit_ekleme_view_model.dart';
 
 class HomeAndYakitListView extends StatelessWidget {
-  const HomeAndYakitListView({Key? key, required this.viewModel})
-      : super(key: key);
+  const HomeAndYakitListView({Key? key, required this.viewModel}) : super(key: key);
   final HomeAndYakitListViewModel viewModel;
   @override
   Widget build(BuildContext context) {
@@ -25,20 +25,21 @@ class HomeAndYakitListView extends StatelessWidget {
         initialIndex: 0,
         length: 2,
         child: Scaffold(
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
           floatingActionButton: FloatingActionButton(
             onPressed: () {
+              if (AdmobService.instance!.getIsInterstitialAdReady) {
+                AdmobService.instance!.getInterstitialAd.show();
+              }
+
               goToWiewPush<YakitIslemModel>(
                   path: NavigationEnum.yakitEkleme,
-                  args: YakitEklemeViewModel.addNew(
-                      carModel: viewModel.carModel,
-                      yakitHesapModel: viewModel.yakitHesapModel),
+                  args: YakitEklemeViewModel.addNew(carModel: viewModel.carModel, yakitHesapModel: viewModel.yakitHesapModel),
                   function: (gelenModel) {
                     viewModel.modelInsert(gelenModel);
                   });
             },
-            child: Icon(Icons.add),
+            child: const Icon(Icons.add),
           ),
           bottomNavigationBar: const TabBar(tabs: [
             Tab(

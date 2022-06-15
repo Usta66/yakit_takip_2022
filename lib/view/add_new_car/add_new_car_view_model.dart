@@ -11,8 +11,6 @@ import 'package:yakit_takip_2022/services/database_service.dart';
 import '../../model/car_model.dart';
 
 class AddNewCarViewModel extends ChangeNotifier {
-
-  
   late CarModel carModel;
   late bool isNew;
   late int _color;
@@ -26,8 +24,6 @@ class AddNewCarViewModel extends ChangeNotifier {
   int get color => _color;
 
   late TextEditingController controllerAdi, controllerYakitTuru, controllerLpgDepo, controllerAracDepo, controllerAracKm;
-
-  final DatabaseService _dbServis = DatabaseService.instance!;
 
   File? image;
 
@@ -73,7 +69,7 @@ class AddNewCarViewModel extends ChangeNotifier {
 
   AddNewCarViewModel.addNew() {
     isNew = true;
-    color = Color.fromARGB(198, 255, 228, 20).value;
+    color = const Color.fromARGB(198, 255, 228, 20).value;
     carModel = CarModel();
     controllerAdi = TextEditingController()
       ..addListener(() {

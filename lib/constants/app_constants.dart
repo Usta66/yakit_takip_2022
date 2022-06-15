@@ -11,18 +11,6 @@ class LottieConstants {
   }
 
   LottieConstants._init();
-
-  /*  
-  final String SPLASH = "assets/lottie/maths_splash.json";
-
-  
-  final String SEVYESECME = "assets/lottie/maths_sevye_secme.json";
-
- 
-  final String SEVYESECME2 = "assets/lottie/maths_sevye_secme2.json";
-
- 
-  final String DRAWER_LOTTIE = "assets/lottie/drawer_lottie.json"; */
 }
 
 class AssetsConstants {

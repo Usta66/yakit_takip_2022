@@ -3,9 +3,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:yakit_takip_2022/constants/app_constants.dart';
-import 'package:yakit_takip_2022/deneme/admob_deneme_view.dart';
-import 'package:yakit_takip_2022/deneme/admob_stateless.dart';
-import 'package:yakit_takip_2022/deneme/admob_stateless_view_model.dart';
 
 import 'package:yakit_takip_2022/navigation/navigation_services.dart';
 import 'package:yakit_takip_2022/services/admob_service.dart';
@@ -30,7 +27,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -41,11 +37,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(useMaterial3: true, primarySwatch: Colors.amber, textTheme: const TextTheme(subtitle2: TextStyle(color: Colors.amber))),
       initialRoute: "aracListesi",
       navigatorKey: NavigationServices.instance.navigatorKey,
-
       onGenerateRoute: (settings) => NavigatorRouteServices.onRouteGenarete(settings),
-
-     //home: AdmobDenemeView()//
-      //
     );
   }
 }

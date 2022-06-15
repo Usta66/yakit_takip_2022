@@ -16,9 +16,19 @@ class HomeAndYakitListViewModel extends ChangeNotifier {
   late List<YakitIslemModel?> listYakitIslemModel;
 
   HomeAndYakitListViewModel({required this.carModel, required this.aracListViewModel}) {
-    yakitListesiniDoldur();
+    yakitListesiniDoldur().then((value) {
+      yakitHesapModel = YakitHesapModel(carModel: carModel, listYakitIslemModel: value);
+    });
+  }
 
-    ;
+  Future<List<YakitIslemModel?>> yakitListesiniDoldur() async {
+    listYakitIslemModel = await YakitHesapModel.getListYakitislemModel(carModel);
+
+    yakitHesapModel = YakitHesapModel(carModel: carModel, listYakitIslemModel: listYakitIslemModel);
+
+    notifyListeners();
+
+    return listYakitIslemModel;
   }
 
   Future<int> modelInsert(YakitIslemModel yakitIslemModel) async {
@@ -36,17 +46,6 @@ class HomeAndYakitListViewModel extends ChangeNotifier {
     return result;
   }
 
-  Future<List<YakitIslemModel?>> yakitListesiniDoldur() async {
-    //var result = await _dbServis.getAracYakitListesi(aracId: carModel.id!);
-    yakitHesapModel = YakitHesapModel(carModel: carModel);
-
-    listYakitIslemModel = await yakitHesapModel.getYakitislemModel();
-
-    notifyListeners();
-
-    return listYakitIslemModel;
-  }
-
   Future<int> delete(YakitIslemModel yakitIslemModel) async {
     if (yakitIslemModel.id != null) {
       var resualt = _dbServis.delete<YakitIslemModel>(yakitIslemModel.id!);
@@ -54,7 +53,7 @@ class HomeAndYakitListViewModel extends ChangeNotifier {
 
       return resualt;
     } else {
-      throw ("delet carmosel id null");
+      throw ("delet carmodel id null");
     }
   }
 

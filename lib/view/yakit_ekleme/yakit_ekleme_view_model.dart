@@ -35,8 +35,7 @@ class YakitEklemeViewModel extends ChangeNotifier {
     controllerAlisSaati = TextEditingController(text: TimeOfDay.now().stringValue);
   }
   YakitEklemeViewModel.show({required this.yakitIslemModel, required this.carModel, required this.yakitHesapModel, required this.index}) {
-    //init();
-    yakitHesapModel.getYakitislemModel().then((value) {
+    YakitHesapModel.getListYakitislemModel(carModel).then((value) {
       yakitIslemModelList = value;
       notifyListeners();
     });
@@ -52,7 +51,7 @@ class YakitEklemeViewModel extends ChangeNotifier {
   }
 
   init() async {
-    yakitIslemModelList = await yakitHesapModel.getYakitislemModel();
+    yakitIslemModelList = await YakitHesapModel.getListYakitislemModel(carModel);
   }
 
   YakitIslemModel modeliHazirla() {

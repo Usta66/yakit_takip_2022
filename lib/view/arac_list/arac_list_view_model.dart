@@ -43,7 +43,7 @@ class AracListViewModel extends ChangeNotifier {
         builder: (context) {
           return AlertDialog(
             title: const Text(
-              'Araca Ait Bütün Veriler Silinsin mi?',
+              'Araca Ait Bütün Veriler Silinecektir?',
             ),
             content: Column(mainAxisSize: MainAxisSize.min, children: [
               ButtonBar(
@@ -67,8 +67,7 @@ class AracListViewModel extends ChangeNotifier {
         }).then((value) async {
       if (carModel.id != null && value != null && value) {
         await _dbServis.aracaAitTumYakitlariSil(carModel.id!);
-
-        var resualt = _dbServis.delete<CarModel>(carModel.id!);
+        await _dbServis.delete<CarModel>(carModel.id!);
         aracListesiniDoldur();
       }
     });
