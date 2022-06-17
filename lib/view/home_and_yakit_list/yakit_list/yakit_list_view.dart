@@ -77,10 +77,11 @@ class YakitListView extends StatelessWidget {
                         Expanded(
                           child: CircleAvatarImageAndAlphabet(
                               color: yakitIslemModel.yakitTuru == YakitTuruEnum.LPG ? 0x4D05FF3B : 0x989F0D7D,
-                              radius: context.width * 0.15,
-                              text: yakitIslemModel.yakitTuru != null ? yakitIslemModel.yakitTuru!.name : null),
+                              radius: context.width * 0.05,
+                              text: yakitIslemModel.yakitTuru != null ? yakitIslemModel.yakitTuru!.name[0] : null),
                         ),
                         Expanded(
+                          flex: 2,
                           child: Column(
                             children: [
                               Text("Tarih", style: Theme.of(context).textTheme.subtitle1),
@@ -94,6 +95,7 @@ class YakitListView extends StatelessWidget {
                           ),
                         ),
                         Expanded(
+                          flex: 2,
                           child: Column(
                             children: [
                               Text("Miktar", style: Theme.of(context).textTheme.subtitle1),
@@ -107,6 +109,27 @@ class YakitListView extends StatelessWidget {
                           ),
                         ),
                         Expanded(
+                          flex: 2,
+                          child: Column(
+                            children: [
+                              Text("TL/KM", style: Theme.of(context).textTheme.subtitle1),
+                              yakitIslemModel.tutar != null && yakitIslemModel.mesafe != null
+                                  ? Text("${(yakitIslemModel.tutar! / yakitIslemModel.mesafe!).toStringAsFixed(2)} TL",
+                                      style: Theme.of(context).textTheme.subtitle2)
+                                  : Text("--"),
+                              Padding(
+                                padding: EdgeInsets.only(top: context.lowValue),
+                                child: Text("L/KM", style: Theme.of(context).textTheme.subtitle1),
+                              ),
+                              yakitIslemModel.miktari != null && yakitIslemModel.mesafe != null
+                                  ? Text("${(yakitIslemModel.miktari! / yakitIslemModel.mesafe!).toStringAsFixed(2)} L",
+                                      style: Theme.of(context).textTheme.subtitle2)
+                                  : Text("--"),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          flex: 2,
                           child: Column(
                             children: [
                               Text("Fiyat", style: Theme.of(context).textTheme.subtitle1),
@@ -115,7 +138,7 @@ class YakitListView extends StatelessWidget {
                                 padding: EdgeInsets.only(top: context.lowValue),
                                 child: Text("Mesafe", style: Theme.of(context).textTheme.subtitle1),
                               ),
-                              Text("${viewModel.mesafeHesapla(index) ?? "---"} KM", style: Theme.of(context).textTheme.subtitle2)
+                              Text("${yakitIslemModel.mesafe ?? "---"} KM", style: Theme.of(context).textTheme.subtitle2)
                             ],
                           ),
                         ),

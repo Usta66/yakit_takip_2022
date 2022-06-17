@@ -20,3 +20,9 @@ extension StringExtantion on String {
     }
   }
 }
+
+extension DoubleExtantion on num {
+  num? asFixed(int digits) {
+    return double.tryParse(toStringAsFixed(digits));
+  }
+}

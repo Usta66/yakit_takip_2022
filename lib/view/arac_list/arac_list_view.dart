@@ -155,10 +155,6 @@ class AracListView extends StatelessWidget {
                       padding: context.paddingLow,
                       child: GestureDetector(
                         onTap: () {
-                          if (AdmobService.instance!.getIsInterstitialAdReady) {
-                            AdmobService.instance!.getInterstitialAd.show();
-                          }
-
                           goToWiewPush(
                               path: NavigationEnum.homeAndYakitList,
                               args: HomeAndYakitListViewModel(carModel: carModel, aracListViewModel: viewModel));

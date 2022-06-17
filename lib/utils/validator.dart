@@ -1,12 +1,11 @@
-import 'package:yakit_takip_2022/utils/string_extantion.dart';
+import 'package:yakit_takip_2022/utils/extantion.dart';
 
 mixin Validator {
   String? bosOlamaz(String? value) {
     if (value != null) {
       return (value.trim().isNullOrEmpty) ? "Boş Olmamalı" : null;
     }
-    return null; 
-    
+    return null;
   }
 
   String? kucukOlamaz(String value, double sonKm) {

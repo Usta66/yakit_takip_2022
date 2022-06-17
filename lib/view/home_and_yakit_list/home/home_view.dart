@@ -3,19 +3,18 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:kartal/kartal.dart';
 
 import 'package:provider/provider.dart';
+import 'package:yakit_takip_2022/components/my_chart.dart';
 
 import 'package:yakit_takip_2022/enum/yakit_turu_enum.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 import 'package:yakit_takip_2022/model/yakit_islem_model.dart';
-import 'package:yakit_takip_2022/utils/date_time_extension.dart';
+import 'package:yakit_takip_2022/utils/extantion.dart';
 
 import 'package:yakit_takip_2022/view/home_and_yakit_list/home_and_yakit_list_view_model.dart';
 import '../../../components/aciklama_card.dart';
 import '../../../components/my_app_bar.dart';
 import '../../../components/my_banner_adwidget.dart';
 import '../../../services/admob_service.dart';
-import '../../../utils/date_time_extension.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({
@@ -24,6 +23,9 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (AdmobService.instance!.getIsInterstitialAdReady) {
+      AdmobService.instance!.getInterstitialAd.show();
+    }
     return WillPopScope(
       onWillPop: () {
         AdmobService.instance!.bannerAd.dispose();
@@ -142,38 +144,21 @@ class HomeView extends StatelessWidget {
             ),
             AciklamaCard(yakitHesapModel: viewModel.yakitHesapModel, isLPG: true),
             const MyBannerAdWidget(size: AdSize.largeBanner),
-            Padding(
-              padding: context.paddingLow,
-              child: SfCartesianChart(
-                  primaryXAxis: CategoryAxis(),
-                  title: ChartTitle(text: "LPG", textStyle: Theme.of(context).textTheme.headline5),
-                  // Chart title
-
-                  // Enable legend
-                  legend: Legend(isVisible: true, position: LegendPosition.bottom),
-
-                  // Enable tooltip
-                  tooltipBehavior: TooltipBehavior(enable: true),
-                  series: <ChartSeries<YakitIslemModel?, String>>[
-                    LineSeries<YakitIslemModel?, String>(
-                        dataSource: viewModel.yakitHesapModel.listYakitIslemModelLpg,
-                        xValueMapper: (YakitIslemModel? sales, _) => sales!.alisTarihi!.stringValue,
-                        yValueMapper: (YakitIslemModel? sales, _) => sales!.fiyati,
-                        name: "Fiyat TL",
-
-                        // Enable data label
-                        dataLabelSettings: const DataLabelSettings(isVisible: true)),
-                    LineSeries<YakitIslemModel?, String>(
-                        dataSource: viewModel.yakitHesapModel.listYakitIslemModelLpg,
-                        xValueMapper: (YakitIslemModel? sales, _) => sales!.alisTarihi!.stringValue,
-                        yValueMapper: (YakitIslemModel? sales, _) => sales!.miktari!,
-                        name: 'Miktar L',
-                        // Enable data label
-                        dataLabelSettings: const DataLabelSettings(
-                          isVisible: true,
-                        ))
-                  ]),
-            )
+            MyChart(
+                chartTitle: "Fiyat-Miktar(LPG)",
+                dataSource: viewModel.yakitHesapModel.listYakitIslemModelLpg,
+                yValueMapper: (YakitIslemModel? sales, _) => sales!.fiyati,
+                yValueMapper2: (YakitIslemModel? sales, _) => sales!.miktari!,
+                name: "Fiyat TL",
+                name2: "Miktar L"),
+            MyChart(
+                chartTitle: "TL/Km-L/100Km(LPG)",
+                name: "TL/KM",
+                name2: "L/100KM",
+                dataSource: viewModel.yakitHesapModel.listYakitIslemModelLpg,
+                yValueMapper: (sales, _) => sales!.tutar != null && sales.mesafe != null ? (sales.tutar! / sales.mesafe!).asFixed(2) : null,
+                yValueMapper2: (sales, _) =>
+                    sales!.miktari != null && sales.mesafe != null ? (sales.miktari! / sales.mesafe! * 100).asFixed(2) : null),
           ],
         ));
   }
@@ -227,34 +212,23 @@ class HomeView extends StatelessWidget {
           isLPG: false,
         ),
         const MyBannerAdWidget(size: AdSize.largeBanner),
+        MyChart(
+            chartTitle: "Fiyat-Miktar(Akaryakıt)",
+            name: "Fiyat TL",
+            name2: "Miktar L",
+            dataSource: viewModel.yakitHesapModel.listYakitIslemModelAkaryakit,
+            yValueMapper: (sales, _) => sales!.fiyati,
+            yValueMapper2: (sales, _) => sales!.miktari!),
         Padding(
-          padding: EdgeInsets.only(bottom: context.mediumValue),
-          child: SfCartesianChart(
-              primaryXAxis: CategoryAxis(),
-              title: ChartTitle(text: "Akaryakıt", textStyle: Theme.of(context).textTheme.headline6),
-              legend: Legend(
-                isVisible: true,
-                position: LegendPosition.bottom,
-              ),
-              // Enable tooltip
-              tooltipBehavior: TooltipBehavior(enable: true),
-              series: <ChartSeries<YakitIslemModel?, String>>[
-                LineSeries<YakitIslemModel?, String>(
-                    dataSource: viewModel.yakitHesapModel.listYakitIslemModelAkaryakit,
-                    xValueMapper: (YakitIslemModel? sales, _) => sales!.alisTarihi!.stringValue,
-                    yValueMapper: (YakitIslemModel? sales, _) => sales!.fiyati,
-                    name: "Fiyat",
-
-                    // Enable data label
-                    dataLabelSettings: const DataLabelSettings(isVisible: true)),
-                LineSeries<YakitIslemModel?, String>(
-                    dataSource: viewModel.yakitHesapModel.listYakitIslemModelAkaryakit,
-                    xValueMapper: (YakitIslemModel? sales, _) => sales!.alisTarihi!.stringValue,
-                    yValueMapper: (YakitIslemModel? sales, _) => sales!.miktari!,
-                    name: 'Miktar',
-                    // Enable data label
-                    dataLabelSettings: const DataLabelSettings(isVisible: true))
-              ]),
+          padding: EdgeInsets.only(bottom: context.normalValue),
+          child: MyChart(
+            chartTitle: "TL/Km-L/100Km\n(Akaryakıt)",
+            name: "TL/KM",
+            name2: "L/100KM",
+            dataSource: viewModel.yakitHesapModel.listYakitIslemModelAkaryakit,
+            yValueMapper: (sales, _) => sales!.tutar != null && sales.mesafe != null ? (sales.tutar! / sales.mesafe!) : null,
+            yValueMapper2: (sales, _) => sales!.miktari != null && sales.mesafe != null ? sales.miktari! / sales.mesafe! * 100 : null,
+          ),
         ),
       ],
     );

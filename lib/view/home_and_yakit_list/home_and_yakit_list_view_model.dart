@@ -16,9 +16,7 @@ class HomeAndYakitListViewModel extends ChangeNotifier {
   late List<YakitIslemModel?> listYakitIslemModel;
 
   HomeAndYakitListViewModel({required this.carModel, required this.aracListViewModel}) {
-    yakitListesiniDoldur().then((value) {
-      yakitHesapModel = YakitHesapModel(carModel: carModel, listYakitIslemModel: value);
-    });
+    yakitListesiniDoldur();
   }
 
   Future<List<YakitIslemModel?>> yakitListesiniDoldur() async {

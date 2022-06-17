@@ -1,3 +1,4 @@
+import 'package:kartal/kartal.dart';
 import 'package:yakit_takip_2022/services/database_service.dart';
 
 import '../enum/yakit_turu_enum.dart';
@@ -23,6 +24,8 @@ class YakitHesapModel {
   late List<YakitIslemModel?> listYakitIslemModelAkaryakit;
   late String ortalamaLpgMaliyeti;
   late String ortalamaAkaryakitMaliyeti;
+  late String toplamKmLpg;
+  late String toplamKmAkaryakit;
 
   YakitHesapModel({required this.carModel, required this.listYakitIslemModel}) {
     init();
@@ -33,16 +36,13 @@ class YakitHesapModel {
 
     toplamLpgMiktari = getToplamLpgMiktari();
     toplamLpgMaliyeti = getToplamLpgMaliyeti();
+    sonKm = getSonKm();
 
     toplamAkaryakitMiktari = getToplamAkaryakitMiktari();
     toplamAkaryakitMaliyeti = getToplamAkaryakitMaliyeti();
     toplamMaliyet = getToplamMaliyet();
     toplamKm = getToplamKm();
     tLKm = getTlKm();
-    tLKmLpg = getTlKmLpg();
-    tlKmAkaryakit = getTlKmAkaryakit();
-    litreKmLpg = getLitreKmLpg();
-    litreKmAkaryakit = getLitreKmAkaryakit();
 
     listYakitIslemModelLpg = getListYakitIslemModelLpg();
     listYakitIslemModelAkaryakit = getListYakitIslemModelAkaryakit();
@@ -50,10 +50,19 @@ class YakitHesapModel {
     listYakitIslemModel.sort((a, b) => a!.aracKm!.compareTo(b!.aracKm!));
 
     listYakitIslemModelLpg.sort((a, b) => a!.aracKm!.compareTo(b!.aracKm!));
-
+    listYakitIslemModelAkaryakit.sort((a, b) => a!.aracKm!.compareTo(b!.aracKm!));
     ortalamaLpgMaliyeti = getOrtalamLpgMaliyet();
     ortalamaAkaryakitMaliyeti = getOrtalamaAkaryakitMaliyeti();
-    sonKm = getSonKm();
+
+    mesafeHesapla();
+
+    toplamKmLpg = getToplamKmLpg();
+    toplamKmAkaryakit = getToplamKmAkaryakit();
+
+    tLKmLpg = getTlKmLpg();
+    tlKmAkaryakit = getTlKmAkaryakit();
+    litreKmLpg = getLitreKmLpg();
+    litreKmAkaryakit = getLitreKmAkaryakit();
   }
 
   static Future<List<YakitIslemModel?>> getListYakitislemModel(CarModel carModel) async {
@@ -149,6 +158,28 @@ class YakitHesapModel {
     return toplamKm.toStringAsFixed(2);
   }
 
+  getToplamKmLpg() {
+    double toplamKm = 0;
+    if (!listYakitIslemModelLpg.isNullOrEmpty) {
+      if (listYakitIslemModelLpg.last!.aracKm != null && listYakitIslemModelLpg.first!.aracKm != null) {
+        toplamKm = (listYakitIslemModelLpg.last!.aracKm!) - (listYakitIslemModelLpg.first!.aracKm!);
+      }
+    }
+
+    return toplamKm.toStringAsFixed(2);
+  }
+
+  getToplamKmAkaryakit() {
+    double toplamKm = 0;
+    if (!listYakitIslemModelAkaryakit.isNullOrEmpty) {
+      if (listYakitIslemModelAkaryakit.last!.aracKm != null && listYakitIslemModelAkaryakit.first!.aracKm != null) {
+        toplamKm = (listYakitIslemModelAkaryakit.last!.aracKm!) - (listYakitIslemModelAkaryakit.first!.aracKm!);
+      }
+    }
+
+    return toplamKm.toStringAsFixed(2);
+  }
+
   String getTlKm() {
     double tlKm = 0;
 
@@ -158,19 +189,19 @@ class YakitHesapModel {
   }
 
   String getTlKmLpg() {
-    return (double.tryParse(getToplamLpgMaliyeti())! / double.tryParse(getToplamKm())!).toStringAsFixed(2);
+    return (double.tryParse(getToplamLpgMaliyeti())! / double.tryParse(getToplamKmLpg())!).toStringAsFixed(2);
   }
 
   String getTlKmAkaryakit() {
-    return (double.tryParse(getToplamAkaryakitMaliyeti())! / double.tryParse(getToplamKm())!).toStringAsFixed(2);
+    return (double.tryParse(getToplamAkaryakitMaliyeti())! / double.tryParse(getToplamKmAkaryakit())!).toStringAsFixed(2);
   }
 
   String getLitreKmLpg() {
-    return (double.tryParse(getToplamLpgMiktari())! * 100 / double.tryParse(getToplamKm())!).toStringAsFixed(2);
+    return (double.tryParse(getToplamLpgMiktari())! * 100 / double.tryParse(getToplamKmLpg())!).toStringAsFixed(2);
   }
 
   String getLitreKmAkaryakit() {
-    return (double.tryParse(getToplamAkaryakitMiktari())! * 100 / double.tryParse(getToplamKm())!).toStringAsFixed(2);
+    return (double.tryParse(getToplamAkaryakitMiktari())! * 100 / double.tryParse(getToplamKmAkaryakit())!).toStringAsFixed(2);
   }
 
   String getSonKm() {
@@ -197,5 +228,30 @@ class YakitHesapModel {
 
   String getOrtalamaAkaryakitMaliyeti() {
     return (double.tryParse(getToplamAkaryakitMaliyeti())! / double.tryParse(getToplamAkaryakitMiktari())!).toStringAsFixed(2);
+  }
+
+  mesafeHesapla() {
+    if (listYakitIslemModelLpg.length >= 2) {
+      for (var i = 0; i < listYakitIslemModelLpg.length; i++) {
+        if (listYakitIslemModelLpg.length >= i + 2) {
+          listYakitIslemModelLpg[i]!.mesafe = listYakitIslemModelLpg[i + 1]!.aracKm! - listYakitIslemModelLpg[i]!.aracKm!;
+        }
+      }
+    }
+
+    if (listYakitIslemModelAkaryakit.length >= 2) {
+      for (var i = 0; i < listYakitIslemModelAkaryakit.length; i++) {
+        if (listYakitIslemModelAkaryakit.length >= i + 2) {
+          listYakitIslemModelAkaryakit[i]!.mesafe = listYakitIslemModelAkaryakit[i + 1]!.aracKm! - listYakitIslemModelAkaryakit[i]!.aracKm!;
+        }
+      }
+    }
+
+    listYakitIslemModel.clear();
+
+    listYakitIslemModel.addAll(listYakitIslemModelLpg);
+    listYakitIslemModel.addAll(listYakitIslemModelAkaryakit);
+
+    listYakitIslemModel.sort((a, b) => a!.aracKm!.compareTo(b!.aracKm!));
   }
 }

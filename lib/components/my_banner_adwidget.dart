@@ -16,7 +16,7 @@ class MyBannerAdWidget extends StatelessWidget {
 
         if (admobService.isBannerReady) {
           return Padding(
-            padding: EdgeInsets.only(top: context.normalValue),
+            padding: EdgeInsets.only(top: context.normalValue, bottom: context.normalValue),
             child: SizedBox(
               child: AdWidget(
                 ad: admobService.bannerAd,

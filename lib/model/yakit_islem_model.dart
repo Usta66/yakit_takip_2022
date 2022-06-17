@@ -19,6 +19,7 @@ class YakitIslemModel implements BaseModel {
   double? tutar;
   double? aracKm;
   double? mesafe;
+
   YakitIslemModel({
     this.id,
     this.aracId,
