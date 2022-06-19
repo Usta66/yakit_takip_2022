@@ -6,19 +6,29 @@ import 'package:yakit_takip_2022/view/arac_list/arac_list_view.dart';
 import 'package:yakit_takip_2022/view/arac_list/arac_list_view_model.dart';
 import 'package:yakit_takip_2022/view/home_and_yakit_list/home_and_yakit_list_view.dart';
 import 'package:yakit_takip_2022/view/home_and_yakit_list/home_and_yakit_list_view_model.dart';
+import 'package:yakit_takip_2022/view/onboard/onboard_view_model.dart';
 import 'package:yakit_takip_2022/view/yakit_ekleme/yakit_ekleme_view.dart';
 
 import '../model/car_model.dart';
 
+import '../view/onboard/onboard_view.dart';
+import '../view/splash/splash_view.dart';
+import '../view/splash/splash_view_model.dart';
 import '../view/yakit_ekleme/yakit_ekleme_view_model.dart';
 
-enum NavigationEnum { homeAndYakitList, aracListesi, aracEkleme, aracGuncelleme, yakitEkleme, yakitGuncelleme }
+enum NavigationEnum {splash,onboard, homeAndYakitList, aracListesi, aracEkleme, aracGuncelleme, yakitEkleme, yakitGuncelleme }
 
 class NavigatorRouteServices {
   NavigatorRouteServices._init();
 
   static Route<dynamic> onRouteGenarete(RouteSettings settings) {
     switch (settings.name) {
+
+       case "splash":
+        return _navigateToDeafult(page: SplashView(viewModel: SplashViewModel()));
+
+        case "onboard":
+        return _navigateToDeafult(page: OnboardView(viewModel: OnboardViewModel(),));
       case "aracListesi":
         return _navigateToDeafult(page: AracListView(viewModel: AracListViewModel()));
 

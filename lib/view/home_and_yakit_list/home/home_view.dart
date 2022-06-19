@@ -36,7 +36,11 @@ class HomeView extends StatelessWidget {
         body: SingleChildScrollView(child: Consumer<HomeAndYakitListViewModel>(
           builder: (context, viewModel, child) {
             return Column(
-              children: [aracKmVerileriCard(context, viewModel), lpgVerileriCard(viewModel, context), akaryakitVerileriColumn(context, viewModel)],
+              children: [
+                aracKmVerileriCard(context, viewModel),
+                lpgVerileriCard(viewModel, context),
+                akaryakitVerileriColumn(context, viewModel)
+              ],
             );
           },
         )),
@@ -44,7 +48,8 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  Card aracKmVerileriCard(BuildContext context, HomeAndYakitListViewModel viewModel) {
+  Card aracKmVerileriCard(
+      BuildContext context, HomeAndYakitListViewModel viewModel) {
     return Card(
       child: Column(
         children: [
@@ -53,7 +58,8 @@ class HomeView extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Araç KM Verileri", style: Theme.of(context).textTheme.headline5),
+                Text("Araç KM Verileri",
+                    style: Theme.of(context).textTheme.headline5),
               ],
             ),
           ),
@@ -70,7 +76,8 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  Visibility lpgVerileriCard(HomeAndYakitListViewModel viewModel, BuildContext context) {
+  Visibility lpgVerileriCard(
+      HomeAndYakitListViewModel viewModel, BuildContext context) {
     return Visibility(
         visible: viewModel.carModel.yakitTuru == YakitTuruEnum.LPG,
         child: Column(
@@ -83,12 +90,14 @@ class HomeView extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Karma Yakıt Verileri", style: Theme.of(context).textTheme.headline5),
+                        Text("Karma Yakıt Verileri",
+                            style: Theme.of(context).textTheme.headline5),
                       ],
                     ),
                   ),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    Text(viewModel.yakitHesapModel.tLKm, style: Theme.of(context).textTheme.headline5),
+                    Text(viewModel.yakitHesapModel.tLKm,
+                        style: Theme.of(context).textTheme.headline5),
                     Text("TL/KM", style: Theme.of(context).textTheme.headline5),
                   ])
                 ],
@@ -102,7 +111,8 @@ class HomeView extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("LPG Verileri", style: Theme.of(context).textTheme.headline5),
+                        Text("LPG Verileri",
+                            style: Theme.of(context).textTheme.headline5),
                       ],
                     ),
                   ),
@@ -142,7 +152,8 @@ class HomeView extends StatelessWidget {
                 ],
               ),
             ),
-            AciklamaCard(yakitHesapModel: viewModel.yakitHesapModel, isLPG: true),
+            AciklamaCard(
+                yakitHesapModel: viewModel.yakitHesapModel, isLPG: true),
             const MyBannerAdWidget(size: AdSize.largeBanner),
             MyChart(
                 chartTitle: "Fiyat-Miktar(LPG)",
@@ -152,18 +163,24 @@ class HomeView extends StatelessWidget {
                 name: "Fiyat TL",
                 name2: "Miktar L"),
             MyChart(
-                chartTitle: "TL/Km-L/100Km(LPG)",
+                chartTitle: "TL/Km - L/100Km(LPG)",
                 name: "TL/KM",
                 name2: "L/100KM",
                 dataSource: viewModel.yakitHesapModel.listYakitIslemModelLpg,
-                yValueMapper: (sales, _) => sales!.tutar != null && sales.mesafe != null ? (sales.tutar! / sales.mesafe!).asFixed(2) : null,
+                yValueMapper: (sales, _) =>
+                    sales!.tutar != null && sales.mesafe != null
+                        ? (sales.tutar! / sales.mesafe!).asFixed(2)
+                        : null,
                 yValueMapper2: (sales, _) =>
-                    sales!.miktari != null && sales.mesafe != null ? (sales.miktari! / sales.mesafe! * 100).asFixed(2) : null),
+                    sales!.miktari != null && sales.mesafe != null
+                        ? (sales.miktari! / sales.mesafe! * 100).asFixed(2)
+                        : null),
           ],
         ));
   }
 
-  Column akaryakitVerileriColumn(BuildContext context, HomeAndYakitListViewModel viewModel) {
+  Column akaryakitVerileriColumn(
+      BuildContext context, HomeAndYakitListViewModel viewModel) {
     return Column(
       children: [
         const Divider(),
@@ -172,7 +189,8 @@ class HomeView extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Akaryakıt Verileri", style: Theme.of(context).textTheme.headline5),
+              Text("Akaryakıt Verileri",
+                  style: Theme.of(context).textTheme.headline5),
             ],
           ),
         ),
@@ -186,8 +204,11 @@ class HomeView extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("${viewModel.yakitHesapModel.tlKmAkaryakit} TL/KM", style: Theme.of(context).textTheme.subtitle1),
-                    Text("${viewModel.yakitHesapModel.litreKmAkaryakit} L/100KM", style: Theme.of(context).textTheme.subtitle1)
+                    Text("${viewModel.yakitHesapModel.tlKmAkaryakit} TL/KM",
+                        style: Theme.of(context).textTheme.subtitle1),
+                    Text(
+                        "${viewModel.yakitHesapModel.litreKmAkaryakit} L/100KM",
+                        style: Theme.of(context).textTheme.subtitle1)
                   ],
                 ),
               ),
@@ -200,7 +221,9 @@ class HomeView extends StatelessWidget {
                       "Toplam Maliyet = ${viewModel.yakitHesapModel.toplamAkaryakitMaliyeti} TL ",
                       style: Theme.of(context).textTheme.subtitle1,
                     ),
-                    Text("Toplam Miktar   = ${viewModel.yakitHesapModel.toplamAkaryakitMiktari} L ", style: Theme.of(context).textTheme.subtitle1)
+                    Text(
+                        "Toplam Miktar   = ${viewModel.yakitHesapModel.toplamAkaryakitMiktari} L ",
+                        style: Theme.of(context).textTheme.subtitle1)
                   ],
                 ),
               )
@@ -213,7 +236,7 @@ class HomeView extends StatelessWidget {
         ),
         const MyBannerAdWidget(size: AdSize.largeBanner),
         MyChart(
-            chartTitle: "Fiyat-Miktar(Akaryakıt)",
+            chartTitle: "Fiyat - Miktar(Akaryakıt)",
             name: "Fiyat TL",
             name2: "Miktar L",
             dataSource: viewModel.yakitHesapModel.listYakitIslemModelAkaryakit,
@@ -222,12 +245,18 @@ class HomeView extends StatelessWidget {
         Padding(
           padding: EdgeInsets.only(bottom: context.normalValue),
           child: MyChart(
-            chartTitle: "TL/Km-L/100Km\n(Akaryakıt)",
+            chartTitle: "TL/Km - L/100Km\n(Akaryakıt)",
             name: "TL/KM",
             name2: "L/100KM",
             dataSource: viewModel.yakitHesapModel.listYakitIslemModelAkaryakit,
-            yValueMapper: (sales, _) => sales!.tutar != null && sales.mesafe != null ? (sales.tutar! / sales.mesafe!) : null,
-            yValueMapper2: (sales, _) => sales!.miktari != null && sales.mesafe != null ? sales.miktari! / sales.mesafe! * 100 : null,
+            yValueMapper: (sales, _) =>
+                sales!.tutar != null && sales.mesafe != null
+                    ? (sales.tutar! / sales.mesafe!)
+                    : null,
+            yValueMapper2: (sales, _) =>
+                sales!.miktari != null && sales.mesafe != null
+                    ? sales.miktari! / sales.mesafe! * 100
+                    : null,
           ),
         ),
       ],

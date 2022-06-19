@@ -15,7 +15,10 @@ void main() async {
 
   runApp(EasyLocalization(
       startLocale: const Locale("tr", "TR"),
-      supportedLocales: const [LocaleConstants.EN_LOCALE, LocaleConstants.TR_LOCALE],
+      supportedLocales: const [
+        LocaleConstants.EN_LOCALE,
+        LocaleConstants.TR_LOCALE
+      ],
       path: LocaleConstants.LANG_PATH,
       child: MultiProvider(providers: [
         ChangeNotifierProvider(
@@ -30,14 +33,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       locale: context.locale,
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       title: 'Yakıt Takip',
-      theme: ThemeData(useMaterial3: true, primarySwatch: Colors.amber, textTheme: const TextTheme(subtitle2: TextStyle(color: Colors.amber))),
-      initialRoute: "aracListesi",
+      theme: ThemeData(
+          useMaterial3: true,
+          primarySwatch: Colors.amber,
+          textTheme:
+              const TextTheme(subtitle2: TextStyle(color: Colors.amber))),
+      initialRoute: NavigationEnum.splash.name,
       navigatorKey: NavigationServices.instance.navigatorKey,
-      onGenerateRoute: (settings) => NavigatorRouteServices.onRouteGenarete(settings),
+      onGenerateRoute: (settings) =>
+          NavigatorRouteServices.onRouteGenarete(settings),
     );
   }
 }

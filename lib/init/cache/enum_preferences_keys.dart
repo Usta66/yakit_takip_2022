@@ -1,0 +1,1 @@
+enum EnumPreferencesKeys { ISFIRSTOPEN }
