@@ -32,7 +32,7 @@ class HomeAndYakitListView extends StatelessWidget {
                 AdmobService.instance!.getInterstitialAd.show();
               }
 
-              goToWiewPush<YakitIslemModel>(
+              goToViewPush<YakitIslemModel>(
                   path: NavigationEnum.yakitEkleme,
                   args: YakitEklemeViewModel.addNew(carModel: viewModel.carModel, yakitHesapModel: viewModel.yakitHesapModel),
                   function: (gelenModel) {

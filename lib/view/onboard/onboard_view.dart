@@ -14,60 +14,60 @@ class OnboardView extends StatelessWidget {
   final OnboardViewModel viewModel;
   @override
   Widget build(BuildContext context) {
-   
-    return BaseView(viewModel: viewModel, child: Scaffold(
-      body: Padding(
-        padding: context.horizontalPaddingNormal,
-        child: Column(
-          children: [
-            Spacer(
-              flex: 1,
+    return BaseView(
+        viewModel: viewModel,
+        child: Scaffold(
+          body: Padding(
+            padding: context.horizontalPaddingNormal,
+            child: Column(
+              children: [
+                const Spacer(
+                  flex: 1,
+                ),
+                Expanded(
+                    flex: 5,
+                    child: PageView.builder(
+                      onPageChanged: (value) {
+                        viewModel.changeCurrentIndex(value);
+                      },
+                      itemCount: viewModel.onboardItems.length,
+                      itemBuilder: (context, index) => builColumnBody(context, viewModel.onboardItems[index]),
+                    )),
+                Expanded(
+                    flex: 2,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                            flex: 2,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: 3,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: context.paddingLow,
+                                  child: Consumer<OnboardViewModel>(
+                                    builder: (context, value, child) => CircleAvatar(
+                                      backgroundColor: Color.fromARGB(255, 69, 18, 196).withOpacity(viewModel.curruntIndex == index ? 1 : 0.2),
+                                      radius: viewModel.curruntIndex == index ? context.width * 0.015 : context.width * 0.01,
+                                    ),
+                                  ),
+                                );
+                              },
+                            )),
+                        const Spacer(),
+                        FloatingActionButton(
+                            backgroundColor: Color.fromARGB(255, 69, 18, 196),
+                            child: Icon(Icons.keyboard_arrow_right_sharp),
+                            onPressed: () {
+                              goToViewPush(path: NavigationEnum.aracListesi);
+                            })
+                      ],
+                    ))
+              ],
             ),
-            Expanded(
-                flex: 5,
-                child: PageView.builder(
-                  onPageChanged: (value) {
-                   viewModel.changeCurrentIndex(value);
-                  },
-                  itemCount: viewModel.onboardItems.length,
-                  itemBuilder: (context, index) => builColumnBody(context, viewModel.onboardItems[index]),
-                )),
-            Expanded(
-                flex: 2,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                        flex: 2,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: 3,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: context.paddingLow,
-                              child: Consumer<OnboardViewModel>(builder: (context, value, child) => CircleAvatar(
-                                  backgroundColor: Colors.purple.withOpacity(viewModel.curruntIndex == index ? 1 : 0.2),
-                                  radius: viewModel.curruntIndex == index ? context.width * 0.015 : context.width * 0.01,
-                                ),
-                               
-                              ),
-                            );
-                          },
-                        )),
-                    const Spacer(),
-                    FloatingActionButton(
-                        backgroundColor: Colors.purpleAccent,
-                        child: Icon(Icons.keyboard_arrow_right_sharp),
-                        onPressed: () {
-                          goToWiewPush(path: NavigationEnum.aracListesi);
-                         
-                        })
-                  ],
-                ))
-          ],
-        ),
-      ),
-    ));
+          ),
+        ));
   }
 
   Column builColumnBody(BuildContext context, OnboardModel onboardItem) {
@@ -97,5 +97,3 @@ class OnboardView extends StatelessWidget {
     return SvgPicture.asset(imagePath);
   }
 }
-  
-

@@ -1,3 +1,70 @@
 {
-    "dil": "Dil"
+    "dil": "Dil",
+    "tlKM": " TL/KM",
+    "km": " KM",
+    "l100Km": " L/100KM",
+    "tl": " TL",
+    "l": " L",
+    "guncelle": "Güncelle",
+    "sil": "Sil",
+    "miktar": "Miktar",
+    "fiyat": "Fiyat",
+    "add_new_car": {
+        "yeniAracEkle": "Yeni Araç Ekle",
+        "adi": "Adı",
+        "aracKm": "Aracın KM'si",
+        "yakitTuru": "Yakıt Türü",
+        "lpgDepoKapasite": "LPG Depo Kapasitesi",
+        "akaryakitDepoKapasitesi": "Akaryakıt Depo Kapasitesi"
+    },
+    "home": {
+        "aracDetay": "Araç Detay",
+        "aracKmVerileri": "Araç KM Verileri",
+        "yakitAlinanSonKm": "Yakıt Alınan Son KM: ",
+        "toplamKm": "Toplam Km: ",
+        "karmaYakitVerileri": "Karma Yakit Verileri",
+        "lpgVerileri": "LPG Verileri",
+        "taplamMaliyet": "Toplam Maliyet: ",
+        "toplamMiktar": "Toplam Miktar: ",
+        "fiyatMiktarLpg": "Fiyat-Miktar(LPG)",
+        "tlkmlkmLpg": "TL/Km - L/100Km(LPG)",
+        "akaryakitVerileri": "Akaryakit Verileri",
+        "fiyatMiktarAkaryakit": "Fiyat - Miktar(Akaryakıt)",
+        "tlkmlkmAkaryakit": "TL/Km - L/100Km\n(Akaryakit)",
+        "yakitAlinanIlkTarih": "Yakıt Alınan İlk Tarih: ",
+        "ortalamaLpgFiyati": "Ortlama LPG Fiyatı: ",
+        "toplamYakitAlimSayisi": "Toplam Yakıt Alım Sayısı: ",
+        "ortalamaAkaryakitFiyati": "Ortalama Akaryakıt Fiyatı: "
+    },
+    "aracList": {
+        "aracListesi": "Araç Listesi",
+        "uygulamaAdi": "Yakit Takip Uygulaması",
+        "hakkinda": "Hakkında",
+        "hakkindaText": "Bu uygulama aracınızın yakıt tüketimini tüm detaylarıyla takip edebilmeniz amaçıyla geliştirilmiştir.",
+        "ingilizce": "English",
+        "turkce": "Türkçe"
+    },
+    "yakitList": {
+        "yakitListesi": "Yakit Listesi",
+        "tarih": "Tarih",
+        "tutar": "Tutar",
+        "mesafe": "Mesafe"
+    },
+    "onboard": {
+        "baslik1": "Yakıt Verilerinizi Grafikler Uzerinden Takip Edin",
+        "baslik2": "LPG'li Araçlarda Karma Yakıt Tüketiminizi Görün",
+        "baslik3": "Geçmiş Yakıt Verilerinizi Saklayın",
+        "aciklama1": "Yakit Alımlarınızı alım tarihi bazlı olarak fiyat, miktar, ortalama tüketimler(TL/KM - L/100KM) olarak görebilirsiniz.",
+        "aciklama2": "LPG'li araçlarda LPG ve benzin tüketimleri ayrı ayrı hesaplanarak bu değerlerden karma yakıt verisine ulaşılır.",
+        "aciklama3": "Araca ait tüm yakıt verileri kayıt edilerek kullanıcıya bütün ayrıntılarıyla gösterilir. Yakıt verileri üzerinde silme güncelleme işlemlerini yapabilirsiniz."
+    },
+    "yakitEkleme": {
+        "yakitEkleme": "Yakit Ekleme",
+        "yakitGuncelleme": "Yakit Guncelleme",
+        "sonKm": "Son Km",
+        "birOncekiKm": "Bir Önceki Km:",
+        "birSonrakiKm": "Bir Sonraki Km:",
+        "aracKm": "ARAÇ KM",
+        "birimFiyat": "Birim Fiyat"
+    }
 }

@@ -17,17 +17,18 @@ class OnboardViewModel extends ChangeNotifier {
 
   void init() {
     onboardItems.add(OnboardModel(
-        title: "Yakıt Verilerinizi Grafikler Uzerinden Takip",
-        description: "Kaliteli Benzin",
+        title: "Yakıt Verilerinizi Grafikler Uzerinden Takip Edin",
+        description: "Yakit Alımlarınızı alım tarihi bazlı olarak fiyat, miktar, ortalama tüketimler(TL/KM - L/100KM) olarak görebilirsiniz.  ",
         imagePath: AssetsConstants.instance!.CHART_1));
 
     onboardItems.add(OnboardModel(
-        title: "Enson Benzin Fiyatı",
-        description: "Benzin Çok Pahalı",
+        title: "LPG'li Araçlarda Karma Yakıt Tüketiminizi Görün",
+        description: "LPG'li araçlarda LPG ve benzin tüketimleri ayrı ayrı hesaplanarak bu değerlerden karma yakıt verisine ulaşılır.",
         imagePath: AssetsConstants.instance!.OFF_ROAD));
     onboardItems.add(OnboardModel(
-        title: "LPG'de Ne Yakıyor Araba",
-        description: "Çok Yakıyor ÇOk",
+        title: "Geçmiş Yakıt Verilerinizi Saklayın",
+        description:
+            "Araca ait tüm yakıt verileri kayıt edilerek kullanıcıya bütün ayrıntılarıyla gösterilir. Yakıt verileri üzerinde silme güncelleme işlemlerini yapabilirsiniz.",
         imagePath: AssetsConstants.instance!.MY_CAR));
   }
 }

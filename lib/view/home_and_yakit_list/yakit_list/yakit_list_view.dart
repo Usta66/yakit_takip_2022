@@ -47,7 +47,7 @@ class YakitListView extends StatelessWidget {
                     backgroundColor: Colors.blueAccent,
                     label: "Güncelle",
                     onPressed: (context) {
-                      goToWiewPush<YakitIslemModel>(
+                      goToViewPush<YakitIslemModel>(
                           path: NavigationEnum.yakitGuncelleme,
                           args: YakitEklemeViewModel.show(
                               yakitIslemModel: viewModel.listYakitIslemModel[index]!,

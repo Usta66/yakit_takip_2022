@@ -52,7 +52,7 @@ class AracListView extends StatelessWidget {
                 AdmobService.instance!.getInterstitialAd.show();
               }
 
-              goToWiewPush<CarModel>(
+              goToViewPush<CarModel>(
                   path: NavigationEnum.aracEkleme,
                   function: (carModel) {
                     viewModel.modelInsert(carModel);
@@ -71,8 +71,7 @@ class AracListView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                    child: Lottie.asset(LottieConstants.instance!.GAS_STATION)),
+                Expanded(child: Lottie.asset(LottieConstants.instance!.GAS_STATION)),
                 Expanded(
                   child: Text(
                     "Yakıt Takip Uygulaması",
@@ -87,10 +86,8 @@ class AracListView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Hakkında",
-                      style: Theme.of(context).textTheme.subtitle1),
-                  const Text(
-                      "Bu uygulama aracınızın yakıt tüketimini tüm detaylarıyla takip edebilmeniz amaçıyla geliştirilmiştir.")
+                  Text("Hakkında", style: Theme.of(context).textTheme.subtitle1),
+                  const Text("Bu uygulama aracınızın yakıt tüketimini tüm detaylarıyla takip edebilmeniz amaçıyla geliştirilmiştir.")
                 ],
               )),
           const Divider(),
@@ -102,14 +99,10 @@ class AracListView extends StatelessWidget {
                 Text("dil".tr(), style: Theme.of(context).textTheme.subtitle1),
                 Center(
                   child: DropdownButton<String>(
-                      hint: Text(context.locale.languageCode == "en"
-                          ? "English"
-                          : "Türkçe"),
+                      hint: Text(context.locale.languageCode == "en" ? "English" : "Türkçe"),
                       items: const [
-                        DropdownMenuItem<String>(
-                            child: Text("Türkçe"), value: "tr"),
-                        DropdownMenuItem<String>(
-                            child: Text("English"), value: "en")
+                        DropdownMenuItem<String>(child: Text("Türkçe"), value: "tr"),
+                        DropdownMenuItem<String>(child: Text("English"), value: "en")
                       ],
                       onChanged: (value) {
                         if (value == "tr") {
@@ -128,16 +121,14 @@ class AracListView extends StatelessWidget {
             children: [
               IconButton(
                   onPressed: () {
-                    final Uri _url = Uri.parse(
-                        "mailto:veysel.karabacak66@gmail.com?subject=Yakit Takip Uygulaması Hakkında&body=");
+                    final Uri _url = Uri.parse("mailto:veysel.karabacak66@gmail.com?subject=Yakit Takip Uygulaması Hakkında&body=");
 
                     launchUrl(_url);
                   },
                   icon: FaIcon(FontAwesomeIcons.envelope)),
               IconButton(
                   onPressed: () {
-                    final Uri _url = Uri.parse(
-                        "https://play.google.com/store/apps/details?id=com.veyselkarabacak.square_app");
+                    final Uri _url = Uri.parse("https://play.google.com/store/apps/details?id=com.veyselkarabacak.square_app");
 
                     launchUrl(_url);
                   },
@@ -145,13 +136,11 @@ class AracListView extends StatelessWidget {
             ],
           ),
           const Divider(),
-          Padding(
-              padding: EdgeInsets.only(left: context.normalValue),
-              child: const Text("v.1.0.0")),
+          Padding(padding: EdgeInsets.only(left: context.normalValue), child: const Text("v.1.0.0")),
           TextButton(
               onPressed: () {
                 LocaleManeger.instance.clear();
-                goToWiewPush(path: NavigationEnum.onboard);
+                goToViewPush(path: NavigationEnum.onboard);
               },
               child: Text("cache temizle"))
         ],
@@ -170,41 +159,35 @@ class AracListView extends StatelessWidget {
                 CarModel carModel = viewModel.listCarModel[index]!;
                 return Card(
                   child: Slidable(
-                    endActionPane: ActionPane(
-                        extentRatio: 0.50,
-                        motion: const BehindMotion(),
-                        children: [
-                          SlidableAction(
-                            backgroundColor: Colors.blueAccent,
-                            label: "Güncelle",
-                            onPressed: (context) {
-                              goToWiewPush<CarModel>(
-                                  path: NavigationEnum.aracGuncelleme,
-                                  args: AddNewCarViewModel.show(
-                                      carModel: carModel),
-                                  function: (gelenModel) {
-                                    viewModel.modelUpdate(gelenModel);
-                                  });
-                            },
-                            icon: Icons.update_rounded,
-                          ),
-                          SlidableAction(
-                              backgroundColor: Colors.redAccent,
-                              label: "Sil",
-                              onPressed: (context) {
-                                viewModel.delete(carModel);
-                              },
-                              icon: Icons.delete)
-                        ]),
+                    endActionPane: ActionPane(extentRatio: 0.50, motion: const BehindMotion(), children: [
+                      SlidableAction(
+                        backgroundColor: Colors.blueAccent,
+                        label: "Güncelle",
+                        onPressed: (context) {
+                          goToViewPush<CarModel>(
+                              path: NavigationEnum.aracGuncelleme,
+                              args: AddNewCarViewModel.show(carModel: carModel),
+                              function: (gelenModel) {
+                                viewModel.modelUpdate(gelenModel);
+                              });
+                        },
+                        icon: Icons.update_rounded,
+                      ),
+                      SlidableAction(
+                          backgroundColor: Colors.redAccent,
+                          label: "Sil",
+                          onPressed: (context) {
+                            viewModel.delete(carModel);
+                          },
+                          icon: Icons.delete)
+                    ]),
                     child: Padding(
                       padding: context.paddingLow,
                       child: GestureDetector(
                         onTap: () {
-                          goToWiewPush(
+                          goToViewPush(
                               path: NavigationEnum.homeAndYakitList,
-                              args: HomeAndYakitListViewModel(
-                                  carModel: carModel,
-                                  aracListViewModel: viewModel));
+                              args: HomeAndYakitListViewModel(carModel: carModel, aracListViewModel: viewModel));
                         },
                         child: Row(
                           children: [
@@ -214,46 +197,33 @@ class AracListView extends StatelessWidget {
                                   radius: context.width * 0.15,
                                   color: carModel.color,
                                   imagePath: carModel.imagePath,
-                                  text: carModel.adi != null
-                                      ? carModel.adi![0]
-                                      : null),
+                                  text: carModel.adi != null ? carModel.adi![0] : null),
                             ),
                             Expanded(
                               flex: 3,
                               child: Column(
                                 children: [
                                   Text(
-                                    carModel.adi ?? " ",
-                                    style:
-                                        Theme.of(context).textTheme.headline5,
+                                    carModel.adi ?? "---",
+                                    style: Theme.of(context).textTheme.headline5,
                                     textAlign: TextAlign.center,
                                   ),
-                                  Text("${carModel.aracKm} KM",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .subtitle1),
-                                  Text(carModel.yakitTuru!.name,
-                                      style:
-                                          Theme.of(context).textTheme.subtitle2)
+                                  Text("${carModel.aracKm} KM", style: Theme.of(context).textTheme.subtitle1),
+                                  Text(carModel.yakitTuru!.name, style: Theme.of(context).textTheme.subtitle2)
                                 ],
                               ),
                             ),
                             Expanded(
                                 flex: 2,
                                 child: Text(
-                                  carModel.ortalamaTl.toString(),
-                                  style: const TextStyle(
-                                      color: Colors.red, fontSize: 30),
+                                  carModel.ortalamaTl == null ? "---" : carModel.ortalamaTl.toString(),
+                                  style: const TextStyle(color: Colors.red, fontSize: 30),
                                 )),
                             Expanded(
                               flex: 2,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("TL/KM",
-                                      style:
-                                          Theme.of(context).textTheme.subtitle1)
-                                ],
+                                children: [Text("TL/KM", style: Theme.of(context).textTheme.subtitle1)],
                               ),
                             )
                           ],

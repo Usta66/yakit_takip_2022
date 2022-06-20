@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
-import 'package:yakit_takip_2022/enum/yakit_turu_enum.dart';
 import 'package:yakit_takip_2022/model/yakit_hesap_model.dart';
 import 'package:yakit_takip_2022/utils/date_time_extension.dart';
 

@@ -1,3 +1,70 @@
 {
-    "dil": "Language"
+    "dil": "Language",
+    "tlKM": " TL/KM",
+    "km": " KM",
+    "l100Km": " L/100KM",
+    "tl": " TL",
+    "l": " L",
+    "guncelle": "Update",
+    "sil": "Delete",
+    "miktar": "Quantity",
+    "fiyat": "Price",
+    "add_new_car": {
+        "yeniAracEkle": "Add New Car",
+        "adi": "Name",
+        "aracKm": "KM Of The Vehicle",
+        "yakitTuru": "Fuel Type",
+        "lpgDepoKapasite": "LPG Tank Capacity",
+        "akaryakitDepoKapasitesi": "Fuel Tank Capacity"
+    },
+    "home": {
+        "aracDetay": "Vehicle Detail",
+        "aracKmVerileri": "Vehicle Km Data",
+        "yakitAlinanSonKm": "Fuel Received Last Km: ",
+        "toplamKm": "Total Km: ",
+        "karmaYakitVerileri": "Mixed Fuel Data",
+        "lpgVerileri": "LPG Data",
+        "taplamMaliyet": "Total Cost: ",
+        "toplamMiktar": "Total Quantity: ",
+        "fiyatMiktarLpg": "Price-Quantity (LPG)",
+        "tlkmlkmLpg": "TL/Km - L/100Km(LPG)",
+        "akaryakitVerileri": "Fuel Data",
+        "fiyatMiktarAkaryakit": "Price - Quantity (Fuel)",
+        "tlkmlkmAkaryakit": "TL/Km - L/100Km\n(Fuel)",
+        "yakitAlinanIlkTarih": "The First Date Received Fuel: ",
+        "ortalamaLpgFiyati": "Average LPG Price: ",
+        "toplamYakitAlimSayisi": "Total Fuel Purchases Number: ",
+        "ortalamaAkaryakitFiyati": "Average Fuel Price: "
+    },
+    "aracList": {
+        "aracListesi": "Vehicle List",
+        "uygulamaAdi": "Fuel Tracking Application",
+        "hakkinda": "About",
+        "hakkindaText": "This application has been developed to follow the fuel consumption of your vehicle in all details.",
+        "ingilizce": "İngilizce",
+        "turkce": "Turkish"
+    },
+    "yakitList": {
+        "yakitListesi": "Fuel List",
+        "tarih": "Date",
+        "tutar": "Amount",
+        "mesafe": "Distance"
+    },
+    "onboard": {
+        "baslik1": "Follow Your Fuel Data On Graphics",
+        "baslik2": "See Your Mixed Fuel Consumption In LPG Vehicles",
+        "baslik3": "Keep Your Past Fuel Data",
+        "aciklama1": "You can see your fuel purchases as price, quantity, average consumption (TL/km - l/100km) based on purchase date.",
+        "aciklama2": "In vehicles with LPG, LPG and gasoline consumption are calculated separately and mixed fuel data is reached from these values.",
+        "aciklama3": "All fuel data of the vehicle are recorded and showed the user in detail.You can update deletion on fuel data."
+    },
+    "yakitEkleme": {
+        "yakitEkleme": "Fuel Adding",
+        "yakitGuncelleme": "Fuel Update",
+        "sonKm": "Last Km",
+        "birOncekiKm": "Previous Km:",
+        "birSonrakiKm": "Next Km:",
+        "aracKm": "Vehicle Km",
+        "birimFiyat": "Unit Price"
+    }
 }

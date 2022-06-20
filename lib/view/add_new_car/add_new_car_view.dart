@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -9,6 +10,7 @@ import 'package:yakit_takip_2022/components/circle_avatar_image_and_alphabet.dar
 
 import 'package:yakit_takip_2022/components/yakit_turu_secim_dialog.dart';
 import 'package:yakit_takip_2022/enum/yakit_turu_enum.dart';
+import 'package:yakit_takip_2022/utils/locale_keys.g.dart';
 import 'package:yakit_takip_2022/utils/validator.dart';
 
 import 'package:yakit_takip_2022/view/add_new_car/add_new_car_view_model.dart';
@@ -33,7 +35,7 @@ class AddNewCarView extends StatelessWidget with Validator {
         viewModel: viewModel,
         child: Scaffold(
           appBar: MyAppBar(
-            label: viewModel.isNew ? "Yeni Araç Ekle" : "Güncelle",
+            label: viewModel.isNew ? LocaleKeys.add_new_car_yeniAracEkle : LocaleKeys.guncelle,
             actions: [
               MyAppBarActionButton(
                 onPressed: () {
@@ -86,14 +88,15 @@ class AddNewCarView extends StatelessWidget with Validator {
                     key: viewModel.formKey,
                     child: Column(
                       children: [
-                        BaseTextFormField(labelText: "Adı", controller: viewModel.controllerAdi, validator: (value) => bosOlamaz(value)),
+                        BaseTextFormField(
+                            labelText: LocaleKeys.add_new_car_adi, controller: viewModel.controllerAdi, validator: (value) => bosOlamaz(value)),
                         BaseTextFormField(
                             validator: (value) => bosOlamaz(value),
-                            labelText: "Araçın KM'si",
+                            labelText: LocaleKeys.add_new_car_aracKm,
                             keyboardType: TextInputType.number,
                             controller: viewModel.controllerAracKm),
                         BaseTextFormField(
-                            labelText: "Yakıt Türü",
+                            labelText: LocaleKeys.add_new_car_yakitTuru,
                             controller: viewModel.controllerYakitTuru,
                             readOnly: true,
                             validator: (value) => bosOlamaz(value),
@@ -112,11 +115,15 @@ class AddNewCarView extends StatelessWidget with Validator {
                           builder: (context, value, child) => Visibility(
                             visible: viewModel.controllerYakitTuru.text == YakitTuruEnum.LPG.name,
                             child: BaseTextFormField(
-                                keyboardType: TextInputType.number, labelText: "LPG Depo Kapasitesi", controller: viewModel.controllerLpgDepo),
+                                keyboardType: TextInputType.number,
+                                labelText: LocaleKeys.add_new_car_lpgDepoKapasite,
+                                controller: viewModel.controllerLpgDepo),
                           ),
                         ),
                         BaseTextFormField(
-                            labelText: "Akaryakıt Depo Kapasitesi", keyboardType: TextInputType.number, controller: viewModel.controllerAracDepo),
+                            labelText: LocaleKeys.add_new_car_akaryakitDepoKapasitesi,
+                            keyboardType: TextInputType.number,
+                            controller: viewModel.controllerAracDepo),
                       ],
                     ),
                   ),

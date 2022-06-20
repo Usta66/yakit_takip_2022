@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 
@@ -32,10 +33,7 @@ class BaseTextFormField extends StatelessWidget {
         onTap: onTap,
         onChanged: onChanged,
         controller: controller,
-        decoration: InputDecoration(
-            labelText: labelText,
-            border: const OutlineInputBorder(),
-            hintText: hintText),
+        decoration: InputDecoration(labelText: labelText?.tr(), border: const OutlineInputBorder(), hintText: hintText?.tr()),
         keyboardType: keyboardType,
       ),
     );

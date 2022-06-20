@@ -19,15 +19,14 @@ class SplashViewModel extends ChangeNotifier {
   Future<void> navigate() async {
     await LocaleManeger.prefrencesInit();
 
-    bool? isOpen =
-        LocaleManeger.instance.getBoolValue(EnumPreferencesKeys.ISFIRSTOPEN);
+    bool? isOpen = LocaleManeger.instance.getBoolValue(EnumPreferencesKeys.ISFIRSTOPEN);
 
     if (isOpen == null || isOpen == false) {
-      LocaleManeger.instance
-          .setBoolValue(EnumPreferencesKeys.ISFIRSTOPEN, true);
-      goToWiewPush(path: NavigationEnum.onboard);
+      LocaleManeger.instance.setBoolValue(EnumPreferencesKeys.ISFIRSTOPEN, true);
+
+      goToViewReset(path: NavigationEnum.onboard);
     } else {
-      goToWiewPush(path: NavigationEnum.aracListesi);
+      goToViewReset(path: NavigationEnum.aracListesi);
     }
   }
 }

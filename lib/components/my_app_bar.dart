@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class MyAppBar extends AppBar {
@@ -8,7 +9,7 @@ class MyAppBar extends AppBar {
       : super(
             key: key,
             title: Text(
-              label ?? "",
+              label?.tr() ?? "",
               style: Theme.of(context).textTheme.displaySmall,
             ));
 }
