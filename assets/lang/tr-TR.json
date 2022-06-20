@@ -9,6 +9,10 @@
     "sil": "Sil",
     "miktar": "Miktar",
     "fiyat": "Fiyat",
+    "BENZIN":"Benzin",
+            "DIZEL":"Dizel",
+            "LPG":"LPG",
+            "yakitTuruSeciniz":"Yakıt Türünü Seciniz",
     "add_new_car": {
         "yeniAracEkle": "Yeni Araç Ekle",
         "adi": "Adı",
@@ -34,7 +38,8 @@
         "yakitAlinanIlkTarih": "Yakıt Alınan İlk Tarih: ",
         "ortalamaLpgFiyati": "Ortlama LPG Fiyatı: ",
         "toplamYakitAlimSayisi": "Toplam Yakıt Alım Sayısı: ",
-        "ortalamaAkaryakitFiyati": "Ortalama Akaryakıt Fiyatı: "
+        "ortalamaAkaryakitFiyati": "Ortalama Akaryakıt Fiyatı: ",
+        "tuketim":"Tüketim: "
     },
     "aracList": {
         "aracListesi": "Araç Listesi",
@@ -61,10 +66,14 @@
     "yakitEkleme": {
         "yakitEkleme": "Yakit Ekleme",
         "yakitGuncelleme": "Yakit Guncelleme",
-        "sonKm": "Son Km",
-        "birOncekiKm": "Bir Önceki Km:",
-        "birSonrakiKm": "Bir Sonraki Km:",
+        "sonKm": "Son Km: ",
+        "birOncekiKm": "Bir Önceki Km: ",
+        "birSonrakiKm": "Bir Sonraki Km: ",
         "aracKm": "ARAÇ KM",
         "birimFiyat": "Birim Fiyat"
+
+       
+
+
     }
 }

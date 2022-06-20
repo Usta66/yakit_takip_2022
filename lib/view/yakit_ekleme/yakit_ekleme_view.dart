@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:kartal/kartal.dart';
@@ -14,6 +15,7 @@ import '../../components/my_app_bar.dart';
 import '../../components/my_app_bar_action_button.dart';
 import '../../components/my_banner_adwidget.dart';
 import '../../components/yakit_ekleme_text_form_field.dart';
+import '../../utils/locale_keys.g.dart';
 import '../../utils/validator.dart';
 
 class YakitEklemeView extends StatelessWidget with Validator {
@@ -28,11 +30,14 @@ class YakitEklemeView extends StatelessWidget with Validator {
         child: Scaffold(
           appBar: MyAppBar(
             context: context,
-            label: viewModel.isNew ? "Yakit Ekleme" : "Yakit Güncelleme",
+            label: viewModel.isNew
+                ? LocaleKeys.yakitEkleme_yakitEkleme
+                : LocaleKeys.yakitEkleme_yakitGuncelleme,
             actions: [
               MyAppBarActionButton(onPressed: () {
                 if (viewModel.formKey.currentState!.validate()) {
-                  Navigator.pop<YakitIslemModel>(context, viewModel.modeliHazirla());
+                  Navigator.pop<YakitIslemModel>(
+                      context, viewModel.modeliHazirla());
                 }
               })
             ],
@@ -62,11 +67,17 @@ class YakitEklemeView extends StatelessWidget with Validator {
                               context: context,
                               initialEntryMode: DatePickerEntryMode.calendar,
                               initialDate: DateTime.now(),
-                              firstDate: DateTime.now().subtract(const Duration(days: 3000)),
-                              lastDate: DateTime.now().add(const Duration(days: 300)))
-                          .then((value) => value != null ? viewModel.controllerAlisTarihi.text = value.stringValue : null);
+                              firstDate: DateTime.now()
+                                  .subtract(const Duration(days: 3000)),
+                              lastDate:
+                                  DateTime.now().add(const Duration(days: 300)))
+                          .then((value) => value != null
+                              ? viewModel.controllerAlisTarihi.text =
+                                  value.stringValue
+                              : null);
                     },
-                    decoration: const InputDecoration(prefixIcon: Icon(Icons.calendar_today_outlined)),
+                    decoration: const InputDecoration(
+                        prefixIcon: Icon(Icons.calendar_today_outlined)),
                     controller: viewModel.controllerAlisTarihi,
                     readOnly: true,
                   ),
@@ -79,10 +90,16 @@ class YakitEklemeView extends StatelessWidget with Validator {
                       showTimePicker(
                               useRootNavigator: false,
                               context: context,
-                              initialTime: viewModel.isNew ? TimeOfDay.now() : viewModel.yakitIslemModel.alisSaati!)
-                          .then((value) => value != null ? viewModel.controllerAlisSaati.text = (value.stringValue) : null);
+                              initialTime: viewModel.isNew
+                                  ? TimeOfDay.now()
+                                  : viewModel.yakitIslemModel.alisSaati!)
+                          .then((value) => value != null
+                              ? viewModel.controllerAlisSaati.text =
+                                  (value.stringValue)
+                              : null);
                     },
-                    decoration: const InputDecoration(prefixIcon: Icon(Icons.watch_later_outlined)),
+                    decoration: const InputDecoration(
+                        prefixIcon: Icon(Icons.watch_later_outlined)),
                     controller: viewModel.controllerAlisSaati,
                     readOnly: true,
                   ),
@@ -97,28 +114,57 @@ class YakitEklemeView extends StatelessWidget with Validator {
                   children: [
                     viewModel.isNew
                         ? Text(
-                            "Son Km:${viewModel.carModel.aracKm}",
+                            LocaleKeys.yakitEkleme_aracKm.tr() +
+                                viewModel.carModel.aracKm.toString(),
                             style: const TextStyle(color: Colors.green),
                           )
                         : Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Text(
-                                "Bir Önceki Km:${viewModel.birOncekiBirSonrakiKmHesapla().birOnceki ?? "---"}",
+                                LocaleKeys.yakitEkleme_birOncekiKm.tr() +
+                                    (viewModel
+                                                .birOncekiBirSonrakiKmHesapla()
+                                                .birOnceki !=
+                                            null
+                                        ? viewModel
+                                            .birOncekiBirSonrakiKmHesapla()
+                                            .birOnceki
+                                            .toString()
+                                        : "---"),
                                 style: const TextStyle(color: Colors.green),
                               ),
-                              Text("Bir Sonraki KM: ${viewModel.birOncekiBirSonrakiKmHesapla().birSonraki ?? "---"}",
+                              Text(
+                                  LocaleKeys.yakitEkleme_birSonrakiKm.tr() +
+                                      (viewModel
+                                                  .birOncekiBirSonrakiKmHesapla()
+                                                  .birSonraki !=
+                                              null
+                                          ? viewModel
+                                              .birOncekiBirSonrakiKmHesapla()
+                                              .birSonraki
+                                              .toString()
+                                          : "---"),
                                   style: const TextStyle(color: Colors.green))
                             ],
                           ),
                     YakitEklemeTextFormField(
                         validator: viewModel.isNew
-                            ? (value) => value == "" ? bosOlamaz(value!) : kucukOlamaz(value!, viewModel.carModel.aracKm!)
+                            ? (value) => value == ""
+                                ? bosOlamaz(value!)
+                                : kucukOlamaz(
+                                    value!, viewModel.carModel.aracKm!)
                             : (value) => kmKontrol(
-                                value!, viewModel.birOncekiBirSonrakiKmHesapla().birOnceki, viewModel.birOncekiBirSonrakiKmHesapla().birSonraki),
+                                value!,
+                                viewModel
+                                    .birOncekiBirSonrakiKmHesapla()
+                                    .birOnceki,
+                                viewModel
+                                    .birOncekiBirSonrakiKmHesapla()
+                                    .birSonraki),
                         icon: Icons.add_road_rounded,
-                        text: "ARAÇ KM",
-                        suffixTex: "KM",
+                        text: LocaleKeys.yakitEkleme_aracKm,
+                        suffixTex: LocaleKeys.km.tr(),
                         controller: viewModel.controllerKm,
                         keyboardType: TextInputType.number),
                   ],
@@ -127,7 +173,7 @@ class YakitEklemeView extends StatelessWidget with Validator {
             ),
             YakitEklemeTextFormField(
               icon: Icons.local_gas_station_outlined,
-              text: "YAKIT TÜRÜ",
+              text: LocaleKeys.add_new_car_yakitTuru,
               controller: viewModel.controllerYakitTuru,
               readOnly: true,
               onTap: () {
@@ -138,7 +184,8 @@ class YakitEklemeView extends StatelessWidget with Validator {
                         return const YakitTuruSecimDialog(isLpg: true);
                       }).then((value) {
                     if (value != null) {
-                      viewModel.controllerYakitTuru.text = value.name.toUpperCase();
+                      viewModel.controllerYakitTuru.text =
+                          value.name.tr().toUpperCase();
                     }
                   });
                 }
@@ -146,8 +193,8 @@ class YakitEklemeView extends StatelessWidget with Validator {
             ),
             YakitEklemeTextFormField(
               icon: Icons.money,
-              text: "Tutar",
-              suffixTex: "TL",
+              text: LocaleKeys.yakitList_tutar,
+              suffixTex: LocaleKeys.tl.tr(),
               controller: viewModel.controllerToplamTutar,
               keyboardType: TextInputType.number,
               onChanged: (value) {
@@ -156,8 +203,8 @@ class YakitEklemeView extends StatelessWidget with Validator {
             ),
             YakitEklemeTextFormField(
               icon: Icons.money,
-              text: "Birim Fiyat",
-              suffixTex: "TL",
+              text: LocaleKeys.yakitEkleme_birimFiyat,
+              suffixTex: LocaleKeys.tl.tr(),
               controller: viewModel.controllerBirimFiyat,
               keyboardType: TextInputType.number,
               onChanged: (value) {
@@ -166,8 +213,8 @@ class YakitEklemeView extends StatelessWidget with Validator {
             ),
             YakitEklemeTextFormField(
               icon: Icons.gas_meter_outlined,
-              text: "Miktar",
-              suffixTex: "L",
+              text: LocaleKeys.miktar,
+              suffixTex: LocaleKeys.l.tr(),
               controller: viewModel.controllerMiktar,
               keyboardType: TextInputType.number,
             ),

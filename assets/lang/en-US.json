@@ -9,6 +9,10 @@
     "sil": "Delete",
     "miktar": "Quantity",
     "fiyat": "Price",
+    "BENZIN":"Gasoline",
+    "DIZEL":"Diesel",
+    "LPG":"LPG",
+    "yakitTuruSeciniz":"Your Choice Of Fuel Type",
     "add_new_car": {
         "yeniAracEkle": "Add New Car",
         "adi": "Name",
@@ -34,7 +38,8 @@
         "yakitAlinanIlkTarih": "The First Date Received Fuel: ",
         "ortalamaLpgFiyati": "Average LPG Price: ",
         "toplamYakitAlimSayisi": "Total Fuel Purchases Number: ",
-        "ortalamaAkaryakitFiyati": "Average Fuel Price: "
+        "ortalamaAkaryakitFiyati": "Average Fuel Price: ",
+        "tuketim":"Consumption: "
     },
     "aracList": {
         "aracListesi": "Vehicle List",
@@ -67,4 +72,5 @@
         "aracKm": "Vehicle Km",
         "birimFiyat": "Unit Price"
     }
+    
 }

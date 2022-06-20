@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:yakit_takip_2022/components/left_icon_text.dart';
 import 'package:kartal/kartal.dart';
@@ -31,7 +32,7 @@ class YakitEklemeTextFormField extends StatelessWidget {
     return Column(children: [
       Row(
         children: [
-          Expanded(child: LeftIconText(icon: icon, text: text)),
+          Expanded(child: LeftIconText(icon: icon, text: text.tr())),
           Expanded(
             child: TextFormField(
               onChanged: onChanged,

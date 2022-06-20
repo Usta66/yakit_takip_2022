@@ -11,6 +11,10 @@ abstract class  LocaleKeys {
   static const sil = 'sil';
   static const miktar = 'miktar';
   static const fiyat = 'fiyat';
+  static const BENZIN = 'BENZIN';
+  static const DIZEL = 'DIZEL';
+  static const LPG = 'LPG';
+  static const yakitTuruSeciniz = 'yakitTuruSeciniz';
   static const add_new_car_yeniAracEkle = 'add_new_car.yeniAracEkle';
   static const add_new_car_adi = 'add_new_car.adi';
   static const add_new_car_aracKm = 'add_new_car.aracKm';
@@ -35,6 +39,7 @@ abstract class  LocaleKeys {
   static const home_ortalamaLpgFiyati = 'home.ortalamaLpgFiyati';
   static const home_toplamYakitAlimSayisi = 'home.toplamYakitAlimSayisi';
   static const home_ortalamaAkaryakitFiyati = 'home.ortalamaAkaryakitFiyati';
+  static const home_tuketim = 'home.tuketim';
   static const home = 'home';
   static const aracList_aracListesi = 'aracList.aracListesi';
   static const aracList_uygulamaAdi = 'aracList.uygulamaAdi';
