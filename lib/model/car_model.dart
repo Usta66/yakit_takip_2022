@@ -61,7 +61,7 @@ class CarModel implements BaseModel {
       String? imagePath,
       double? aracKm,
       num? ortalamaLitre,
-      num? ortalamaKrs,
+      num? ortalamaTl,
       double? aracLpgDepo,
       double? aracDepo,
       double? mevcutLpgMiktari,
@@ -74,7 +74,7 @@ class CarModel implements BaseModel {
         imagePath: imagePath ?? this.imagePath,
         aracKm: aracKm ?? this.aracKm,
         ortalamaLitre: ortalamaLitre ?? this.ortalamaLitre,
-        ortalamaTl: ortalamaKrs ?? this.ortalamaTl,
+        ortalamaTl: ortalamaTl ?? this.ortalamaTl,
         aracLpgDepo: aracLpgDepo ?? this.aracLpgDepo,
         aracDepo: aracDepo ?? this.aracDepo,
         mevcutLpgMiktari: mevcutLpgMiktari ?? this.mevcutLpgMiktari,
@@ -86,9 +86,7 @@ class CarModel implements BaseModel {
     return CarModel(
         id: map['id']?.toInt(),
         adi: map['adi'],
-        yakitTuru: map['yakitTuru'] != null
-            ? ((map['yakitTuru'] as String).YakitTuruValu)
-            : null,
+        yakitTuru: map['yakitTuru'] != null ? ((map['yakitTuru'] as String).YakitTuruValu) : null,
         imagePath: map['imagePath'],
         aracKm: map['aracKm']?.toDouble(),
         ortalamaLitre: map['ortalamaLitre'],
@@ -102,8 +100,7 @@ class CarModel implements BaseModel {
 
   String toJson() => json.encode(toMap());
 
-  factory CarModel.fromJson(String source) =>
-      CarModel.fromMap(json.decode(source));
+  factory CarModel.fromJson(String source) => CarModel.fromMap(json.decode(source));
 
   @override
   String toString() {

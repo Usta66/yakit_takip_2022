@@ -4,7 +4,7 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'package:yakit_takip_2022/model/yakit_islem_model.dart';
-import 'package:yakit_takip_2022/services/Idatabase_service.dart';
+import 'package:yakit_takip_2022/services/i_database_service.dart';
 import 'package:yakit_takip_2022/services/db_utils.dart';
 
 import '../model/base_model.dart';
@@ -37,7 +37,7 @@ class DatabaseService extends IDatabaseService {
 
       return await openDatabase(path, version: _version, onCreate: _createDb, onConfigure: _onConfigure);
     } on Exception catch (e) {
-      throw ("Database Açılmadı Hata");
+      throw ("Database Açılmadı Hata $e");
     }
   }
 

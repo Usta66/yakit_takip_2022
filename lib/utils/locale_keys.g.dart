@@ -1,12 +1,9 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
-abstract class  LocaleKeys {
+// ignore_for_file: constant_identifier_names
+
+abstract class LocaleKeys {
   static const dil = 'dil';
-  static const tlKM = 'tlKM';
-  static const km = 'km';
-  static const l100Km = 'l100Km';
-  static const tl = 'tl';
-  static const l = 'l';
   static const guncelle = 'guncelle';
   static const sil = 'sil';
   static const miktar = 'miktar';
@@ -68,5 +65,9 @@ abstract class  LocaleKeys {
   static const yakitEkleme_aracKm = 'yakitEkleme.aracKm';
   static const yakitEkleme_birimFiyat = 'yakitEkleme.birimFiyat';
   static const yakitEkleme = 'yakitEkleme';
-
+  static const validator_bosOlamaz = 'validator.bosOlamaz';
+  static const validator_sonKmKucukOlamaz = 'validator.sonKmKucukOlamaz';
+  static const validator_birsonrakindenBuyukKm = 'validator.birsonrakindenBuyukKm';
+  static const validator_birOncekindenKucukKm = 'validator.birOncekindenKucukKm';
+  static const validator = 'validator';
 }

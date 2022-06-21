@@ -1,18 +1,13 @@
 {
     "dil": "Dil",
-    "tlKM": " TL/KM",
-    "km": " KM",
-    "l100Km": " L/100KM",
-    "tl": " TL",
-    "l": " L",
     "guncelle": "Güncelle",
     "sil": "Sil",
     "miktar": "Miktar",
     "fiyat": "Fiyat",
-    "BENZIN":"Benzin",
-            "DIZEL":"Dizel",
-            "LPG":"LPG",
-            "yakitTuruSeciniz":"Yakıt Türünü Seciniz",
+    "BENZIN": "Benzin",
+    "DIZEL": "Dizel",
+    "LPG": "LPG",
+    "yakitTuruSeciniz": "Yakıt Türünü Seciniz",
     "add_new_car": {
         "yeniAracEkle": "Yeni Araç Ekle",
         "adi": "Adı",
@@ -39,7 +34,7 @@
         "ortalamaLpgFiyati": "Ortlama LPG Fiyatı: ",
         "toplamYakitAlimSayisi": "Toplam Yakıt Alım Sayısı: ",
         "ortalamaAkaryakitFiyati": "Ortalama Akaryakıt Fiyatı: ",
-        "tuketim":"Tüketim: "
+        "tuketim": "Tüketim: "
     },
     "aracList": {
         "aracListesi": "Araç Listesi",
@@ -69,11 +64,13 @@
         "sonKm": "Son Km: ",
         "birOncekiKm": "Bir Önceki Km: ",
         "birSonrakiKm": "Bir Sonraki Km: ",
-        "aracKm": "ARAÇ KM",
+        "aracKm": "Araç Km: ",
         "birimFiyat": "Birim Fiyat"
-
-       
-
-
+    },
+    "validator": {
+        "bosOlamaz": "Boş Olamaz",
+        "sonKmKucukOlamaz": "Son Km'den Küçük Olamaz",
+        "birsonrakindenBuyukKm": "Bir Sonrakinden Büyük Km",
+        "birOncekindenKucukKm": "Bir Oncekinden Küçük Km"
     }
 }

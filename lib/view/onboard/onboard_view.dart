@@ -48,7 +48,7 @@ class OnboardView extends StatelessWidget {
                                   padding: context.paddingLow,
                                   child: Consumer<OnboardViewModel>(
                                     builder: (context, value, child) => CircleAvatar(
-                                      backgroundColor: Color.fromARGB(255, 69, 18, 196).withOpacity(viewModel.curruntIndex == index ? 1 : 0.2),
+                                      backgroundColor: const Color.fromARGB(255, 69, 18, 196).withOpacity(viewModel.curruntIndex == index ? 1 : 0.2),
                                       radius: viewModel.curruntIndex == index ? context.width * 0.015 : context.width * 0.01,
                                     ),
                                   ),
@@ -57,8 +57,8 @@ class OnboardView extends StatelessWidget {
                             )),
                         const Spacer(),
                         FloatingActionButton(
-                            backgroundColor: Color.fromARGB(255, 69, 18, 196),
-                            child: Icon(Icons.keyboard_arrow_right_sharp),
+                            backgroundColor: const Color.fromARGB(255, 69, 18, 196),
+                            child: const Icon(Icons.keyboard_arrow_right_sharp),
                             onPressed: () {
                               goToViewPush(path: NavigationEnum.aracListesi);
                             })

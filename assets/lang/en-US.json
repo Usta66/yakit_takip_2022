@@ -1,18 +1,13 @@
 {
     "dil": "Language",
-    "tlKM": " TL/KM",
-    "km": " KM",
-    "l100Km": " L/100KM",
-    "tl": " TL",
-    "l": " L",
     "guncelle": "Update",
     "sil": "Delete",
     "miktar": "Quantity",
     "fiyat": "Price",
-    "BENZIN":"Gasoline",
-    "DIZEL":"Diesel",
-    "LPG":"LPG",
-    "yakitTuruSeciniz":"Your Choice Of Fuel Type",
+    "BENZIN": "Gasoline",
+    "DIZEL": "Diesel",
+    "LPG": "LPG",
+    "yakitTuruSeciniz": "Your Choice Of Fuel Type",
     "add_new_car": {
         "yeniAracEkle": "Add New Car",
         "adi": "Name",
@@ -39,7 +34,7 @@
         "ortalamaLpgFiyati": "Average LPG Price: ",
         "toplamYakitAlimSayisi": "Total Fuel Purchases Number: ",
         "ortalamaAkaryakitFiyati": "Average Fuel Price: ",
-        "tuketim":"Consumption: "
+        "tuketim": "Consumption: "
     },
     "aracList": {
         "aracListesi": "Vehicle List",
@@ -69,8 +64,13 @@
         "sonKm": "Last Km",
         "birOncekiKm": "Previous Km:",
         "birSonrakiKm": "Next Km:",
-        "aracKm": "Vehicle Km",
+        "aracKm": "Vehicle Km: ",
         "birimFiyat": "Unit Price"
+    },
+    "validator": {
+        "bosOlamaz": "Can't Be Empty",
+        "sonKmKucukOlamaz": "Cannot Be Less Than Last Km",
+        "birsonrakindenBuyukKm": "Bigger Km Than Next",
+        "birOncekindenKucukKm": "Smaller Km Than Before"
     }
-    
 }

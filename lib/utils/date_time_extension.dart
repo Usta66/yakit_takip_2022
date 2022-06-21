@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 DateFormat _onlyDateFormater = DateFormat('dd/MM/yyyy');
+// ignore: unused_element
 DateFormat _fullDateFormatter = DateFormat('dd/MM/yyyy  HH:mm');
 DateFormat _onlyTimeFormatter = DateFormat('HH:mm');
 

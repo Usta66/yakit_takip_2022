@@ -20,13 +20,13 @@ class AdmobService extends ChangeNotifier {
   AdmobService._init() {
     InterstitialAd.load(
         adUnitId: "ca-app-pub-3940256099942544/1033173712",
-        request: AdRequest(),
-        adLoadCallback: InterstitialAdLoadCallback(onAdLoaded: (ad) {
-          this._interstitialAd = ad;
-          _isInterstitialAdReady = true;
-        }, onAdFailedToLoad: (eror) {
-          print(eror.message);
-        }));
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(
+            onAdLoaded: (ad) {
+              _interstitialAd = ad;
+              _isInterstitialAdReady = true;
+            },
+            onAdFailedToLoad: (eror) {}));
   }
 
   // BannerAd get getBannerAd => _bannerAd;
@@ -45,12 +45,10 @@ class AdmobService extends ChangeNotifier {
             setIsBannerReady(true);
           }
         }, onAdFailedToLoad: (ad, error) {
-          print(" admob hata${error.message}");
-
           // isBannerReady = false;
           ad.dispose();
         }),
-        request: AdRequest())
+        request: const AdRequest())
       ..load();
   }
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kartal/kartal.dart';
+
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:yakit_takip_2022/utils/date_time_extension.dart';
 

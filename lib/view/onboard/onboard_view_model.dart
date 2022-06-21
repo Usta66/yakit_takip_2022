@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../constants/app_constants.dart';
+import '../../utils/locale_keys.g.dart';
 import 'onboard_model.dart';
 
 class OnboardViewModel extends ChangeNotifier {
@@ -17,18 +19,11 @@ class OnboardViewModel extends ChangeNotifier {
 
   void init() {
     onboardItems.add(OnboardModel(
-        title: "Yakıt Verilerinizi Grafikler Uzerinden Takip Edin",
-        description: "Yakit Alımlarınızı alım tarihi bazlı olarak fiyat, miktar, ortalama tüketimler(TL/KM - L/100KM) olarak görebilirsiniz.  ",
-        imagePath: AssetsConstants.instance!.CHART_1));
+        title: LocaleKeys.onboard_baslik1.tr(), description: LocaleKeys.onboard_aciklama1.tr(), imagePath: AssetsConstants.instance!.CHART_1));
 
     onboardItems.add(OnboardModel(
-        title: "LPG'li Araçlarda Karma Yakıt Tüketiminizi Görün",
-        description: "LPG'li araçlarda LPG ve benzin tüketimleri ayrı ayrı hesaplanarak bu değerlerden karma yakıt verisine ulaşılır.",
-        imagePath: AssetsConstants.instance!.OFF_ROAD));
+        title: LocaleKeys.onboard_baslik2.tr(), description: LocaleKeys.onboard_aciklama2.tr(), imagePath: AssetsConstants.instance!.OFF_ROAD));
     onboardItems.add(OnboardModel(
-        title: "Geçmiş Yakıt Verilerinizi Saklayın",
-        description:
-            "Araca ait tüm yakıt verileri kayıt edilerek kullanıcıya bütün ayrıntılarıyla gösterilir. Yakıt verileri üzerinde silme güncelleme işlemlerini yapabilirsiniz.",
-        imagePath: AssetsConstants.instance!.MY_CAR));
+        title: LocaleKeys.onboard_baslik3.tr(), description: LocaleKeys.onboard_aciklama3.tr(), imagePath: AssetsConstants.instance!.MY_CAR));
   }
 }

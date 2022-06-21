@@ -6,8 +6,6 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:yakit_takip_2022/enum/yakit_turu_enum.dart';
 
-import 'package:yakit_takip_2022/services/database_service.dart';
-
 import '../../model/car_model.dart';
 
 class AddNewCarViewModel extends ChangeNotifier {

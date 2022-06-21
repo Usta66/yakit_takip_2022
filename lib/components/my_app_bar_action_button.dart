@@ -12,7 +12,7 @@ class MyAppBarActionButton extends StatelessWidget {
       padding: context.paddingLow,
       child: IconButton(
         onPressed: onPressed,
-        icon: Icon(Icons.check),
+        icon: const Icon(Icons.check),
         iconSize: context.mediumValue,
         color: Colors.amber,
       ),

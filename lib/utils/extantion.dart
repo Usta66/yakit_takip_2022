@@ -9,6 +9,7 @@ extension StringExtantion on String {
   }
 
   bool get isNullOrEmpty {
+    // ignore: unnecessary_null_comparison
     if (this == null) {
       return true;
     } else {

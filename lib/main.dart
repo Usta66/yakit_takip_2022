@@ -11,15 +11,15 @@ import 'navigation/navigation_route_services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   MobileAds.instance.initialize();
 
   runApp(EasyLocalization(
-      startLocale: const Locale("tr", "TR"),
-      saveLocale: true,
-      supportedLocales: const [
-        LocaleConstants.EN_LOCALE,
-        LocaleConstants.TR_LOCALE
-      ],
+
+      //startLocale: const Locale("tr", "TR"),
+      //saveLocale: true,
+
+      supportedLocales: const [LocaleConstants.EN_LOCALE, LocaleConstants.TR_LOCALE],
       path: LocaleConstants.LANG_PATH,
       child: MultiProvider(providers: [
         ChangeNotifierProvider(
@@ -39,15 +39,10 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       title: 'Yakıt Takip',
-      theme: ThemeData(
-          useMaterial3: true,
-          primarySwatch: Colors.amber,
-          textTheme:
-              const TextTheme(subtitle2: TextStyle(color: Colors.amber))),
+      theme: ThemeData(useMaterial3: true, primarySwatch: Colors.amber, textTheme: const TextTheme(subtitle2: TextStyle(color: Colors.amber))),
       initialRoute: NavigationEnum.splash.name,
       navigatorKey: NavigationServices.instance.navigatorKey,
-      onGenerateRoute: (settings) =>
-          NavigatorRouteServices.onRouteGenarete(settings),
+      onGenerateRoute: (settings) => NavigatorRouteServices.onRouteGenarete(settings),
     );
   }
 }

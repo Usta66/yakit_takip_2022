@@ -58,7 +58,7 @@ class HomeAndYakitListViewModel extends ChangeNotifier {
   Future<void> aracModelUpdate() async {
     await yakitListesiniDoldur();
 
-    carModel = carModel.copyWith(aracKm: double.tryParse(yakitHesapModel.sonKm), ortalamaKrs: double.tryParse(yakitHesapModel.tLKm));
+    carModel = carModel.copyWith(aracKm: double.tryParse(yakitHesapModel.sonKm), ortalamaTl: double.tryParse(yakitHesapModel.tLKm));
 
     _dbServis.update<CarModel>(carModel);
 
