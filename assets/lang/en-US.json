@@ -4,8 +4,8 @@
     "sil": "Delete",
     "miktar": "Quantity",
     "fiyat": "Price",
-    "BENZIN": "Gasoline",
-    "DIZEL": "Diesel",
+    "BENZIN": "GASOLINE",
+    "DIZEL": "DIESEL",
     "LPG": "LPG",
     "yakitTuruSeciniz": "Your Choice Of Fuel Type",
     "add_new_car": {

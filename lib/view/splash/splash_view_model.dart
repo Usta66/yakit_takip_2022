@@ -22,7 +22,7 @@ class SplashViewModel extends ChangeNotifier {
     bool? isOpen = LocaleManeger.instance.getBoolValue(EnumPreferencesKeys.ISFIRSTOPEN);
 
     if (isOpen == null || isOpen == false) {
-      LocaleManeger.instance.setBoolValue(EnumPreferencesKeys.ISFIRSTOPEN, true);
+      
 
       goToViewReset(path: NavigationEnum.onboard);
     } else {

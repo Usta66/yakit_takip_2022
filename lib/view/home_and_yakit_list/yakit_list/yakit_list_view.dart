@@ -37,42 +37,49 @@ class YakitListView extends StatelessWidget {
   }
 
   Consumer<HomeAndYakitListViewModel> _buildBody() {
-    return Consumer<HomeAndYakitListViewModel>(builder: (context, viewModel, child) {
+    return Consumer<HomeAndYakitListViewModel>(
+        builder: (context, viewModel, child) {
       return ListView.builder(
         shrinkWrap: true,
         itemCount: viewModel.listYakitIslemModel.length,
         itemBuilder: (context, index) {
-          YakitIslemModel yakitIslemModel = viewModel.listYakitIslemModel[index]!;
+          YakitIslemModel yakitIslemModel =
+              viewModel.listYakitIslemModel[index]!;
           return Padding(
               padding: context.paddingNormal,
               child: Card(
                 child: Slidable(
-                  endActionPane: ActionPane(extentRatio: 0.50, motion: const BehindMotion(), children: [
-                    SlidableAction(
-                      backgroundColor: Colors.blueAccent,
-                      label: LocaleKeys.guncelle.tr(),
-                      onPressed: (context) {
-                        goToViewPush<YakitIslemModel>(
-                            path: NavigationEnum.yakitGuncelleme,
-                            args: YakitEklemeViewModel.show(
-                                yakitIslemModel: viewModel.listYakitIslemModel[index]!,
-                                carModel: viewModel.carModel,
-                                yakitHesapModel: viewModel.yakitHesapModel,
-                                index: index),
-                            function: (gelenModel) {
-                              viewModel.modelUpdate(gelenModel);
-                            });
-                      },
-                      icon: Icons.update_rounded,
-                    ),
-                    SlidableAction(
-                        backgroundColor: Colors.redAccent,
-                        label: LocaleKeys.sil.tr(),
-                        onPressed: (context) {
-                          viewModel.delete(viewModel.listYakitIslemModel[index]!);
-                        },
-                        icon: Icons.delete)
-                  ]),
+                  endActionPane: ActionPane(
+                      extentRatio: 0.50,
+                      motion: const BehindMotion(),
+                      children: [
+                        SlidableAction(
+                          backgroundColor: Colors.blueAccent,
+                          label: LocaleKeys.guncelle.tr(),
+                          onPressed: (context) {
+                            goToViewPush<YakitIslemModel>(
+                                path: NavigationEnum.yakitGuncelleme,
+                                args: YakitEklemeViewModel.show(
+                                    yakitIslemModel:
+                                        viewModel.listYakitIslemModel[index]!,
+                                    carModel: viewModel.carModel,
+                                    yakitHesapModel: viewModel.yakitHesapModel,
+                                    index: index),
+                                function: (gelenModel) {
+                                  viewModel.modelUpdate(gelenModel);
+                                });
+                          },
+                          icon: Icons.update_rounded,
+                        ),
+                        SlidableAction(
+                            backgroundColor: Colors.redAccent,
+                            label: LocaleKeys.sil.tr(),
+                            onPressed: (context) {
+                              viewModel.delete(
+                                  viewModel.listYakitIslemModel[index]!);
+                            },
+                            icon: Icons.delete)
+                      ]),
                   child: Padding(
                     padding: context.paddingNormal,
                     child: GestureDetector(
@@ -82,9 +89,16 @@ class YakitListView extends StatelessWidget {
                         Expanded(
                           flex: 1,
                           child: CircleAvatarImageAndAlphabet(
-                              color: yakitIslemModel.yakitTuru == YakitTuruEnum.LPG ? 0x4D05FF3B : 0x989F0D7D,
+                              color:
+                                  yakitIslemModel.yakitTuru == YakitTuruEnum.LPG
+                                      ? 0x4D05FF3B
+                                      : 0x989F0D7D,
                               radius: context.width * 0.15,
-                              text: yakitIslemModel.yakitTuru != null ? yakitIslemModel.yakitTuru!.name : null),
+                              text: yakitIslemModel.yakitTuru != null
+                                  ? yakitIslemModel.yakitTuru!.name
+                                      .toUpperCase()
+                                      .tr()
+                                  : null),
                         ),
                         Expanded(
                           flex: 2,
@@ -97,29 +111,69 @@ class YakitListView extends StatelessWidget {
                                   children: [
                                     Expanded(
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          LocaleText(LocaleKeys.yakitList_tarih, style: Theme.of(context).textTheme.subtitle1),
-                                          Text(yakitIslemModel.alisTarihi!.stringValue, style: Theme.of(context).textTheme.subtitle2),
+                                          LocaleText(LocaleKeys.yakitList_tarih,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle1),
+                                          Text(
+                                              yakitIslemModel
+                                                  .alisTarihi!.stringValue,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle2),
                                           Padding(
-                                            padding: EdgeInsets.only(top: context.lowValue),
-                                            child: LocaleText(StringConstants.km, style: Theme.of(context).textTheme.subtitle1),
+                                            padding: EdgeInsets.only(
+                                                top: context.lowValue),
+                                            child: LocaleText(
+                                                StringConstants.km,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .subtitle1),
                                           ),
-                                          Text(yakitIslemModel.aracKm.toString() + StringConstants.km, style: Theme.of(context).textTheme.subtitle2)
+                                          Text(
+                                              yakitIslemModel.aracKm
+                                                      .toString() +
+                                                  StringConstants.km,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle2)
                                         ],
                                       ),
                                     ),
                                     Expanded(
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          LocaleText(LocaleKeys.miktar, style: Theme.of(context).textTheme.subtitle1),
-                                          Text(yakitIslemModel.miktari.toString() + StringConstants.l, style: Theme.of(context).textTheme.subtitle2),
+                                          LocaleText(LocaleKeys.miktar,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle1),
+                                          Text(
+                                              yakitIslemModel.miktari
+                                                      .toString() +
+                                                  StringConstants.l,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle2),
                                           Padding(
-                                            padding: EdgeInsets.only(top: context.lowValue),
-                                            child: LocaleText(LocaleKeys.yakitList_tutar, style: Theme.of(context).textTheme.subtitle1),
+                                            padding: EdgeInsets.only(
+                                                top: context.lowValue),
+                                            child: LocaleText(
+                                                LocaleKeys.yakitList_tutar,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .subtitle1),
                                           ),
-                                          Text(yakitIslemModel.tutar.toString() + StringConstants.tl, style: Theme.of(context).textTheme.subtitle2)
+                                          Text(
+                                              yakitIslemModel.tutar.toString() +
+                                                  StringConstants.tl,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle2)
                                         ],
                                       ),
                                     ),
@@ -130,36 +184,85 @@ class YakitListView extends StatelessWidget {
                                   children: [
                                     Expanded(
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          Text(StringConstants.tlKm, style: Theme.of(context).textTheme.subtitle1),
-                                          yakitIslemModel.tutar != null && yakitIslemModel.mesafe != null
-                                              ? Text((yakitIslemModel.tutar! / yakitIslemModel.mesafe!).toStringAsFixed(2) + StringConstants.tl,
-                                                  style: Theme.of(context).textTheme.subtitle2)
-                                              : Text("---", style: Theme.of(context).textTheme.subtitle2),
+                                          Text(StringConstants.tlKm,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle1),
+                                          yakitIslemModel.tutar != null &&
+                                                  yakitIslemModel.mesafe != null
+                                              ? Text(
+                                                  (yakitIslemModel.tutar! /
+                                                              yakitIslemModel
+                                                                  .mesafe!)
+                                                          .toStringAsFixed(2) +
+                                                      StringConstants.tl,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .subtitle2)
+                                              : Text("---",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .subtitle2),
                                           Padding(
-                                            padding: EdgeInsets.only(top: context.lowValue),
-                                            child: Text(StringConstants.lKm, style: Theme.of(context).textTheme.subtitle1),
+                                            padding: EdgeInsets.only(
+                                                top: context.lowValue),
+                                            child: Text(StringConstants.lKm,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .subtitle1),
                                           ),
-                                          yakitIslemModel.miktari != null && yakitIslemModel.mesafe != null
-                                              ? Text((yakitIslemModel.miktari! / yakitIslemModel.mesafe!).toStringAsFixed(2) + StringConstants.l,
-                                                  style: Theme.of(context).textTheme.subtitle2)
-                                              : Text("---", style: Theme.of(context).textTheme.subtitle2),
+                                          yakitIslemModel.miktari != null &&
+                                                  yakitIslemModel.mesafe != null
+                                              ? Text(
+                                                  (yakitIslemModel.miktari! /
+                                                              yakitIslemModel
+                                                                  .mesafe!)
+                                                          .toStringAsFixed(2) +
+                                                      StringConstants.l,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .subtitle2)
+                                              : Text("---",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .subtitle2),
                                         ],
                                       ),
                                     ),
                                     Expanded(
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          Text(LocaleKeys.fiyat.tr(), style: Theme.of(context).textTheme.subtitle1),
-                                          Text(yakitIslemModel.fiyati.toString() + StringConstants.tl, style: Theme.of(context).textTheme.subtitle2),
+                                          Text(LocaleKeys.fiyat.tr(),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle1),
+                                          Text(
+                                              yakitIslemModel.fiyati
+                                                      .toString() +
+                                                  StringConstants.tl,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle2),
                                           Padding(
-                                            padding: EdgeInsets.only(top: context.lowValue),
-                                            child: Text(LocaleKeys.yakitList_mesafe.tr(), style: Theme.of(context).textTheme.subtitle1),
+                                            padding: EdgeInsets.only(
+                                                top: context.lowValue),
+                                            child: Text(
+                                                LocaleKeys.yakitList_mesafe
+                                                    .tr(),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .subtitle1),
                                           ),
-                                          Text("${yakitIslemModel.mesafe ?? "---"} ${StringConstants.km}",
-                                              style: Theme.of(context).textTheme.subtitle2)
+                                          Text(
+                                              "${yakitIslemModel.mesafe ?? "---"} ${StringConstants.km}",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle2)
                                         ],
                                       ),
                                     ),
@@ -180,32 +283,37 @@ class YakitListView extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Card(
               child: Slidable(
-                endActionPane: ActionPane(extentRatio: 0.50, motion: const BehindMotion(), children: [
-                  SlidableAction(
-                    backgroundColor: Colors.blueAccent,
-                    label: LocaleKeys.guncelle.tr(),
-                    onPressed: (context) {
-                      goToViewPush<YakitIslemModel>(
-                          path: NavigationEnum.yakitGuncelleme,
-                          args: YakitEklemeViewModel.show(
-                              yakitIslemModel: viewModel.listYakitIslemModel[index]!,
-                              carModel: viewModel.carModel,
-                              yakitHesapModel: viewModel.yakitHesapModel,
-                              index: index),
-                          function: (gelenModel) {
-                            viewModel.modelUpdate(gelenModel);
-                          });
-                    },
-                    icon: Icons.update_rounded,
-                  ),
-                  SlidableAction(
-                      backgroundColor: Colors.redAccent,
-                      label: LocaleKeys.sil.tr(),
-                      onPressed: (context) {
-                        viewModel.delete(viewModel.listYakitIslemModel[index]!);
-                      },
-                      icon: Icons.delete)
-                ]),
+                endActionPane: ActionPane(
+                    extentRatio: 0.50,
+                    motion: const BehindMotion(),
+                    children: [
+                      SlidableAction(
+                        backgroundColor: Colors.blueAccent,
+                        label: LocaleKeys.guncelle.tr(),
+                        onPressed: (context) {
+                          goToViewPush<YakitIslemModel>(
+                              path: NavigationEnum.yakitGuncelleme,
+                              args: YakitEklemeViewModel.show(
+                                  yakitIslemModel:
+                                      viewModel.listYakitIslemModel[index]!,
+                                  carModel: viewModel.carModel,
+                                  yakitHesapModel: viewModel.yakitHesapModel,
+                                  index: index),
+                              function: (gelenModel) {
+                                viewModel.modelUpdate(gelenModel);
+                              });
+                        },
+                        icon: Icons.update_rounded,
+                      ),
+                      SlidableAction(
+                          backgroundColor: Colors.redAccent,
+                          label: LocaleKeys.sil.tr(),
+                          onPressed: (context) {
+                            viewModel
+                                .delete(viewModel.listYakitIslemModel[index]!);
+                          },
+                          icon: Icons.delete)
+                    ]),
                 child: Padding(
                   padding: context.paddingLow,
                   child: GestureDetector(
@@ -214,21 +322,32 @@ class YakitListView extends StatelessWidget {
                       children: [
                         Expanded(
                           child: CircleAvatarImageAndAlphabet(
-                              color: yakitIslemModel.yakitTuru == YakitTuruEnum.LPG ? 0x4D05FF3B : 0x989F0D7D,
+                              color:
+                                  yakitIslemModel.yakitTuru == YakitTuruEnum.LPG
+                                      ? 0x4D05FF3B
+                                      : 0x989F0D7D,
                               radius: context.width * 0.05,
-                              text: yakitIslemModel.yakitTuru != null ? yakitIslemModel.yakitTuru!.name[0] : null),
+                              text: yakitIslemModel.yakitTuru != null
+                                  ? yakitIslemModel.yakitTuru!.name[0]
+                                  : null),
                         ),
                         Expanded(
                           flex: 2,
                           child: Column(
                             children: [
-                              Text(LocaleKeys.yakitList_tarih.tr(), style: Theme.of(context).textTheme.subtitle1),
-                              Text(yakitIslemModel.alisTarihi!.stringValue, style: Theme.of(context).textTheme.subtitle2),
+                              Text(LocaleKeys.yakitList_tarih.tr(),
+                                  style: Theme.of(context).textTheme.subtitle1),
+                              Text(yakitIslemModel.alisTarihi!.stringValue,
+                                  style: Theme.of(context).textTheme.subtitle2),
                               Padding(
                                 padding: EdgeInsets.only(top: context.lowValue),
-                                child: Text(StringConstants.km, style: Theme.of(context).textTheme.subtitle1),
+                                child: Text(StringConstants.km,
+                                    style:
+                                        Theme.of(context).textTheme.subtitle1),
                               ),
-                              Text("${yakitIslemModel.aracKm} ${StringConstants.km}", style: Theme.of(context).textTheme.subtitle2)
+                              Text(
+                                  "${yakitIslemModel.aracKm} ${StringConstants.km}",
+                                  style: Theme.of(context).textTheme.subtitle2)
                             ],
                           ),
                         ),
@@ -236,13 +355,20 @@ class YakitListView extends StatelessWidget {
                           flex: 2,
                           child: Column(
                             children: [
-                              Text(LocaleKeys.miktar.tr(), style: Theme.of(context).textTheme.subtitle1),
-                              Text("${yakitIslemModel.miktari} ${StringConstants.l}", style: Theme.of(context).textTheme.subtitle2),
+                              Text(LocaleKeys.miktar.tr(),
+                                  style: Theme.of(context).textTheme.subtitle1),
+                              Text(
+                                  "${yakitIslemModel.miktari} ${StringConstants.l}",
+                                  style: Theme.of(context).textTheme.subtitle2),
                               Padding(
                                 padding: EdgeInsets.only(top: context.lowValue),
-                                child: Text(LocaleKeys.yakitList_tutar.tr(), style: Theme.of(context).textTheme.subtitle1),
+                                child: Text(LocaleKeys.yakitList_tutar.tr(),
+                                    style:
+                                        Theme.of(context).textTheme.subtitle1),
                               ),
-                              Text("${yakitIslemModel.tutar} ${StringConstants.tl}", style: Theme.of(context).textTheme.subtitle2)
+                              Text(
+                                  "${yakitIslemModel.tutar} ${StringConstants.tl}",
+                                  style: Theme.of(context).textTheme.subtitle2)
                             ],
                           ),
                         ),
@@ -250,19 +376,34 @@ class YakitListView extends StatelessWidget {
                           flex: 2,
                           child: Column(
                             children: [
-                              Text(StringConstants.tlKm, style: Theme.of(context).textTheme.subtitle1),
-                              yakitIslemModel.tutar != null && yakitIslemModel.mesafe != null
-                                  ? Text("${(yakitIslemModel.tutar! / yakitIslemModel.mesafe!).toStringAsFixed(2)} ${StringConstants.tl}",
-                                      style: Theme.of(context).textTheme.subtitle2)
-                                  : Text("---", style: Theme.of(context).textTheme.subtitle2),
+                              Text(StringConstants.tlKm,
+                                  style: Theme.of(context).textTheme.subtitle1),
+                              yakitIslemModel.tutar != null &&
+                                      yakitIslemModel.mesafe != null
+                                  ? Text(
+                                      "${(yakitIslemModel.tutar! / yakitIslemModel.mesafe!).toStringAsFixed(2)} ${StringConstants.tl}",
+                                      style:
+                                          Theme.of(context).textTheme.subtitle2)
+                                  : Text("---",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .subtitle2),
                               Padding(
                                 padding: EdgeInsets.only(top: context.lowValue),
-                                child: Text(StringConstants.lKm, style: Theme.of(context).textTheme.subtitle1),
+                                child: Text(StringConstants.lKm,
+                                    style:
+                                        Theme.of(context).textTheme.subtitle1),
                               ),
-                              yakitIslemModel.miktari != null && yakitIslemModel.mesafe != null
-                                  ? Text("${(yakitIslemModel.miktari! / yakitIslemModel.mesafe!).toStringAsFixed(2)} ${StringConstants.l}",
-                                      style: Theme.of(context).textTheme.subtitle2)
-                                  : Text("---", style: Theme.of(context).textTheme.subtitle2),
+                              yakitIslemModel.miktari != null &&
+                                      yakitIslemModel.mesafe != null
+                                  ? Text(
+                                      "${(yakitIslemModel.miktari! / yakitIslemModel.mesafe!).toStringAsFixed(2)} ${StringConstants.l}",
+                                      style:
+                                          Theme.of(context).textTheme.subtitle2)
+                                  : Text("---",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .subtitle2),
                             ],
                           ),
                         ),
@@ -270,13 +411,20 @@ class YakitListView extends StatelessWidget {
                           flex: 2,
                           child: Column(
                             children: [
-                              Text(LocaleKeys.fiyat.tr(), style: Theme.of(context).textTheme.subtitle1),
-                              Text("${yakitIslemModel.fiyati} ${StringConstants.tl} ", style: Theme.of(context).textTheme.subtitle2),
+                              Text(LocaleKeys.fiyat.tr(),
+                                  style: Theme.of(context).textTheme.subtitle1),
+                              Text(
+                                  "${yakitIslemModel.fiyati} ${StringConstants.tl} ",
+                                  style: Theme.of(context).textTheme.subtitle2),
                               Padding(
                                 padding: EdgeInsets.only(top: context.lowValue),
-                                child: Text(LocaleKeys.yakitList_mesafe.tr(), style: Theme.of(context).textTheme.subtitle1),
+                                child: Text(LocaleKeys.yakitList_mesafe.tr(),
+                                    style:
+                                        Theme.of(context).textTheme.subtitle1),
                               ),
-                              Text("${yakitIslemModel.mesafe ?? "---"} ${StringConstants.km}", style: Theme.of(context).textTheme.subtitle2)
+                              Text(
+                                  "${yakitIslemModel.mesafe ?? "---"} ${StringConstants.km}",
+                                  style: Theme.of(context).textTheme.subtitle2)
                             ],
                           ),
                         ),

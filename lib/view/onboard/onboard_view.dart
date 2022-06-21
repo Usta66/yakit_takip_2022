@@ -60,7 +60,7 @@ class OnboardView extends StatelessWidget {
                             backgroundColor: const Color.fromARGB(255, 69, 18, 196),
                             child: const Icon(Icons.keyboard_arrow_right_sharp),
                             onPressed: () {
-                              goToViewPush(path: NavigationEnum.aracListesi);
+                              goToViewReset(path: NavigationEnum.aracEkleme);
                             })
                       ],
                     ))

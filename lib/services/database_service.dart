@@ -80,6 +80,9 @@ class DatabaseService extends IDatabaseService {
 
   @override
   Future<int> insert<T extends BaseModel>(T model) async {
+
+
+    _db = await db;
     if (_db != null) {
       var result = await _db!.insert(dbUtils.getTableName<T>(), model.toMap());
 

@@ -41,7 +41,11 @@ class HomeView extends StatelessWidget {
         body: SingleChildScrollView(child: Consumer<HomeAndYakitListViewModel>(
           builder: (context, viewModel, child) {
             return Column(
-              children: [aracKmVerileriCard(context, viewModel), lpgVerileriCard(viewModel, context), akaryakitVerileriColumn(context, viewModel)],
+              children: [
+                aracKmVerileriCard(context, viewModel),
+                lpgVerileriCard(viewModel, context),
+                akaryakitVerileriColumn(context, viewModel)
+              ],
             );
           },
         )),
@@ -49,7 +53,8 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  Widget aracKmVerileriCard(BuildContext context, HomeAndYakitListViewModel viewModel) {
+  Widget aracKmVerileriCard(
+      BuildContext context, HomeAndYakitListViewModel viewModel) {
     return Padding(
       padding: EdgeInsets.only(bottom: context.normalValue),
       child: Card(
@@ -60,7 +65,8 @@ class HomeView extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  LocaleText(LocaleKeys.home_aracKmVerileri, style: Theme.of(context).textTheme.headline5),
+                  LocaleText(LocaleKeys.home_aracKmVerileri,
+                      style: Theme.of(context).textTheme.headline5),
                 ],
               ),
             ),
@@ -103,7 +109,8 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  Visibility lpgVerileriCard(HomeAndYakitListViewModel viewModel, BuildContext context) {
+  Visibility lpgVerileriCard(
+      HomeAndYakitListViewModel viewModel, BuildContext context) {
     return Visibility(
         visible: viewModel.carModel.yakitTuru == YakitTuruEnum.LPG,
         child: Column(
@@ -118,7 +125,8 @@ class HomeView extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          LocaleText(LocaleKeys.home_karmaYakitVerileri, style: Theme.of(context).textTheme.headline5),
+                          LocaleText(LocaleKeys.home_karmaYakitVerileri,
+                              style: Theme.of(context).textTheme.headline5),
                         ],
                       ),
                     ),
@@ -129,7 +137,8 @@ class HomeView extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              LocaleText(LocaleKeys.home_tuketim, style: Theme.of(context).textTheme.headline5),
+                              LocaleText(LocaleKeys.home_tuketim,
+                                  style: Theme.of(context).textTheme.headline5),
                             ],
                           ),
                         ),
@@ -137,7 +146,10 @@ class HomeView extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(viewModel.yakitHesapModel.tLKm + StringConstants.tlKm, style: Theme.of(context).textTheme.headline5),
+                              Text(
+                                  viewModel.yakitHesapModel.tLKm +
+                                      StringConstants.tlKm,
+                                  style: Theme.of(context).textTheme.headline5),
                             ],
                           ),
                         ),
@@ -155,7 +167,8 @@ class HomeView extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        LocaleText(LocaleKeys.home_lpgVerileri, style: Theme.of(context).textTheme.headline5),
+                        LocaleText(LocaleKeys.home_lpgVerileri,
+                            style: Theme.of(context).textTheme.headline5),
                       ],
                     ),
                   ),
@@ -200,33 +213,46 @@ class HomeView extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              (viewModel.yakitHesapModel.listYakitIslemModelLpg.isNotNullOrEmpty
-                                  ? viewModel.yakitHesapModel.listYakitIslemModelLpg.first!.alisTarihi!.stringValue
+                              (viewModel.yakitHesapModel.listYakitIslemModelLpg
+                                      .isNotNullOrEmpty
+                                  ? viewModel
+                                      .yakitHesapModel
+                                      .listYakitIslemModelLpg
+                                      .first!
+                                      .alisTarihi!
+                                      .stringValue
                                   : "---"),
                               style: Theme.of(context).textTheme.subtitle1,
                             ),
                             Text(
-                              viewModel.yakitHesapModel.tLKmLpg + StringConstants.tlKm,
+                              viewModel.yakitHesapModel.tLKmLpg +
+                                  StringConstants.tlKm,
                               style: Theme.of(context).textTheme.subtitle1,
                             ),
                             Text(
-                              viewModel.yakitHesapModel.litreKmLpg + StringConstants.l100km,
+                              viewModel.yakitHesapModel.litreKmLpg +
+                                  StringConstants.l100km,
                               style: Theme.of(context).textTheme.subtitle1,
                             ),
                             Text(
-                              viewModel.yakitHesapModel.ortalamaLpgMaliyeti,
+                              viewModel.yakitHesapModel.ortalamaLpgMaliyeti +
+                                  StringConstants.tl,
                               style: Theme.of(context).textTheme.subtitle1,
                             ),
                             Text(
-                              viewModel.yakitHesapModel.listYakitIslemModelLpg.length.toString(),
+                              viewModel
+                                  .yakitHesapModel.listYakitIslemModelLpg.length
+                                  .toString(),
                               style: Theme.of(context).textTheme.subtitle1,
                             ),
                             Text(
-                              viewModel.yakitHesapModel.toplamLpgMaliyeti + StringConstants.tl,
+                              viewModel.yakitHesapModel.toplamLpgMaliyeti +
+                                  StringConstants.tl,
                               style: Theme.of(context).textTheme.subtitle1,
                             ),
                             Text(
-                              viewModel.yakitHesapModel.toplamLpgMiktari + StringConstants.l,
+                              viewModel.yakitHesapModel.toplamLpgMiktari +
+                                  StringConstants.l,
                               style: Theme.of(context).textTheme.subtitle1,
                             ),
                           ],
@@ -250,14 +276,20 @@ class HomeView extends StatelessWidget {
                 name: StringConstants.tlKm,
                 name2: StringConstants.l100km,
                 dataSource: viewModel.yakitHesapModel.listYakitIslemModelLpg,
-                yValueMapper: (sales, _) => sales!.tutar != null && sales.mesafe != null ? (sales.tutar! / sales.mesafe!).asFixed(2) : null,
+                yValueMapper: (sales, _) =>
+                    sales!.tutar != null && sales.mesafe != null
+                        ? (sales.tutar! / sales.mesafe!).asFixed(2)
+                        : null,
                 yValueMapper2: (sales, _) =>
-                    sales!.miktari != null && sales.mesafe != null ? (sales.miktari! / sales.mesafe! * 100).asFixed(2) : null),
+                    sales!.miktari != null && sales.mesafe != null
+                        ? (sales.miktari! / sales.mesafe! * 100).asFixed(2)
+                        : null),
           ],
         ));
   }
 
-  akaryakitVerileriColumn(BuildContext context, HomeAndYakitListViewModel viewModel) {
+  akaryakitVerileriColumn(
+      BuildContext context, HomeAndYakitListViewModel viewModel) {
     return Column(
       children: [
         Card(
@@ -268,7 +300,8 @@ class HomeView extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    LocaleText(LocaleKeys.home_akaryakitVerileri, style: Theme.of(context).textTheme.headline5),
+                    LocaleText(LocaleKeys.home_akaryakitVerileri,
+                        style: Theme.of(context).textTheme.headline5),
                   ],
                 ),
               ),
@@ -283,8 +316,10 @@ class HomeView extends StatelessWidget {
                           LocaleKeys.home_yakitAlinanIlkTarih,
                           style: Theme.of(context).textTheme.subtitle1,
                         ),
-                        LocaleText(LocaleKeys.home_tuketim, style: Theme.of(context).textTheme.subtitle1),
-                        LocaleText(LocaleKeys.home_tuketim, style: Theme.of(context).textTheme.subtitle1),
+                        LocaleText(LocaleKeys.home_tuketim,
+                            style: Theme.of(context).textTheme.subtitle1),
+                        LocaleText(LocaleKeys.home_tuketim,
+                            style: Theme.of(context).textTheme.subtitle1),
                         LocaleText(
                           LocaleKeys.home_ortalamaAkaryakitFiyati,
                           style: Theme.of(context).textTheme.subtitle1,
@@ -297,7 +332,8 @@ class HomeView extends StatelessWidget {
                           LocaleKeys.home_taplamMaliyet,
                           style: Theme.of(context).textTheme.subtitle1,
                         ),
-                        LocaleText(LocaleKeys.home_toplamMiktar, style: Theme.of(context).textTheme.subtitle1),
+                        LocaleText(LocaleKeys.home_toplamMiktar,
+                            style: Theme.of(context).textTheme.subtitle1),
                       ],
                     ),
                   ),
@@ -305,26 +341,41 @@ class HomeView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        viewModel.yakitHesapModel.listYakitIslemModelAkaryakit.isNotNullOrEmpty
-                            ? viewModel.yakitHesapModel.listYakitIslemModelAkaryakit.first!.alisTarihi!.stringValue
+                        viewModel.yakitHesapModel.listYakitIslemModelAkaryakit
+                                .isNotNullOrEmpty
+                            ? viewModel
+                                .yakitHesapModel
+                                .listYakitIslemModelAkaryakit
+                                .first!
+                                .alisTarihi!
+                                .stringValue
                             : "---",
                         style: Theme.of(context).textTheme.subtitle1,
                       ),
-                      Text(StringConstants.tlKm, style: Theme.of(context).textTheme.subtitle1),
-                      Text(StringConstants.l100km, style: Theme.of(context).textTheme.subtitle1),
+                      Text(StringConstants.tlKm,
+                          style: Theme.of(context).textTheme.subtitle1),
+                      Text(StringConstants.l100km,
+                          style: Theme.of(context).textTheme.subtitle1),
                       Text(
-                        viewModel.yakitHesapModel.ortalamaAkaryakitMaliyeti,
+                        viewModel.yakitHesapModel.ortalamaAkaryakitMaliyeti +
+                            StringConstants.tl,
                         style: Theme.of(context).textTheme.subtitle1,
                       ),
                       Text(
-                        viewModel.yakitHesapModel.listYakitIslemModelAkaryakit.length.toString(),
+                        viewModel
+                            .yakitHesapModel.listYakitIslemModelAkaryakit.length
+                            .toString(),
                         style: Theme.of(context).textTheme.subtitle1,
                       ),
                       Text(
-                        viewModel.yakitHesapModel.toplamAkaryakitMaliyeti + StringConstants.tl,
+                        viewModel.yakitHesapModel.toplamAkaryakitMaliyeti +
+                            StringConstants.tl,
                         style: Theme.of(context).textTheme.subtitle1,
                       ),
-                      Text(viewModel.yakitHesapModel.toplamAkaryakitMiktari + StringConstants.l, style: Theme.of(context).textTheme.subtitle1),
+                      Text(
+                          viewModel.yakitHesapModel.toplamAkaryakitMiktari +
+                              StringConstants.l,
+                          style: Theme.of(context).textTheme.subtitle1),
                     ],
                   )
                 ],
@@ -345,10 +396,16 @@ class HomeView extends StatelessWidget {
           child: MyChart(
             chartTitle: LocaleKeys.home_tlkmlkmAkaryakit.tr(),
             name: StringConstants.tlKm,
-            name2: StringConstants.tlKm,
+            name2: StringConstants.l100km,
             dataSource: viewModel.yakitHesapModel.listYakitIslemModelAkaryakit,
-            yValueMapper: (sales, _) => sales!.tutar != null && sales.mesafe != null ? (sales.tutar! / sales.mesafe!) : null,
-            yValueMapper2: (sales, _) => sales!.miktari != null && sales.mesafe != null ? sales.miktari! / sales.mesafe! * 100 : null,
+            yValueMapper: (sales, _) =>
+                sales!.tutar != null && sales.mesafe != null
+                    ? (sales.tutar! / sales.mesafe!).asFixed(2)
+                    : null,
+            yValueMapper2: (sales, _) =>
+                sales!.miktari != null && sales.mesafe != null
+                    ? (sales.miktari! / sales.mesafe! * 100).asFixed(2)
+                    : null,
           ),
         )
       ],

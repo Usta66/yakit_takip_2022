@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:yakit_takip_2022/enum/yakit_turu_enum.dart';
 import 'package:yakit_takip_2022/model/car_model.dart';
@@ -27,7 +28,7 @@ class YakitEklemeViewModel extends ChangeNotifier {
     isNew = true;
     yakitIslemModel = YakitIslemModel();
     controllerKm = TextEditingController();
-    controllerYakitTuru = TextEditingController(text: carModel.yakitTuru!.name.toUpperCase());
+    controllerYakitTuru = TextEditingController(text: carModel.yakitTuru!.name.toUpperCase().tr());
     controllerToplamTutar = TextEditingController();
     controllerBirimFiyat = TextEditingController();
     controllerMiktar = TextEditingController();
@@ -42,7 +43,7 @@ class YakitEklemeViewModel extends ChangeNotifier {
     isNew = false;
 
     controllerKm = TextEditingController(text: yakitIslemModel.aracKm == null ? "0" : yakitIslemModel.aracKm!.toStringAsFixed(2));
-    controllerYakitTuru = TextEditingController(text: yakitIslemModel.yakitTuru!.name);
+    controllerYakitTuru = TextEditingController(text: yakitIslemModel.yakitTuru!.name.toUpperCase().tr());
     controllerToplamTutar = TextEditingController(text: yakitIslemModel.tutar == null ? "0" : yakitIslemModel.tutar!.toStringAsFixed(2));
     controllerBirimFiyat = TextEditingController(text: yakitIslemModel.fiyati == null ? "0" : yakitIslemModel.fiyati!.toStringAsFixed(2));
     controllerMiktar = TextEditingController(text: yakitIslemModel.miktari == null ? "0" : yakitIslemModel.miktari!.toString());

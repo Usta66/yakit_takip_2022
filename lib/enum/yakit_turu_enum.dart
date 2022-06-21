@@ -8,9 +8,13 @@ extension YakitTuruExtension on String {
     switch (this) {
       case "BENZIN":
         return YakitTuruEnum.BENZIN;
+      case "GASOLINE":
+        return YakitTuruEnum.BENZIN;
       case "LPG":
         return YakitTuruEnum.LPG;
       case "DIZEL":
+        return YakitTuruEnum.DIZEL;
+      case "DIESEL":
         return YakitTuruEnum.DIZEL;
       case "ELEKTIRIK":
         return YakitTuruEnum.ELEKTIRIK;

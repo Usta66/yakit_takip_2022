@@ -19,7 +19,7 @@ class AdmobService extends ChangeNotifier {
 
   AdmobService._init() {
     InterstitialAd.load(
-        adUnitId: "ca-app-pub-3940256099942544/1033173712",
+        adUnitId: "ca-app-pub-7713506603432492/6434643653",
         request: const AdRequest(),
         adLoadCallback: InterstitialAdLoadCallback(
             onAdLoaded: (ad) {
@@ -39,7 +39,7 @@ class AdmobService extends ChangeNotifier {
   void bannerAdStart({required AdSize size}) {
     bannerAd = BannerAd(
         size: size,
-        adUnitId: "ca-app-pub-3940256099942544/6300978111",
+        adUnitId: "ca-app-pub-7713506603432492/9834784886",
         listener: BannerAdListener(onAdLoaded: (ad) {
           if (isBannerReady == false) {
             setIsBannerReady(true);

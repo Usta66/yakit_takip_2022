@@ -4,8 +4,8 @@
     "sil": "Sil",
     "miktar": "Miktar",
     "fiyat": "Fiyat",
-    "BENZIN": "Benzin",
-    "DIZEL": "Dizel",
+    "BENZIN": "BENZIN",
+    "DIZEL": "DIZEL",
     "LPG": "LPG",
     "yakitTuruSeciniz": "Yakıt Türünü Seciniz",
     "add_new_car": {
@@ -31,8 +31,8 @@
         "fiyatMiktarAkaryakit": "Fiyat - Miktar(Akaryakıt)",
         "tlkmlkmAkaryakit": "TL/Km - L/100Km\n(Akaryakit)",
         "yakitAlinanIlkTarih": "Yakıt Alınan İlk Tarih: ",
-        "ortalamaLpgFiyati": "Ortlama LPG Fiyatı: ",
-        "toplamYakitAlimSayisi": "Toplam Yakıt Alım Sayısı: ",
+        "ortalamaLpgFiyati": "Ortalama LPG Fiyatı: ",
+        "toplamYakitAlimSayisi": "Alım Sayısı: ",
         "ortalamaAkaryakitFiyati": "Ortalama Akaryakıt Fiyatı: ",
         "tuketim": "Tüketim: "
     },
