@@ -38,6 +38,7 @@ class HomeAndYakitListViewModel extends ChangeNotifier {
   }
 
   Future<int> modelUpdate(YakitIslemModel yakitIslemModel) async {
+    print(yakitIslemModel.imagePath);
     var result = _dbServis.update<YakitIslemModel>(yakitIslemModel);
     await aracModelUpdate();
 

@@ -31,6 +31,7 @@ class DbUtils {
 }
 
 enum EnumTableName { araclarTablosu, yakitIslemTablosu }
+
 enum EnumDbName { db }
 
 enum EnumAraclarTablosuColumnName {
@@ -48,4 +49,4 @@ enum EnumAraclarTablosuColumnName {
   color
 }
 
-enum EnumYakitIslemTablosuColumnName { id, aracId, yakitTuru, alisTarihi, alisSaati, fiyati, miktari, tutar, aracKm, mesafe }
+enum EnumYakitIslemTablosuColumnName { id, aracId, yakitTuru, alisTarihi, alisSaati, fiyati, miktari, tutar, aracKm, mesafe, imagePath }

@@ -19,7 +19,7 @@
     "home": {
         "aracDetay": "Vehicle Detail",
         "aracKmVerileri": "Vehicle Km Data",
-        "yakitAlinanSonKm": "Fuel Received Last Km: ",
+        "yakitAlinanSonKm": "Last KM: ",
         "toplamKm": "Total Km: ",
         "karmaYakitVerileri": "Mixed Fuel Data",
         "lpgVerileri": "LPG Data",
@@ -41,7 +41,7 @@
         "uygulamaAdi": "Fuel Tracking Application",
         "hakkinda": "About",
         "hakkindaText": "This application has been developed to follow the fuel consumption of your vehicle in all details.",
-        "ingilizce": "İngilizce",
+        "ingilizce": "English",
         "turkce": "Turkish"
     },
     "yakitList": {

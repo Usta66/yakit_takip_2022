@@ -38,6 +38,7 @@ class AssetsConstants {
   final OFF_ROAD = "assets/images/svg/off_road.svg";
 
   final VEHICLE_SALE = "assets/images/svg/vehicle_sale.svg";
+  final NO_IMAGE = "assets/images/jpg/no_image.jpg";
 }
 
 class LocaleConstants {

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -7,10 +9,13 @@ import 'package:yakit_takip_2022/base/base_view.dart';
 import 'package:yakit_takip_2022/components/yakit_turu_secim_dialog.dart';
 import 'package:yakit_takip_2022/enum/yakit_turu_enum.dart';
 import 'package:yakit_takip_2022/model/yakit_islem_model.dart';
+import 'package:yakit_takip_2022/navigation/navigation_route_services.dart';
+import 'package:yakit_takip_2022/navigation/navigation_services.dart';
 import 'package:yakit_takip_2022/utils/date_time_extension.dart';
 
 import 'package:yakit_takip_2022/view/yakit_ekleme/yakit_ekleme_view_model.dart';
 
+import '../../components/left_icon_text.dart';
 import '../../components/my_app_bar.dart';
 import '../../components/my_app_bar_action_button.dart';
 import '../../components/my_banner_adwidget.dart';
@@ -53,7 +58,6 @@ class YakitEklemeView extends StatelessWidget with Validator {
         key: viewModel.formKey,
         child: Wrap(
           children: [
-            const Divider(),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -92,7 +96,6 @@ class YakitEklemeView extends StatelessWidget with Validator {
                 ),
               ],
             ),
-            const Divider(),
             Consumer<YakitEklemeViewModel>(
               builder: (context, viewModel, child) {
                 return Column(
@@ -181,6 +184,41 @@ class YakitEklemeView extends StatelessWidget with Validator {
               controller: viewModel.controllerMiktar,
               keyboardType: TextInputType.number,
             ),
+            Padding(
+              padding: context.paddingLow,
+              child: const LeftIconText(text: "Belge Yükle", icon: Icons.file_present_outlined),
+            ),
+            Consumer<YakitEklemeViewModel>(
+              builder: (context, value, child) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        if (viewModel.image != null) {
+                          goToViewPush(path: NavigationEnum.fullscreenImage, args: viewModel.image);
+                        }
+                      },
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: SizedBox.fromSize(
+                            size: Size.fromRadius(48),
+                            child: viewModel.image != null
+                                ? Image.file(
+                                    viewModel.image!,
+                                    height: 100,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Image.asset(AssetsConstants.instance!.NO_IMAGE)),
+                      ),
+                    ),
+                    IconButton(onPressed: () => viewModel.getImage(false), icon: Icon(Icons.camera_alt_outlined)),
+                    IconButton(onPressed: () => viewModel.getImage(true), icon: Icon(Icons.file_upload_rounded)),
+                    IconButton(onPressed: () => viewModel.deletImage(), icon: Icon(Icons.delete_forever_outlined))
+                  ],
+                );
+              },
+            )
           ],
         ),
       ),

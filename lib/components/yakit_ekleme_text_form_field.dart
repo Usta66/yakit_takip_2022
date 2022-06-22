@@ -29,8 +29,9 @@ class YakitEklemeTextFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Row(
+    return Padding(
+      padding: context.paddingLow,
+      child: Row(
         children: [
           Expanded(child: LeftIconText(icon: icon, text: text.tr())),
           Expanded(
@@ -46,7 +47,6 @@ class YakitEklemeTextFormField extends StatelessWidget {
           )
         ],
       ),
-      Padding(padding: context.paddingLow, child: const Divider())
-    ]);
+    );
   }
 }

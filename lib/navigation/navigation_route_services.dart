@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:yakit_takip_2022/components/fullscreen_image_view.dart';
 import 'package:yakit_takip_2022/model/yakit_islem_model.dart';
 import 'package:yakit_takip_2022/view/add_new_car/add_new_car_view.dart';
 import 'package:yakit_takip_2022/view/add_new_car/add_new_car_view_model.dart';
@@ -16,19 +19,29 @@ import '../view/splash/splash_view.dart';
 import '../view/splash/splash_view_model.dart';
 import '../view/yakit_ekleme/yakit_ekleme_view_model.dart';
 
-enum NavigationEnum {splash,onboard, homeAndYakitList, aracListesi, aracEkleme, aracGuncelleme, yakitEkleme, yakitGuncelleme }
+enum NavigationEnum { splash, onboard, homeAndYakitList, aracListesi, aracEkleme, aracGuncelleme, yakitEkleme, yakitGuncelleme, fullscreenImage }
 
 class NavigatorRouteServices {
   NavigatorRouteServices._init();
 
   static Route<dynamic> onRouteGenarete(RouteSettings settings) {
     switch (settings.name) {
-
-       case "splash":
+      case "splash":
         return _navigateToDeafult(page: SplashView(viewModel: SplashViewModel()));
 
-        case "onboard":
-        return _navigateToDeafult(page: OnboardView(viewModel: OnboardViewModel(),));
+      case "fullscreenImage":
+        File file = File("path");
+        if (settings.arguments != null) {
+          file = settings.arguments as File;
+        }
+
+        return _navigateToDeafult(page: FullscreenImageView(file: file));
+
+      case "onboard":
+        return _navigateToDeafult(
+            page: OnboardView(
+          viewModel: OnboardViewModel(),
+        ));
       case "aracListesi":
         return _navigateToDeafult(page: AracListView(viewModel: AracListViewModel()));
 

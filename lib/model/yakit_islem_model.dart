@@ -13,6 +13,7 @@ class YakitIslemModel implements BaseModel {
   YakitTuruEnum? yakitTuru;
   DateTime? alisTarihi;
   TimeOfDay? alisSaati;
+  String? imagePath;
 
   double? fiyati;
   double? miktari;
@@ -26,6 +27,7 @@ class YakitIslemModel implements BaseModel {
     this.yakitTuru,
     this.alisTarihi,
     this.alisSaati,
+    this.imagePath,
     this.fiyati,
     this.miktari,
     this.tutar,
@@ -46,6 +48,7 @@ class YakitIslemModel implements BaseModel {
       'yakitTuru': yakitTuru!.name,
       'alisTarihi': alisTarihi?.stringValue,
       'alisSaati': alisSaati?.stringValue,
+      'imagePath': imagePath,
       'fiyati': fiyati,
       'miktari': miktari,
       'tutar': tutar,
@@ -60,6 +63,7 @@ class YakitIslemModel implements BaseModel {
     YakitTuruEnum? yakitTuru,
     DateTime? alisTarihi,
     TimeOfDay? alisSaati,
+    String? imagePath,
     double? fiyati,
     double? miktari,
     double? tutar,
@@ -73,6 +77,7 @@ class YakitIslemModel implements BaseModel {
       alisTarihi: alisTarihi ?? this.alisTarihi,
       alisSaati: alisSaati ?? this.alisSaati,
       fiyati: fiyati ?? this.fiyati,
+      imagePath: imagePath ?? this.imagePath,
       miktari: miktari ?? this.miktari,
       tutar: tutar ?? this.tutar,
       aracKm: aracKm ?? this.aracKm,
@@ -85,6 +90,7 @@ class YakitIslemModel implements BaseModel {
       id: map['id']?.toInt(),
       aracId: map['aracId']?.toInt(),
       yakitTuru: (map['yakitTuru'] as String).YakitTuruValu,
+      imagePath: map['imagePath'],
       alisTarihi: map['alisTarihi'] != null ? (map['alisTarihi'] as String).stringToDateTime : null,
       alisSaati: map['alisSaati'] != null ? (map['alisSaati'] as String).stringFromTimeOfDay : null,
       fiyati: map['fiyati']?.toDouble(),
@@ -101,7 +107,7 @@ class YakitIslemModel implements BaseModel {
 
   @override
   String toString() {
-    return 'YakitIslemModel(id: $id, aracId: $aracId, yakitTuru: $yakitTuru, alisTarihi: $alisTarihi, alisSaati: $alisSaati, fiyati: $fiyati, miktari: $miktari, tutar: $tutar, aracKm: $aracKm, mesafe: $mesafe)';
+    return 'YakitIslemModel(id: $id, aracId: $aracId, imagePath: $imagePath,yakitTuru: $yakitTuru, alisTarihi: $alisTarihi, alisSaati: $alisSaati, fiyati: $fiyati, miktari: $miktari, tutar: $tutar, aracKm: $aracKm, mesafe: $mesafe)';
   }
 
   @override
@@ -113,6 +119,7 @@ class YakitIslemModel implements BaseModel {
         other.aracId == aracId &&
         other.yakitTuru == yakitTuru &&
         other.alisTarihi == alisTarihi &&
+        other.imagePath == imagePath &&
         other.alisSaati == alisSaati &&
         other.fiyati == fiyati &&
         other.miktari == miktari &&
@@ -127,6 +134,7 @@ class YakitIslemModel implements BaseModel {
         aracId.hashCode ^
         yakitTuru.hashCode ^
         alisTarihi.hashCode ^
+        imagePath.hashCode ^
         alisSaati.hashCode ^
         fiyati.hashCode ^
         miktari.hashCode ^

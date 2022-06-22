@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:yakit_takip_2022/enum/yakit_turu_enum.dart';
 import 'package:yakit_takip_2022/model/car_model.dart';
 import 'package:yakit_takip_2022/model/yakit_hesap_model.dart';
@@ -49,23 +52,44 @@ class YakitEklemeViewModel extends ChangeNotifier {
     controllerMiktar = TextEditingController(text: yakitIslemModel.miktari == null ? "0" : yakitIslemModel.miktari!.toString());
     controllerAlisTarihi = TextEditingController(text: yakitIslemModel.alisTarihi!.stringValue);
     controllerAlisSaati = TextEditingController(text: yakitIslemModel.alisSaati!.stringValue);
+    image = yakitIslemModel.imagePath != null ? File(yakitIslemModel.imagePath!) : null;
   }
 
   init() async {
     yakitIslemModelList = await YakitHesapModel.getListYakitislemModel(carModel);
   }
 
+  File? image;
+
+  final picker = ImagePicker();
+
+  getImage(bool issourceGallery) async {
+    final pickedFile = await picker.pickImage(source: issourceGallery ? ImageSource.gallery : ImageSource.camera);
+
+    if (pickedFile != null) {
+      image = File(pickedFile.path);
+    }
+
+    notifyListeners();
+  }
+
+  deletImage() {
+    image = null;
+    yakitIslemModel.imagePath = null;
+    notifyListeners();
+  }
+
   YakitIslemModel modeliHazirla() {
     return yakitIslemModel = yakitIslemModel.copyWith(
-      alisTarihi: controllerAlisTarihi.text.stringToDateTime,
-      alisSaati: controllerAlisSaati.text.stringFromTimeOfDay,
-      aracId: carModel.id,
-      aracKm: double.tryParse(controllerKm.text.trim()),
-      fiyati: double.tryParse(controllerBirimFiyat.text.trim()),
-      tutar: double.tryParse(controllerToplamTutar.text.trim()),
-      miktari: double.tryParse(controllerMiktar.text.trim()),
-      yakitTuru: (controllerYakitTuru.text.trim()).YakitTuruValu,
-    );
+        alisTarihi: controllerAlisTarihi.text.stringToDateTime,
+        alisSaati: controllerAlisSaati.text.stringFromTimeOfDay,
+        aracId: carModel.id,
+        aracKm: double.tryParse(controllerKm.text.trim()),
+        fiyati: double.tryParse(controllerBirimFiyat.text.trim()),
+        tutar: double.tryParse(controllerToplamTutar.text.trim()),
+        miktari: double.tryParse(controllerMiktar.text.trim()),
+        yakitTuru: (controllerYakitTuru.text.trim()).YakitTuruValu,
+        imagePath: image == null ? null : image!.path);
   }
 
   BirOncekiBirSonrakiKmModel birOncekiBirSonrakiKmHesapla() {

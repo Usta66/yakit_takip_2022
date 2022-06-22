@@ -19,7 +19,7 @@
     "home": {
         "aracDetay": "Araç Detay",
         "aracKmVerileri": "Araç KM Verileri",
-        "yakitAlinanSonKm": "Yakıt Alınan Son KM: ",
+        "yakitAlinanSonKm": "Son KM: ",
         "toplamKm": "Toplam Km: ",
         "karmaYakitVerileri": "Karma Yakit Verileri",
         "lpgVerileri": "LPG Verileri",
@@ -41,7 +41,7 @@
         "uygulamaAdi": "Yakit Takip Uygulaması",
         "hakkinda": "Hakkında",
         "hakkindaText": "Bu uygulama aracınızın yakıt tüketimini tüm detaylarıyla takip edebilmeniz amaçıyla geliştirilmiştir.",
-        "ingilizce": "English",
+        "ingilizce": "İngilizce",
         "turkce": "Türkçe"
     },
     "yakitList": {
@@ -60,7 +60,7 @@
     },
     "yakitEkleme": {
         "yakitEkleme": "Yakit Ekleme",
-        "yakitGuncelleme": "Yakit Guncelleme",
+        "yakitGuncelleme": "Güncelleme",
         "sonKm": "Son Km: ",
         "birOncekiKm": "Bir Önceki Km: ",
         "birSonrakiKm": "Bir Sonraki Km: ",

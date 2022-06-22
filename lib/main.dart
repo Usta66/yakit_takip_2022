@@ -15,10 +15,6 @@ void main() async {
   MobileAds.instance.initialize();
 
   runApp(EasyLocalization(
-
-      //startLocale: const Locale("tr", "TR"),
-      //saveLocale: true,
-
       supportedLocales: const [LocaleConstants.EN_LOCALE, LocaleConstants.TR_LOCALE],
       path: LocaleConstants.LANG_PATH,
       child: MultiProvider(providers: [
