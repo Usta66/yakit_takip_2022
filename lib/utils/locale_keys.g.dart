@@ -64,6 +64,8 @@ abstract class LocaleKeys {
   static const yakitEkleme_birSonrakiKm = 'yakitEkleme.birSonrakiKm';
   static const yakitEkleme_aracKm = 'yakitEkleme.aracKm';
   static const yakitEkleme_birimFiyat = 'yakitEkleme.birimFiyat';
+  static const yakitEkleme_belgeYukle = 'yakitEkleme.belgeYukle';
+  static const yakitEkleme_yakitDetay = 'yakitEkleme.yakitDetay';
   static const yakitEkleme = 'yakitEkleme';
   static const validator_bosOlamaz = 'validator.bosOlamaz';
   static const validator_sonKmKucukOlamaz = 'validator.sonKmKucukOlamaz';

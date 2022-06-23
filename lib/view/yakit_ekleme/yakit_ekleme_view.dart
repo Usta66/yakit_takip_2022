@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -36,13 +34,20 @@ class YakitEklemeView extends StatelessWidget with Validator {
         child: Scaffold(
           appBar: MyAppBar(
             context: context,
-            label: viewModel.isNew ? LocaleKeys.yakitEkleme_yakitEkleme : LocaleKeys.yakitEkleme_yakitGuncelleme,
+            label: viewModel.yakitEklemeViewDurum == YakitEklemeViewDurum.yeni
+                ? LocaleKeys.yakitEkleme_yakitEkleme
+                : viewModel.yakitEklemeViewDurum == YakitEklemeViewDurum.guncelleme
+                    ? LocaleKeys.yakitEkleme_yakitGuncelleme
+                    : LocaleKeys.yakitEkleme_yakitDetay,
             actions: [
-              MyAppBarActionButton(onPressed: () {
-                if (viewModel.formKey.currentState!.validate()) {
-                  Navigator.pop<YakitIslemModel>(context, viewModel.modeliHazirla());
-                }
-              })
+              Visibility(
+                visible: viewModel.yakitEklemeViewDurum != YakitEklemeViewDurum.detay,
+                child: MyAppBarActionButton(onPressed: () {
+                  if (viewModel.formKey.currentState!.validate()) {
+                    Navigator.pop<YakitIslemModel>(context, viewModel.modeliHazirla());
+                  }
+                }),
+              )
             ],
           ),
           body: _buildBody(context),
@@ -64,15 +69,17 @@ class YakitEklemeView extends StatelessWidget with Validator {
                 Expanded(
                   flex: 3,
                   child: TextField(
-                    onTap: () {
-                      showDatePicker(
-                              context: context,
-                              initialEntryMode: DatePickerEntryMode.calendar,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime.now().subtract(const Duration(days: 3000)),
-                              lastDate: DateTime.now().add(const Duration(days: 300)))
-                          .then((value) => value != null ? viewModel.controllerAlisTarihi.text = value.stringValue : null);
-                    },
+                    onTap: viewModel.yakitEklemeViewDurum != YakitEklemeViewDurum.detay
+                        ? () {
+                            showDatePicker(
+                                    context: context,
+                                    initialEntryMode: DatePickerEntryMode.calendar,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime.now().subtract(const Duration(days: 3000)),
+                                    lastDate: DateTime.now().add(const Duration(days: 300)))
+                                .then((value) => value != null ? viewModel.controllerAlisTarihi.text = value.stringValue : null);
+                          }
+                        : null,
                     decoration: const InputDecoration(prefixIcon: Icon(Icons.calendar_today_outlined)),
                     controller: viewModel.controllerAlisTarihi,
                     readOnly: true,
@@ -82,13 +89,17 @@ class YakitEklemeView extends StatelessWidget with Validator {
                 Expanded(
                   flex: 4,
                   child: TextFormField(
-                    onTap: () {
-                      showTimePicker(
-                              useRootNavigator: false,
-                              context: context,
-                              initialTime: viewModel.isNew ? TimeOfDay.now() : viewModel.yakitIslemModel.alisSaati!)
-                          .then((value) => value != null ? viewModel.controllerAlisSaati.text = (value.stringValue) : null);
-                    },
+                    onTap: viewModel.yakitEklemeViewDurum != YakitEklemeViewDurum.detay
+                        ? () {
+                            showTimePicker(
+                                    useRootNavigator: false,
+                                    context: context,
+                                    initialTime: viewModel.yakitEklemeViewDurum == YakitEklemeViewDurum.yeni
+                                        ? TimeOfDay.now()
+                                        : viewModel.yakitIslemModel.alisSaati!)
+                                .then((value) => value != null ? viewModel.controllerAlisSaati.text = (value.stringValue) : null);
+                          }
+                        : null,
                     decoration: const InputDecoration(prefixIcon: Icon(Icons.watch_later_outlined)),
                     controller: viewModel.controllerAlisSaati,
                     readOnly: true,
@@ -101,7 +112,7 @@ class YakitEklemeView extends StatelessWidget with Validator {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    viewModel.isNew
+                    viewModel.yakitEklemeViewDurum == YakitEklemeViewDurum.yeni
                         ? Text(
                             LocaleKeys.yakitEkleme_aracKm.tr() + viewModel.carModel.aracKm.toString(),
                             style: const TextStyle(color: Colors.green),
@@ -125,7 +136,8 @@ class YakitEklemeView extends StatelessWidget with Validator {
                             ],
                           ),
                     YakitEklemeTextFormField(
-                        validator: viewModel.isNew
+                        readOnly: viewModel.yakitEklemeViewDurum == YakitEklemeViewDurum.detay,
+                        validator: viewModel.yakitEklemeViewDurum == YakitEklemeViewDurum.yeni
                             ? (value) => value == "" ? bosOlamaz(value!) : kucukOlamaz(value!, viewModel.carModel.aracKm!)
                             : (value) => kmKontrol(
                                 value!, viewModel.birOncekiBirSonrakiKmHesapla().birOnceki, viewModel.birOncekiBirSonrakiKmHesapla().birSonraki),
@@ -143,21 +155,24 @@ class YakitEklemeView extends StatelessWidget with Validator {
               text: LocaleKeys.add_new_car_yakitTuru,
               controller: viewModel.controllerYakitTuru,
               readOnly: true,
-              onTap: () {
-                if (viewModel.carModel.yakitTuru == YakitTuruEnum.LPG) {
-                  showDialog<YakitTuruEnum>(
-                      context: context,
-                      builder: (context) {
-                        return const YakitTuruSecimDialog(isLpg: true);
-                      }).then((value) {
-                    if (value != null) {
-                      viewModel.controllerYakitTuru.text = value.name.tr().toUpperCase();
+              onTap: viewModel.yakitEklemeViewDurum != YakitEklemeViewDurum.detay
+                  ? () {
+                      if (viewModel.carModel.yakitTuru == YakitTuruEnum.LPG) {
+                        showDialog<YakitTuruEnum>(
+                            context: context,
+                            builder: (context) {
+                              return const YakitTuruSecimDialog(isLpg: true);
+                            }).then((value) {
+                          if (value != null) {
+                            viewModel.controllerYakitTuru.text = value.name.tr().toUpperCase();
+                          }
+                        });
+                      }
                     }
-                  });
-                }
-              },
+                  : null,
             ),
             YakitEklemeTextFormField(
+              readOnly: viewModel.yakitEklemeViewDurum == YakitEklemeViewDurum.detay,
               icon: Icons.money,
               text: LocaleKeys.yakitList_tutar,
               suffixTex: StringConstants.tl,
@@ -168,6 +183,7 @@ class YakitEklemeView extends StatelessWidget with Validator {
               },
             ),
             YakitEklemeTextFormField(
+              readOnly: viewModel.yakitEklemeViewDurum == YakitEklemeViewDurum.detay,
               icon: Icons.money,
               text: LocaleKeys.yakitEkleme_birimFiyat,
               suffixTex: StringConstants.tl,
@@ -178,44 +194,56 @@ class YakitEklemeView extends StatelessWidget with Validator {
               },
             ),
             YakitEklemeTextFormField(
+              readOnly: viewModel.yakitEklemeViewDurum == YakitEklemeViewDurum.detay,
               icon: Icons.gas_meter_outlined,
               text: LocaleKeys.miktar,
               suffixTex: StringConstants.l,
               controller: viewModel.controllerMiktar,
               keyboardType: TextInputType.number,
             ),
-            Padding(
-              padding: context.paddingLow,
-              child: const LeftIconText(text: "Belge Yükle", icon: Icons.file_present_outlined),
+            Visibility(
+              visible: viewModel.yakitEklemeViewDurum != YakitEklemeViewDurum.detay,
+              child: Padding(
+                padding: context.paddingLow,
+                child: LeftIconText(text: LocaleKeys.yakitEkleme_belgeYukle.tr(), icon: Icons.file_present_outlined),
+              ),
             ),
             Consumer<YakitEklemeViewModel>(
               builder: (context, value, child) {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        if (viewModel.image != null) {
-                          goToViewPush(path: NavigationEnum.fullscreenImage, args: viewModel.image);
-                        }
-                      },
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: SizedBox.fromSize(
-                            size: Size.fromRadius(48),
-                            child: viewModel.image != null
-                                ? Image.file(
-                                    viewModel.image!,
-                                    height: 100,
-                                    fit: BoxFit.cover,
-                                  )
-                                : Image.asset(AssetsConstants.instance!.NO_IMAGE)),
+                return Padding(
+                  padding: context.paddingNormal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          if (viewModel.image != null) {
+                            goToViewPush(path: NavigationEnum.fullscreenImage, args: viewModel.image);
+                          }
+                        },
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: SizedBox.fromSize(
+                              size: const Size.fromRadius(48),
+                              child: viewModel.image != null
+                                  ? Image.file(
+                                      viewModel.image!,
+                                      height: 100,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Image.asset(AssetsConstants.instance!.NO_IMAGE)),
+                        ),
                       ),
-                    ),
-                    IconButton(onPressed: () => viewModel.getImage(false), icon: Icon(Icons.camera_alt_outlined)),
-                    IconButton(onPressed: () => viewModel.getImage(true), icon: Icon(Icons.file_upload_rounded)),
-                    IconButton(onPressed: () => viewModel.deletImage(), icon: Icon(Icons.delete_forever_outlined))
-                  ],
+                      Visibility(
+                        visible: viewModel.yakitEklemeViewDurum != YakitEklemeViewDurum.detay,
+                        child: ButtonBar(children: [
+                          IconButton(onPressed: () => viewModel.getImage(false), icon: const Icon(Icons.camera_alt_outlined)),
+                          IconButton(onPressed: () => viewModel.getImage(true), icon: const Icon(Icons.file_upload_rounded)),
+                          IconButton(onPressed: () => viewModel.deletImage(), icon: const Icon(Icons.delete_forever_outlined))
+                        ]),
+                      ),
+                    ],
+                  ),
                 );
               },
             )

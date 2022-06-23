@@ -33,7 +33,7 @@ class HomeAndYakitListView extends StatelessWidget {
               }
 
               goToViewPush<YakitIslemModel>(
-                  path: NavigationEnum.yakitEkleme,
+                  path: NavigationEnum.yakitIslem,
                   args: YakitEklemeViewModel.addNew(carModel: viewModel.carModel, yakitHesapModel: viewModel.yakitHesapModel),
                   function: (gelenModel) {
                     viewModel.modelInsert(gelenModel);

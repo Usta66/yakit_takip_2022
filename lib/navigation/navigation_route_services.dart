@@ -19,7 +19,17 @@ import '../view/splash/splash_view.dart';
 import '../view/splash/splash_view_model.dart';
 import '../view/yakit_ekleme/yakit_ekleme_view_model.dart';
 
-enum NavigationEnum { splash, onboard, homeAndYakitList, aracListesi, aracEkleme, aracGuncelleme, yakitEkleme, yakitGuncelleme, fullscreenImage }
+enum NavigationEnum {
+  splash,
+  onboard,
+  homeAndYakitList,
+  aracListesi,
+  aracIslem,
+
+  yakitIslem,
+
+  fullscreenImage,
+}
 
 class NavigatorRouteServices {
   NavigatorRouteServices._init();
@@ -45,28 +55,19 @@ class NavigatorRouteServices {
       case "aracListesi":
         return _navigateToDeafult(page: AracListView(viewModel: AracListViewModel()));
 
-      case "aracEkleme":
-        return _navigateToDeafult<CarModel>(page: AddNewCarView(viewModel: AddNewCarViewModel.addNew()));
+      /*    case "aracEkleme":
+        return _navigateToDeafult<CarModel>(page: AddNewCarView(viewModel: AddNewCarViewModel.addNew())); */
 
-      case "aracGuncelleme":
+      case "aracIslem":
         AddNewCarViewModel? _viewModel;
         if (settings.arguments == null) {
-          _viewModel = AddNewCarViewModel.addNew();
+          throw ("arac işlem viewmodel null geldi");
         } else {
           _viewModel = settings.arguments as AddNewCarViewModel;
         }
         return _navigateToDeafult<CarModel>(page: AddNewCarView(viewModel: _viewModel));
 
-      case "yakitEkleme":
-        YakitEklemeViewModel? _viewModel;
-        if (settings.arguments == null) {
-          throw ("viewModel null geldi");
-        } else {
-          _viewModel = settings.arguments as YakitEklemeViewModel;
-        }
-        return _navigateToDeafult<YakitIslemModel>(page: YakitEklemeView(viewModel: _viewModel));
-
-      case "yakitGuncelleme":
+      case "yakitIslem":
         YakitEklemeViewModel? _viewModel;
         if (settings.arguments == null) {
           throw ("viewModel null geldi");

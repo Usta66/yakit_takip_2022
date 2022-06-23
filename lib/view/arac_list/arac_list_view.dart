@@ -51,7 +51,8 @@ class AracListView extends StatelessWidget {
             child: const Icon(Icons.add),
             onPressed: () {
               goToViewPush<CarModel>(
-                  path: NavigationEnum.aracEkleme,
+                  path: NavigationEnum.aracIslem,
+                  args: AddNewCarViewModel.addNew(),
                   function: (carModel) {
                     viewModel.modelInsert(carModel);
                   });
@@ -161,7 +162,7 @@ class AracListView extends StatelessWidget {
                         label: LocaleKeys.guncelle.tr(),
                         onPressed: (context) {
                           goToViewPush<CarModel>(
-                              path: NavigationEnum.aracGuncelleme,
+                              path: NavigationEnum.aracIslem,
                               args: AddNewCarViewModel.show(carModel: carModel),
                               function: (gelenModel) {
                                 viewModel.modelUpdate(gelenModel);

@@ -10,8 +10,6 @@ class FullscreenImageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: PhotoView(imageProvider: FileImage(file)),
-    );
+    return PhotoView(imageProvider: FileImage(file));
   }
 }

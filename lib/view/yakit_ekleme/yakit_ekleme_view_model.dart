@@ -12,10 +12,10 @@ import 'package:yakit_takip_2022/utils/date_time_extension.dart';
 class YakitEklemeViewModel extends ChangeNotifier {
   late YakitIslemModel yakitIslemModel;
   List<YakitIslemModel?> yakitIslemModelList = [];
-  final YakitHesapModel yakitHesapModel;
+  late YakitHesapModel yakitHesapModel;
   late int index;
 
-  late bool isNew;
+  late YakitEklemeViewDurum yakitEklemeViewDurum;
   late CarModel carModel;
   late TextEditingController controllerKm,
       controllerYakitTuru,
@@ -28,7 +28,7 @@ class YakitEklemeViewModel extends ChangeNotifier {
   final formKey = GlobalKey<FormState>();
 
   YakitEklemeViewModel.addNew({required this.carModel, required this.yakitHesapModel}) {
-    isNew = true;
+    yakitEklemeViewDurum = YakitEklemeViewDurum.yeni;
     yakitIslemModel = YakitIslemModel();
     controllerKm = TextEditingController();
     controllerYakitTuru = TextEditingController(text: carModel.yakitTuru!.name.toUpperCase().tr());
@@ -39,12 +39,19 @@ class YakitEklemeViewModel extends ChangeNotifier {
     controllerAlisSaati = TextEditingController(text: TimeOfDay.now().stringValue);
   }
   YakitEklemeViewModel.show({required this.yakitIslemModel, required this.carModel, required this.yakitHesapModel, required this.index}) {
-    YakitHesapModel.getListYakitislemModel(carModel).then((value) {
-      yakitIslemModelList = value;
-      notifyListeners();
-    });
-    isNew = false;
+    init();
+    yakitEklemeViewDurum = YakitEklemeViewDurum.guncelleme;
 
+    controllerInit();
+  }
+
+  YakitEklemeViewModel.detay({required this.yakitIslemModel, required this.index}) {
+    yakitEklemeViewDurum = YakitEklemeViewDurum.detay;
+
+    controllerInit();
+  }
+
+  void controllerInit() {
     controllerKm = TextEditingController(text: yakitIslemModel.aracKm == null ? "0" : yakitIslemModel.aracKm!.toStringAsFixed(2));
     controllerYakitTuru = TextEditingController(text: yakitIslemModel.yakitTuru!.name.toUpperCase().tr());
     controllerToplamTutar = TextEditingController(text: yakitIslemModel.tutar == null ? "0" : yakitIslemModel.tutar!.toStringAsFixed(2));
@@ -55,15 +62,16 @@ class YakitEklemeViewModel extends ChangeNotifier {
     image = yakitIslemModel.imagePath != null ? File(yakitIslemModel.imagePath!) : null;
   }
 
-  init() async {
+  void init() async {
     yakitIslemModelList = await YakitHesapModel.getListYakitislemModel(carModel);
+    notifyListeners();
   }
 
   File? image;
 
   final picker = ImagePicker();
 
-  getImage(bool issourceGallery) async {
+  void getImage(bool issourceGallery) async {
     final pickedFile = await picker.pickImage(source: issourceGallery ? ImageSource.gallery : ImageSource.camera);
 
     if (pickedFile != null) {
@@ -73,7 +81,7 @@ class YakitEklemeViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  deletImage() {
+  void deletImage() {
     image = null;
     yakitIslemModel.imagePath = null;
     notifyListeners();
@@ -123,3 +131,5 @@ class BirOncekiBirSonrakiKmModel {
 
   BirOncekiBirSonrakiKmModel({this.birOnceki, this.birSonraki});
 }
+
+enum YakitEklemeViewDurum { yeni, guncelleme, detay }

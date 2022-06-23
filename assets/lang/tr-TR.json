@@ -65,7 +65,9 @@
         "birOncekiKm": "Bir Önceki Km: ",
         "birSonrakiKm": "Bir Sonraki Km: ",
         "aracKm": "Araç Km: ",
-        "birimFiyat": "Birim Fiyat"
+        "birimFiyat": "Birim Fiyat",
+        "belgeYukle": "Belge Yükle",
+        "yakitDetay": "Yakıt Detay"
     },
     "validator": {
         "bosOlamaz": "Boş Olamaz",

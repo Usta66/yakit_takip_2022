@@ -65,7 +65,9 @@
         "birOncekiKm": "Previous Km:",
         "birSonrakiKm": "Next Km:",
         "aracKm": "Vehicle Km: ",
-        "birimFiyat": "Unit Price"
+        "birimFiyat": "Unit Price",
+        "belgeYukle": "Upload Document",
+        "yakitDetay": "Fuel Detail"
     },
     "validator": {
         "bosOlamaz": "Can't Be Empty",
