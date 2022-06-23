@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:yakit_takip_2022/base/base_view.dart';
 import 'package:yakit_takip_2022/navigation/navigation_route_services.dart';
 import 'package:yakit_takip_2022/navigation/navigation_services.dart';
+import 'package:yakit_takip_2022/view/add_new_car/add_new_car_view_model.dart';
 import 'package:yakit_takip_2022/view/onboard/onboard_view_model.dart';
 
 import 'onboard_model.dart';
@@ -60,7 +61,7 @@ class OnboardView extends StatelessWidget {
                             backgroundColor: const Color.fromARGB(255, 69, 18, 196),
                             child: const Icon(Icons.keyboard_arrow_right_sharp),
                             onPressed: () {
-                              goToViewReset(path: NavigationEnum.aracIslem);
+                              goToViewReset(path: NavigationEnum.aracIslem,args: AddNewCarViewModel.addNew());
                             })
                       ],
                     ))
