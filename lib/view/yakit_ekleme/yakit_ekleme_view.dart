@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:kartal/kartal.dart';
 import 'package:provider/provider.dart';
@@ -172,27 +173,28 @@ class YakitEklemeView extends StatelessWidget with Validator {
                               )
                             : const SizedBox(),
                     YakitEklemeTextFormField(
-                        readOnly: viewModel.yakitEklemeViewDurum ==
-                            YakitEklemeViewDurum.detay,
-                        validator: viewModel.yakitEklemeViewDurum ==
-                                YakitEklemeViewDurum.yeni
-                            ? (value) => value == ""
-                                ? bosOlamaz(value!)
-                                : kucukOlamaz(
-                                    value!, viewModel.carModel.aracKm!)
-                            : (value) => kmKontrol(
-                                value!,
-                                viewModel
-                                    .birOncekiBirSonrakiKmHesapla()
-                                    .birOnceki,
-                                viewModel
-                                    .birOncekiBirSonrakiKmHesapla()
-                                    .birSonraki),
-                        icon: Icons.add_road_rounded,
-                        text: LocaleKeys.yakitEkleme_aracKm,
-                        suffixTex: StringConstants.km,
-                        controller: viewModel.controllerKm,
-                        keyboardType: TextInputType.number),
+                      readOnly: viewModel.yakitEklemeViewDurum ==
+                          YakitEklemeViewDurum.detay,
+                      validator: viewModel.yakitEklemeViewDurum ==
+                              YakitEklemeViewDurum.yeni
+                          ? (value) => value == ""
+                              ? bosOlamaz(value!)
+                              : kucukOlamaz(value!, viewModel.carModel.aracKm!)
+                          : (value) => kmKontrol(
+                              value!,
+                              viewModel
+                                  .birOncekiBirSonrakiKmHesapla()
+                                  .birOnceki,
+                              viewModel
+                                  .birOncekiBirSonrakiKmHesapla()
+                                  .birSonraki),
+                      icon: Icons.add_road_rounded,
+                      text: LocaleKeys.yakitEkleme_aracKm,
+                      suffixTex: StringConstants.km,
+                      controller: viewModel.controllerKm,
+                      keyboardType: TextInputType.number,
+                      IsinputFormatters: false,
+                    )
                   ],
                 );
               },
@@ -239,14 +241,14 @@ class YakitEklemeView extends StatelessWidget with Validator {
               text: LocaleKeys.yakitEkleme_birimFiyat,
               suffixTex: StringConstants.tl,
               controller: viewModel.controllerBirimFiyat,
-              keyboardType: TextInputType.number,
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
               onChanged: (value) {
                 viewModel.yakitMiktariHesapla();
               },
             ),
             YakitEklemeTextFormField(
-              readOnly:
-                  viewModel.yakitEklemeViewDurum == YakitEklemeViewDurum.detay,
+              readOnly: true,
               icon: Icons.gas_meter_outlined,
               text: LocaleKeys.miktar,
               suffixTex: StringConstants.l,

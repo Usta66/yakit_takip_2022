@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:yakit_takip_2022/components/left_icon_text.dart';
 import 'package:kartal/kartal.dart';
 
@@ -15,12 +16,14 @@ class YakitEklemeTextFormField extends StatelessWidget {
     this.validator,
     this.onTap,
     this.readOnly = false,
+    this.IsinputFormatters=true,
   }) : super(key: key);
 
   final IconData icon;
   final String text;
   final Function(String)? onChanged;
   final TextInputType? keyboardType;
+  final bool IsinputFormatters;
   final String? suffixTex;
   final TextEditingController controller;
   final String? Function(String?)? validator;
@@ -43,6 +46,7 @@ class YakitEklemeTextFormField extends StatelessWidget {
               validator: validator,
               onTap: onTap,
               readOnly: readOnly,
+              inputFormatters: IsinputFormatters?[FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}'))]:[FilteringTextInputFormatter.allow(RegExp(r'^\d*'))],
             ),
           )
         ],
