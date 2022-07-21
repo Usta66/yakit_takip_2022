@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:kartal/kartal.dart';
 
 class BaseTextFormField extends StatelessWidget {
@@ -10,6 +11,7 @@ class BaseTextFormField extends StatelessWidget {
   final TextInputType? keyboardType;
   final String? Function(String?)? validator;
   final bool readOnly;
+  final List<TextInputFormatter>? inputFormatters;
 
   const BaseTextFormField({
     Key? key,
@@ -21,6 +23,7 @@ class BaseTextFormField extends StatelessWidget {
     this.readOnly = false,
     this.keyboardType,
     this.validator,
+    this.inputFormatters,
   }) : super(key: key);
 
   @override
@@ -35,6 +38,7 @@ class BaseTextFormField extends StatelessWidget {
         controller: controller,
         decoration: InputDecoration(labelText: labelText?.tr(), border: const OutlineInputBorder(), hintText: hintText?.tr()),
         keyboardType: keyboardType,
+        inputFormatters: inputFormatters,
       ),
     );
   }

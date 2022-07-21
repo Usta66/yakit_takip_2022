@@ -27,9 +27,9 @@
         "toplamMiktar": "Toplam Miktar: ",
         "fiyatMiktarLpg": "Fiyat-Miktar(LPG)",
         "tlkmlkmLpg": "TL/Km - L/100Km(LPG)",
-        "akaryakitVerileri": "Akaryakit Verileri",
+        "akaryakitVerileri": "Akaryakıt Verileri",
         "fiyatMiktarAkaryakit": "Fiyat - Miktar(Akaryakıt)",
-        "tlkmlkmAkaryakit": "TL/Km - L/100Km\n(Akaryakit)",
+        "tlkmlkmAkaryakit": "TL/Km - L/100Km\n(Akaryakıt)",
         "yakitAlinanIlkTarih": "Yakıt Alınan İlk Tarih: ",
         "ortalamaLpgFiyati": "Ortalama LPG Fiyatı: ",
         "toplamYakitAlimSayisi": "Alım Sayısı: ",
@@ -45,7 +45,7 @@
         "turkce": "Türkçe"
     },
     "yakitList": {
-        "yakitListesi": "Yakit Listesi",
+        "yakitListesi": "Yakıt Listesi",
         "tarih": "Tarih",
         "tutar": "Tutar",
         "mesafe": "Mesafe"
@@ -59,7 +59,7 @@
         "aciklama3": "Araca ait tüm yakıt verileri kayıt edilerek kullanıcıya bütün ayrıntılarıyla gösterilir. Yakıt verileri üzerinde silme güncelleme işlemlerini yapabilirsiniz."
     },
     "yakitEkleme": {
-        "yakitEkleme": "Yakit Ekleme",
+        "yakitEkleme": "Yakıt Ekleme",
         "yakitGuncelleme": "Güncelleme",
         "sonKm": "Son Km: ",
         "birOncekiKm": "Bir Önceki Km: ",
@@ -73,6 +73,6 @@
         "bosOlamaz": "Boş Olamaz",
         "sonKmKucukOlamaz": "Son Km'den Küçük Olamaz",
         "birsonrakindenBuyukKm": "Bir Sonrakinden Büyük Km",
-        "birOncekindenKucukKm": "Bir Oncekinden Küçük Km"
+        "birOncekindenKucukKm": "Bir Öncekinden Küçük Km"
     }
 }

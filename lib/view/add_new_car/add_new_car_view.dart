@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'package:provider/provider.dart';
@@ -41,21 +42,17 @@ class AddNewCarView extends StatelessWidget with Validator {
         viewModel: viewModel,
         child: Scaffold(
           appBar: MyAppBar(
-            label: viewModel.isNew
-                ? LocaleKeys.add_new_car_yeniAracEkle
-                : LocaleKeys.guncelle,
+            label: viewModel.isNew ? LocaleKeys.add_new_car_yeniAracEkle : LocaleKeys.guncelle,
             actions: [
               MyAppBarActionButton(
                 onPressed: () async {
                   if (viewModel.formKey.currentState!.validate()) {
                     if (viewModel.isOpen == null || viewModel.isOpen == false) {
                       await viewModel.modelInsert(viewModel.modeliHazirla());
-                      LocaleManeger.instance
-                          .setBoolValue(EnumPreferencesKeys.ISFIRSTOPEN, true);
+                      LocaleManeger.instance.setBoolValue(EnumPreferencesKeys.ISFIRSTOPEN, true);
                       goToViewPush(path: NavigationEnum.aracListesi);
                     } else {
-                      Navigator.pop<CarModel>(
-                          context, viewModel.modeliHazirla());
+                      Navigator.pop<CarModel>(context, viewModel.modeliHazirla());
                     }
                   }
                 },
@@ -87,13 +84,9 @@ class AddNewCarView extends StatelessWidget with Validator {
                       builder: (context, value, child) {
                         return CircleAvatarImageAndAlphabet(
                           color: viewModel.color,
-                          imagePath: viewModel.image == null
-                              ? null
-                              : viewModel.image!.path,
+                          imagePath: viewModel.image == null ? null : viewModel.image!.path,
                           radius: context.width * 0.2,
-                          text: viewModel.controllerAdi.text.isEmpty
-                              ? null
-                              : viewModel.controllerAdi.text,
+                          text: viewModel.controllerAdi.text.isEmpty ? null : viewModel.controllerAdi.text,
                           onTap: () {
                             viewModel.renkSec(context);
                           },
@@ -111,14 +104,14 @@ class AddNewCarView extends StatelessWidget with Validator {
                     child: Column(
                       children: [
                         BaseTextFormField(
-                            labelText: LocaleKeys.add_new_car_adi,
-                            controller: viewModel.controllerAdi,
-                            validator: (value) => bosOlamaz(value)),
+                            labelText: LocaleKeys.add_new_car_adi, controller: viewModel.controllerAdi, validator: (value) => bosOlamaz(value)),
                         BaseTextFormField(
-                            validator: (value) => bosOlamaz(value),
-                            labelText: LocaleKeys.add_new_car_aracKm,
-                            keyboardType: TextInputType.number,
-                            controller: viewModel.controllerAracKm),
+                          validator: (value) => bosOlamaz(value),
+                          labelText: LocaleKeys.add_new_car_aracKm,
+                          keyboardType: TextInputType.number,
+                          controller: viewModel.controllerAracKm,
+                          inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d*'))],
+                        ),
                         BaseTextFormField(
                             labelText: LocaleKeys.add_new_car_yakitTuru,
                             controller: viewModel.controllerYakitTuru,
@@ -131,25 +124,21 @@ class AddNewCarView extends StatelessWidget with Validator {
                                     return const YakitTuruSecimDialog();
                                   }).then((value) {
                                 if (value != null) {
-                                  viewModel.controllerYakitTuru.text =
-                                      value.name.tr().toUpperCase();
+                                  viewModel.controllerYakitTuru.text = value.name.tr().toUpperCase();
                                 }
                               });
                             }),
                         Consumer<AddNewCarViewModel>(
                           builder: (context, value, child) => Visibility(
-                            visible: viewModel.controllerYakitTuru.text ==
-                                YakitTuruEnum.LPG.name,
+                            visible: viewModel.controllerYakitTuru.text == YakitTuruEnum.LPG.name,
                             child: BaseTextFormField(
                                 keyboardType: TextInputType.number,
-                                labelText:
-                                    LocaleKeys.add_new_car_lpgDepoKapasite,
+                                labelText: LocaleKeys.add_new_car_lpgDepoKapasite,
                                 controller: viewModel.controllerLpgDepo),
                           ),
                         ),
                         BaseTextFormField(
-                            labelText:
-                                LocaleKeys.add_new_car_akaryakitDepoKapasitesi,
+                            labelText: LocaleKeys.add_new_car_akaryakitDepoKapasitesi,
                             keyboardType: TextInputType.number,
                             controller: viewModel.controllerAracDepo),
                       ],
