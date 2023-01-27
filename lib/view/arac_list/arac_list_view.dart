@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -151,7 +153,9 @@ class AracListView extends StatelessWidget {
 
                     launchUrl(_url);
                   },
-                  icon: const FaIcon(FontAwesomeIcons.googlePlay))
+                  icon: Platform.isAndroid
+                      ? const FaIcon(FontAwesomeIcons.googlePlay)
+                      : const FaIcon(FontAwesomeIcons.appStore))
             ],
           ),
           const Divider(),

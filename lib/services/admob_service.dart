@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -19,7 +21,9 @@ class AdmobService extends ChangeNotifier {
 
   AdmobService._init() {
     InterstitialAd.load(
-        adUnitId: "ca-app-pub-7713506603432492/6434643653",
+        adUnitId: Platform.isAndroid
+            ? "ca-app-pub-7713506603432492/6434643653"
+            : "ca-app-pub-7713506603432492/3894698736",
         request: const AdRequest(),
         adLoadCallback: InterstitialAdLoadCallback(
             onAdLoaded: (ad) {
@@ -39,7 +43,9 @@ class AdmobService extends ChangeNotifier {
   void bannerAdStart({required AdSize size}) {
     bannerAd = BannerAd(
         size: size,
-        adUnitId: "ca-app-pub-7713506603432492/9834784886",
+        adUnitId: Platform.isAndroid
+            ? "ca-app-pub-7713506603432492/9834784886"
+            : "ca-app-pub-7713506603432492/1460107081",
         listener: BannerAdListener(onAdLoaded: (ad) {
           if (isBannerReady == false) {
             setIsBannerReady(true);
